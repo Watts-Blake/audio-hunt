@@ -1,3 +1,5 @@
+# AUDIO HUNT
+
 Audio Hunt is a community based website where music enthusiasts can view and discuss popular sound tracks in order to find new music to fall in love with.
 
 Technologies: Express, Node.js, Sequelize, Pug, CSS3
