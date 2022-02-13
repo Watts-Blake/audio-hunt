@@ -1,0 +1,11 @@
+/* Main contents */
+.main {
+  margin: 0 auto;
+  width: 90%; /*we can change the width later*/
+}
+
+/* Flex container */
+.container {
+  display: flex;
+  justify-content: center;
+}
