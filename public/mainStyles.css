@@ -47,13 +47,12 @@ header {
   text-decoration: none;
 
   text-transform: uppercase;
-  font-size: 14px;
   font-weight: 700;
   text-align: center;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
 
   display: inline-block;
-  line-height: 42px;
+  /* line-height: 42px; */
 
   cursor: pointer;
   transition: margin-top 0.2s, background 0.2s, border-color 0.2s, color 0.2s;

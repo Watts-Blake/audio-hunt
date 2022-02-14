@@ -42,14 +42,21 @@ header,
   gap: 5px;
 }
 
-.signUpNav {
+.signUpNav,
+.loginNav {
   /* background-color: #16bb53; */
-  border-radius: 3em;
-  text-align: center;
-  padding: 0 0.5em;
-  line-height: 110%;
+  /* border-radius: 3em; */
   font-size: 10px;
+  padding: 0 0.5em;
   height: 20px;
+  text-transform: none;
+  font-weight: 100;
+  margin: 0 2.5px;
+  text-align: center;
+}
+
+.signUpNav {
+  min-width: 54px;
 }
 
 /*
