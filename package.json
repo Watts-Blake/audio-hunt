@@ -1,0 +1,26 @@
+{
+  "name": "audio-hunt",
+  "version": "1.0.0",
+  "description": "Audio Hunt is a community based website where music enthusiasts can view and discuss popular sound tracks in order to find new music to fall in love with.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Watts-Blake/audio-hunt.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Watts-Blake/audio-hunt/issues"
+  },
+  "homepage": "https://github.com/Watts-Blake/audio-hunt#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "nodemon": "^2.0.15",
+    "pug": "^3.0.2"
+  }
+}
