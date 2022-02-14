@@ -1,17 +1,63 @@
-header {
-  justify-content: space-between;
-}
-.topLeftNav {
-}
 .logoNav {
-  border: 5px solid red;
   width: 50px;
   height: 50px;
-  background-image: url("../assets/images/logo.png");
-  object-fit: cover;
+  background-image: url("./assets/images/logo.png");
+  background-size: contain;
 }
+
+header, .topLeftNav, .topCenterNav, .topRightNav{
+  align-items: center;
+  gap: 15px;
+}
+
 
 .searchInputNav {
   background-color: aliceblue;
   color: black;
+  border-radius: 10px;
+  padding-left: 5px;
 }
+
+.sp_around {
+  justify-content: space-around;
+}
+
+.sp_between {
+  justify-content: space-between;
+}
+
+
+
+
+
+
+/*  
+@media (max-width: 768px) {
+  .hidden.topCenterNav {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    top: -100vh;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background: black;
+  }
+  
+  .topCenterNav a {
+    margin: 20px;
+    font-size: 1.5em;
+    color: #fff;
+  }
+  
+  nav label {
+    display: block;
+  }
+  
+  p {
+    margin: 35px 50px;
+  }
+} */
