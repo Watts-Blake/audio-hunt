@@ -1,0 +1,91 @@
+.logoNav {
+  width: 25px;
+  height: 25px;
+  background-image: url("../assets/images/logo.png");
+  background-size: contain;
+  margin-left: 10px;
+}
+
+header {
+  height: 50px;
+  padding: 5px;
+}
+
+header,
+.topLeftNav,
+.topCenterNav,
+.topRightNav {
+  align-items: center;
+  gap: 15px;
+}
+
+.searchInputNav {
+  background-color: aliceblue;
+  color: black;
+  border-radius: 10px;
+  padding-left: 5px;
+}
+
+.sp_around {
+  justify-content: space-around;
+}
+
+.sp_between {
+  justify-content: space-between;
+}
+
+.login_signNav {
+  gap: 5px;
+}
+
+.topRightNav {
+  gap: 5px;
+}
+
+.signUpNav,
+.loginNav {
+  /* background-color: #16bb53; */
+  /* border-radius: 3em; */
+  font-size: 10px;
+  padding: 0 0.5em;
+  height: 20px;
+  text-transform: none;
+  font-weight: 100;
+  margin: 0 2.5px;
+  text-align: center;
+}
+
+.signUpNav {
+  min-width: 54px;
+}
+
+/*
+@media (max-width: 768px) {
+  .hidden.topCenterNav {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    top: -100vh;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background: black;
+  }
+
+  .topCenterNav a {
+    margin: 20px;
+    font-size: 1.5em;
+    color: #fff;
+  }
+
+  nav label {
+    display: block;
+  }
+
+  p {
+    margin: 35px 50px;
+  }
+} */ ;
