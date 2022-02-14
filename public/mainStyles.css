@@ -3,7 +3,7 @@ body {
   background-color: #212121;
   color: #ffffff;
   font-family: helvetica, arial;
-  letter-spacing: -1px;
+  letter-spacing: 0.25px;
   font-size: 10px;
   /* ↓ testing out position sticky in header*/
   /* height: 1000px; */
