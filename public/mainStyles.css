@@ -4,6 +4,7 @@ body {
   color: #ffffff;
   font-family: helvetica, arial;
   letter-spacing: -1px;
+  font-size: 10px;
   /* ↓ testing out position sticky in header*/
   /* height: 1000px; */
 }
@@ -49,58 +50,57 @@ header {
   font-size: 14px;
   font-weight: 700;
   text-align: center;
-  letter-spacing: .1em;
+  letter-spacing: 0.1em;
 
   display: inline-block;
   line-height: 42px;
 
   cursor: pointer;
-  transition: margin-top .2s, background .2s, border-color .2s, color .2s;
+  transition: margin-top 0.2s, background 0.2s, border-color 0.2s, color 0.2s;
 }
-
 
 /* solid green button skin */
 .btn--primary {
-  background: #1DB954;
-  border-color: #1DB954;
+  background: #1db954;
+  border-color: #1db954;
   color: #ffffff;
 }
 /* green outlined button skin */
 .btn--primary--outline {
-  border-color: #1DB954;
-  color: #1DB954;
-  transition: background .2s, color .2s, border-color .2s, margin-top .2s ;
+  border-color: #1db954;
+  color: #1db954;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, margin-top 0.2s;
 }
 /* green outlined button hover */
 .btn--primary--outline:hover {
-  background: #1DB954;
-  border-color: #1DB954;
-  color: #FFFFFF;
+  background: #1db954;
+  border-color: #1db954;
+  color: #ffffff;
 }
 /* green buttons when clicked */
-.btn--primary:active, .btn--primary--outline:active {
+.btn--primary:active,
+.btn--primary--outline:active {
   margin-top: 2px;
   background: #24a050;
   border-color: #24a050;
 }
 
-
 /* solid white button skin */
 .btn--secondary {
-  background: #FFFFFF;
-  border-color: #FFFFFF;
+  background: #ffffff;
+  border-color: #ffffff;
   color: #212121;
 }
 /* white outlined button skin */
 .btn--secondary--outline {
-  border-color: #FFFFFF;
-  color: #FFFFFF;
-  transition: background .2s, color .2s, border-color .2s, margin-top .2s ;
+  border-color: #ffffff;
+  color: #ffffff;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, margin-top 0.2s;
 }
 /* white outline button hover */
 .btn--secondary--outline:hover {
   background: rgb(51, 51, 51);
-  border-color: #FFFFFF;
+  border-color: #ffffff;
 }
 /* white buttons when clicked */
 .btn--secondary--outline:active {
@@ -110,8 +110,6 @@ header {
 .btn--secondary:active {
   margin-top: 2px;
 }
-
-
 
 /* MEDIA CARDS (POST CARDS ON THE HOME PAGE) *************************************/
 
@@ -150,15 +148,10 @@ header {
   justify-content: space-around;
 }
 .media__body__bottom {
-
   width: 30%;
   display: flex;
   justify-content: space-around;
 }
-
-
-
-
 
 /* FORMS ***********************************************/
 
@@ -187,7 +180,7 @@ header {
   align-items: center;
 }
 /* for the input tag */
-.form_checkbox_group__input{
+.form_checkbox_group__input {
   display: none;
 }
 /* for the styled div next to the hidden input */
@@ -207,13 +200,13 @@ header {
 }
 /* check-mark inside styled div */
 .form_checkbox_group__box::after {
-  content: '\2714';
+  content: "\2714";
   transform: scale(0);
-  transition: transform .15s;
+  transition: transform 0.15s;
 }
 /* turns background green when checked */
 .form_checkbox_group__input:checked + .form_checkbox_group__box {
-  background-color: #1DB954;
+  background-color: #1db954;
 }
 /* shows check-mark image when checked */
 .form_checkbox_group__input:checked + .form_checkbox_group__box::after {
