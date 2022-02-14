@@ -1,15 +1,22 @@
 .logoNav {
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   background-image: url("./assets/images/logo.png");
   background-size: contain;
 }
 
-header, .topLeftNav, .topCenterNav, .topRightNav{
+header {
+  height: 50px;
+  padding: 5px;
+}
+
+header,
+.topLeftNav,
+.topCenterNav,
+.topRightNav {
   align-items: center;
   gap: 15px;
 }
-
 
 .searchInputNav {
   background-color: aliceblue;
@@ -26,12 +33,22 @@ header, .topLeftNav, .topCenterNav, .topRightNav{
   justify-content: space-between;
 }
 
+.login_signNav {
+  gap: 5px;
+}
 
+.topRightNav {
+  gap: 5px;
+}
 
+.signUpNav {
+  background-color: #16bb53;
+  border-radius: 3em;
+  text-align: center;
+  padding: 0 0.5em;
+}
 
-
-
-/*  
+/*
 @media (max-width: 768px) {
   .hidden.topCenterNav {
     position: absolute;
@@ -46,18 +63,18 @@ header, .topLeftNav, .topCenterNav, .topRightNav{
     width: 100%;
     background: black;
   }
-  
+
   .topCenterNav a {
     margin: 20px;
     font-size: 1.5em;
     color: #fff;
   }
-  
+
   nav label {
     display: block;
   }
-  
+
   p {
     margin: 35px 50px;
   }
-} */
+} */ ;
