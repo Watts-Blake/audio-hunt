@@ -1,15 +1,14 @@
 /* Main contents */
-body{
+body {
   background-color: #212121;
-  color: #FFFFFF;
+  color: #ffffff;
   font-family: helvetica, arial;
   letter-spacing: -1px;
   /* ↓ testing out position sticky in header*/
   /* height: 1000px; */
 }
 
-
-header{
+header {
   background-color: #191414;
   margin-bottom: 20px;
   position: sticky;
@@ -22,7 +21,6 @@ header{
   /* padding: 5px */
 }
 
-
 .main {
   margin: 0 auto;
   width: 90%; /*we can change the width later*/
@@ -33,4 +31,3 @@ header{
   display: flex;
   justify-content: center;
 }
-

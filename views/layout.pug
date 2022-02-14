@@ -6,7 +6,29 @@ html(lang="en")
 		meta(name="viewport", content="width=device-width, initial-scale=1.0")
 		link(rel="stylesheet" href="./import.css")
 		title= title
-	body 
-		header 
-			nav 
-				
+	body
+
+		header.container
+			nav.container
+				div.topLeftNav.container
+					div.logo
+						a(href="")
+
+					div#searchBar
+						div#searchIcon
+							img(src="", alt="")
+						div.searchInput
+							label(for="searchBar")
+							input(type="text" name="searchBar" placeHolder='Search Audio Hunt')
+				div.topCenterNav.container
+					a#home(href="") Home
+					a#createAPost(href="") Create a Post
+					a#songPosts(href="")  Collections
+					a#aboutUs(href="") About Us
+				div.topCenterNav.container
+					div#login_sign
+						button#login Login
+						button#signUp Sign Up
+					div#profile
+						a#profPic(href="")
+							img(src="", alt="ProfPic")

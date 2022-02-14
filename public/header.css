@@ -1,0 +1,26 @@
+nav {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+}
+.topLeftNav {
+  display: flex;
+  justify-self: flex-start;
+  justify-content: space-between;
+}
+.logo {
+  border: 5px solid red;
+  width: 50px;
+  height: 50px;
+  background-image: url("../assets/images/logo.png");
+  object-fit: cover;
+}
+
+#navButtons {
+  align-items: center;
+}
+
+.searchInput {
+  background-color: aliceblue;
+  color: black;
+}
