@@ -31,3 +31,61 @@ header {
   display: flex;
   justify-content: center;
 }
+
+/* form container for input and label etc. */
+.form_group {
+  padding: 1em;
+
+  display: flex;
+  flex-direction: column;
+}
+/* form input */
+.form_input {
+  padding: 1em;
+  margin: 20px 0;
+  border: 1px solid #535353;
+  border-radius: 3em;
+}
+
+/* form container for checkbox and label etc. */
+.form_checkbox_group {
+  padding: 1em;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+}
+/* for the input tag */
+.form_checkbox_group__input{
+  display: none;
+}
+/* for the styled div next to the hidden input */
+.form_checkbox_group__box {
+  width: 1.5em;
+  height: 1.5em;
+  margin: 10px;
+
+  background-color: #535353;
+  border-radius: 3px;
+
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+
+  transition: background-color 0.15s;
+}
+/* check-mark inside styled div */
+.form_checkbox_group__box::after {
+  content: '\2714';
+  transform: scale(0);
+  transition: transform .15s;
+}
+/* turns background green when checked */
+.form_checkbox_group__input:checked + .form_checkbox_group__box {
+  background-color: #1DB954;
+}
+/* shows check-mark image when checked */
+.form_checkbox_group__input:checked + .form_checkbox_group__box::after {
+  transform: scale(1);
+}
