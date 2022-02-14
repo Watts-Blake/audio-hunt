@@ -1,14 +1,9 @@
-nav {
-  display: flex;
-  flex-direction: row;
-  width: 100vw;
-}
-.topLeftNav {
-  display: flex;
-  justify-self: flex-start;
+header {
   justify-content: space-between;
 }
-.logo {
+.topLeftNav {
+}
+.logoNav {
   border: 5px solid red;
   width: 50px;
   height: 50px;
@@ -16,11 +11,7 @@ nav {
   object-fit: cover;
 }
 
-#navButtons {
-  align-items: center;
-}
-
-.searchInput {
+.searchInputNav {
   background-color: aliceblue;
   color: black;
 }
