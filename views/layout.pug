@@ -5,7 +5,7 @@ html(lang="en")
     meta(http-equiv="X-UA-Compatible", content="IE=edge")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     link(rel="icon" type="image/x-icon" href="./assets/images/logo.png")
-    link(rel="stylesheet" href="./stylesheets/import.css")
+    link(rel="stylesheet" href="/stylesheets/import.css")
     title= title
   body
     header.container.sp_between
@@ -27,11 +27,11 @@ html(lang="en")
       div.topRightNav.container
         div.login_signNav.container
           if authenticated
-            form(action='/logout' method='post')
+            form(action='/users/logout' method='post')
               button.logoutNav.btn.btn--primary--outline Log Out
           else
-            a.loginNav.btn.btn--secondary--outline(href="/login") Login
-            a.signUpNav.btn.btn--primary--outline(href="/signup") Sign Up
+            a.loginNav.btn.btn--secondary--outline(href="/users/login") Login
+            a.signUpNav.btn.btn--primary--outline(href="/users/signup") Sign Up
         div.profileNav
           if authenticated
             a.profPicNav(href="")

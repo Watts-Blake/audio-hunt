@@ -1,7 +1,7 @@
 extends layout.pug
 
 block content
-  form(action="/login" method="POST")
+  form(action="/users/login" method="POST")
     div.form_group
       label(for="email") Email
       input.form_input(type="email" name="email" id="email" placeholder="email...")

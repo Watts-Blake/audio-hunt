@@ -1,12 +1,14 @@
+// PACKAGE IMPORTS ******************************************************************
 var express = require('express');
-var router = express.Router();
 const bcrypt = require('bcryptjs');
-const db = require('../db/models');
 const asyncHandler = require('express-async-handler');
-
+// MODULE IMPORTS *******************************************************************
 const { loginUser, restoreUser, requireAuth, logoutUser } = require('../auth');
+const db = require('../db/models');
 
 // MIDDLEWARE ***********************************************************************
+var router = express.Router();
+
 router.use(restoreUser);
 
 // ROUTER ***************************************************************************
@@ -15,51 +17,10 @@ router.use(restoreUser);
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Audio Hunt', authenticated: res.locals.authenticated });
 });
-// GET /login
-router.get('/login', (req, res) => {
-  res.render('login');
-});
-// POST /login
-router.post('/login', asyncHandler(async (req, res) => {
-  const {
-      email,
-      password,
-  } = req.body;
-
-  const user = await db.User.findOne({ where: { email } });
-
-  if(user !== null){
-    const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
-
-    if(passwordMatch) {
-      loginUser(req, res, user);
-
-      return res.redirect('/');
-    }
-  }
-
-  res.render('login', { email });
-}));
-// POST /logout
-router.post('/logout', (req, res) => {
-  logoutUser(req, res);
-
-  res.redirect('/');
-});
-// GET /signup
-router.get('/signup', (req, res) => {
-  res.render('signup');
-});
-// POST /signup
-router.post('/signup', asyncHandler(async (req, res, next) => {
-  // TODO redirect user and log them in
-}))
-
-
 
 // GET /random
 router.get('/random', requireAuth, (req, res) => {
-  res.send('urniujknfvedjnkrf;vebfdgg');
+  res.send('urniujknfvedjnkrcszfvbzdbxgdfgxcfvefdvsebfdgg');
 });
 
 
