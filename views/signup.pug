@@ -1,7 +1,15 @@
 extends layout.pug
 
 block content
+  if errors
+    //- set styles for Errors
+    div(class='alert alert-danger')
+      p The following error(s) occurred:
+      ul
+        each error in errors
+          li= error
   form(action='/users/signup' method='post')
+    input(type="hidden" name="_csrf" value=csrfToken)
     .form_group
       label(for='username') Name
       input.form_input(type='text', name='username' id="username" placeholder='User Name' value=user.username autofocus=true required)
