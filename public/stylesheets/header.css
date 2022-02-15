@@ -43,16 +43,15 @@ header,
 }
 
 .signUpNav,
-.loginNav {
+.loginNav,
+.logoutNav {
   /* background-color: #16bb53; */
   /* border-radius: 3em; */
   font-size: 10px;
   padding: 0 0.5em;
   height: 20px;
   text-transform: none;
-  font-weight: 100;
   margin: 0 2.5px;
-  text-align: center;
 }
 
 .signUpNav {
