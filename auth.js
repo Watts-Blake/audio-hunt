@@ -49,12 +49,3 @@ module.exports = {
   requireAuth,
   restoreUser,
 };
-
-
-
-// requireAuth middleware.....
-// POST /comments
-
-
-// s%3Ar2Fql5Ml3DfsyhMQyOoVfSUNPpXShEWH.SjNyLDffbr6RnkefFmcr6iouoF%2Fi045oY1anX1UcXNA
-// s%3Ar2Fql5Ml3DfsyhMQyOoVfSUNPpXShEWH.SjNyLDffbr6RnkefFmcr6iouoF%2Fi045oY1anX1UcXNA
