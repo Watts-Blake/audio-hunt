@@ -1,0 +1,52 @@
+.user_banner {
+  border: 1px solid red;
+
+  width: 75%;
+  height: 250px;
+  margin: 25px auto;
+  padding: 50px;
+
+  justify-content: flex-start;
+}
+.user_banner__pfp {
+  border: 1px solid blue;
+
+  height: 150px;
+  min-width: 150px;
+
+  margin-right: 20px;
+}
+.user_banner__body {
+  border: 1px solid green;
+
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+}
+
+
+.main_body {
+  border: 1px solid red;
+
+  min-height: 500px;
+  width: 75%;
+  margin: 0 auto;
+  padding: 25px;
+
+  align-items: flex-start;
+}
+.user_posts {
+  border: 1px solid blue;
+
+  width: 75%;
+  min-height: 100px;
+}
+.user_comments_preview {
+  border: 1px solid green;
+
+  min-height: 100px;
+}

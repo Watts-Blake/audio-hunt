@@ -42,6 +42,8 @@ app.use(
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+const profilePageDemoRouter = require('./routes/user-create-read-FRONTEND');
+app.use(profilePageDemoRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

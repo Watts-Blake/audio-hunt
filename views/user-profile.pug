@@ -1,0 +1,15 @@
+extends layout.pug
+
+block content
+  .user_banner.container
+    .user_banner__pfp
+      img(src=``, alt="profile-picture")
+    .user_banner__body
+      h2.user_banner__body__name [username goes here]
+      span.user_banner__body__headline [headline goes here]
+      a.user_banner__body__email(href=`mailto:`) [email goes here]
+      button.btn.btn--secondary--outline Edit My Profile
+
+  .main_body.container
+    .user_posts.container THIS IS THE USER POSTS CONTAINER
+    .user_comments_preview.container THIS IS THE COMMENTS PREVIEW THING
