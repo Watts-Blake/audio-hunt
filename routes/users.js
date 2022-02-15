@@ -1,7 +1,7 @@
 // PACKAGE IMPORTS ******************************************************************
 var express = require("express");
 const bcrypt = require("bcryptjs");
-const csrf = require('csurf'); 
+const csrf = require('csurf');
 // const asyncHandler = require("express-async-handler");
 const { validationResult } = require("express-validator");
 
@@ -49,10 +49,10 @@ router.post(
 
     } else {
       errors = validatorErrors.array().map((err) => err.msg)
-      
+
     }
 
-    res.render("login", { 
+    res.render("login", {
     title: 'Log in',
     errors,
     csrfToken: req.csrfToken()
@@ -70,7 +70,7 @@ router.post("/logout", (req, res) => {
 router.get("/signup",
   csrfProtection,
   (req, res) => {
-  return res.render("signup", { 
+  return res.render("signup", {
     user: {},
     title: 'Sing up',
     csrfToken: req.csrfToken()
@@ -90,7 +90,7 @@ router.post(
     const user = db.User.build({ username, email, bio });
 
     if(validatorErrors.isEmpty()) {
-  
+
       const hashedPassword = await bcrypt.hash(password, 12);
       user.hashedPassword = hashedPassword;
       await user.save();
@@ -115,31 +115,20 @@ router.post(
 );
 
 
-// GET /user/:id
-router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
+// GET /users/:id
+router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
   const id = await req.params.id * 1;
 
-  const user = await db.User.findByPk(id);
+  const user = await db.User.findByPk(id,  {
+    include: [db.Post, db.Comment],
+  });
 
   if(user) {
-    const { 
-      username,
-      bio,
-      header,
-      email,
-      // profileUrl
-    } = user
-
-    res.render(`/users/${id}`, {
-      username,
-      bio,
-      header,
-      email,
-      // profileUrl
-    })
+    res.render(`user-profile`, { user });
   } else {
-    // TODO 
-
+    const error = new Error('We could not find this user!');
+    error.status = 404;
+    next(error);
   }
 
 }));

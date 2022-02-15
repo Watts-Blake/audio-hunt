@@ -14,6 +14,7 @@ module.exports = {
      email: 'test@test.com',
      hashedPassword: '$2a$12$KxyJdlqPdOis9YHeSv0nuO/dh8G7cvmWUtuC7pWN9tUcLprUZ9cF.',
      bio: 'this is a test user profile',
+     profileImg: '/assets/images/profileImg/profilePic2.jpg',
      createdAt: new Date(),
      updatedAt: new Date(),
    }], {});

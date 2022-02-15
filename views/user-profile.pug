@@ -1,15 +1,7 @@
 extends layout.pug
 
 block content
-  .user_banner.container
-    .user_banner__pfp
-      img(src=`/bruh.jpg`, alt="profile-picture")
-    .user_banner__body
-      h2.user_banner__body__name [username goes here]
-      span.user_banner__body__headline [headline goes here]
-      a.user_banner__body__email(href=`mailto:`) [email goes here]
-      button.btn.btn--secondary--outline Edit My Profile
-
+  include includes/profile-banner.pug
 
   div.main_body_titles.container
     h2 Your Posts
@@ -19,8 +11,8 @@ block content
       .media
         img.media__img(src="/bruh.jpg")
         .media__body
-          h3= post.title
-          span= post.shortDescription
+          h3 Bruh
+          span Bruh
           .media__body__bottom
             small artist name
             small album name

@@ -1,0 +1,8 @@
+.user_banner.container
+  .user_banner__pfp
+    img(src=user.profileImg, alt="profile-picture")
+  .user_banner__body
+    h2.user_banner__body__name= user.username
+    span.user_banner__body__headline= user.header
+    a.user_banner__body__email= user.email
+    button.btn.btn--secondary--outline Edit My Profile
