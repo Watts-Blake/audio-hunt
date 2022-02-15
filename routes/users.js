@@ -3,13 +3,13 @@ var express = require("express");
 const bcrypt = require("bcryptjs");
 const csrf = require('csurf'); 
 // const asyncHandler = require("express-async-handler");
+const { validationResult } = require("express-validator");
 
 // MODULE IMPORTS *******************************************************************
 const { loginUser, restoreUser, requireAuth, logoutUser } = require("../auth");
 const db = require("../db/models");
-const { userValidators } = require('./utils/user-validator');
+const { signupValidators, loginValidators } = require('./utils/user-validator');
 const { asyncHandler } = require('./utils/utils');
-const { validationResult } = require("express-validator");
 // MIDDLEWARE ***********************************************************************
 var router = express.Router();
 
@@ -28,35 +28,38 @@ router.get("/login", csrfProtection, (req, res) => {
     csrfToken: req.csrfToken()
   });
 });
+
 // POST /users/login
 router.post(
   "/login",
   csrfProtection,
+  loginValidators,
   asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
     const user = await db.User.findOne({ where: { email } });
 
-    if (user !== null) {
-      const passwordMatch = await bcrypt.compare(
-        password,
-        user.hashedPassword.toString()
-      );
+    let errors = []
+    const validatorErrors = validationResult(req);
+    if (user !== null && validatorErrors.isEmpty()) {
 
-      if (passwordMatch) {
         loginUser(req, res, user);
 
         return res.redirect("/");
-      }
+
+    } else {
+      errors = validatorErrors.array().map((err) => err.msg)
+      
     }
 
-    return res.render("login", { 
-      email,
-      title: 'Log in',
-      csrfToken: req.csrfToken()
+    res.render("login", { 
+    title: 'Log in',
+    errors,
+    csrfToken: req.csrfToken()
     });
   })
 );
+
 // POST /users/logout
 router.post("/logout", (req, res) => {
   logoutUser(req, res);
@@ -76,7 +79,7 @@ router.get("/signup",
 // POST /users/signup
 router.post(
   "/signup",
-  userValidators,
+  signupValidators,
   csrfProtection,
   asyncHandler(async (req, res, next) => {
     const { username, email, bio, password } = req.body;
@@ -97,6 +100,7 @@ router.post(
 
     } else {
 			const errors = validatorErrors.array().map((err) => err.msg)
+      console.log(user.bio);
       res.render("signup", {
         user,
         title: 'Sign up',
@@ -109,5 +113,35 @@ router.post(
 
   })
 );
+
+
+// GET /user/:id
+router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
+  const id = await req.params.id * 1;
+
+  const user = await db.User.findByPk(id);
+
+  if(user) {
+    const { 
+      username,
+      bio,
+      header,
+      email,
+      // profileUrl
+    } = user
+
+    res.render(`/users/${id}`, {
+      username,
+      bio,
+      header,
+      email,
+      // profileUrl
+    })
+  } else {
+    // TODO 
+
+  }
+
+}));
 
 module.exports = router;

@@ -1,7 +1,8 @@
 const { check } = require("express-validator");
+const bcrypt = require('bcryptjs')
 const db = require("../../db/models");
 
-const userValidators = [
+const signupValidators = [
   check('username')
     .exists({ checkFalsy: true })
     .withMessage('Please provide a value for Last Name')
@@ -37,7 +38,37 @@ const userValidators = [
 ];
 
 
+const loginValidators = [
+	check('email')
+		.exists({ checkFalsy: true })
+		.withMessage('Please provide a value for Email Address'),
+	check('password')
+		.exists({ checkFalsy: true })
+		.withMessage('Please provide a value for Password')
+    .custom(async (value, { req }) => {
+      const { email } = req.body;
+      const user = await db.User.findOne({ where: { email } });
+
+      if(!user) {
+        throw new Error('Invalid password or email');
+      }
+
+      const passwordMatch = await bcrypt.compare(
+        value,
+        user.hashedPassword.toString()
+      )
+
+      if(!passwordMatch) {
+        throw new Error('Invalid password or email');
+      }
+
+      return true;
+    })
+];
+	
+
 
 module.exports = {
-  userValidators
+  signupValidators,
+  loginValidators
 };
