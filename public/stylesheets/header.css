@@ -1,13 +1,14 @@
 .logoNav {
-  width: 25px;
-  height: 25px;
+  width: 35px;
+  height: 35px;
   background-image: url("../assets/images/logo.png");
   background-size: contain;
+  background-repeat: no-repeat;
   margin-left: 10px;
 }
 
 header {
-  height: 50px;
+  height: 65px;
   padding: 5px;
 }
 
@@ -22,7 +23,9 @@ header,
 .searchInputNav {
   background-color: aliceblue;
   color: black;
-  border-radius: 10px;
+  border-radius: 1em;
+  height: 1.5em;
+  line-height: 1.4em; 
   padding-left: 5px;
 }
 
@@ -47,15 +50,17 @@ header,
 .logoutNav {
   /* background-color: #16bb53; */
   /* border-radius: 3em; */
-  font-size: 10px;
-  padding: 0 0.5em;
-  height: 20px;
+  /* font-size: 10px; */
+  height: 34px;
   text-transform: none;
   margin: 0 2.5px;
+  min-width: 97px;
+  padding: 0 0.5em;
 }
 
 .signUpNav {
-  min-width: 54px;
+  min-width: 109px;
+  padding: 0 1.3em;
 }
 
 /*
