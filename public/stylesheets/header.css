@@ -47,7 +47,7 @@ header,
 .logoutNav {
   /* background-color: #16bb53; */
   /* border-radius: 3em; */
-  font-size: 10px;
+  /* font-size: 10px; */
   padding: 0 0.5em;
   height: 20px;
   text-transform: none;
@@ -55,7 +55,7 @@ header,
 }
 
 .signUpNav {
-  min-width: 54px;
+  min-width: 83px;
 }
 
 /*
