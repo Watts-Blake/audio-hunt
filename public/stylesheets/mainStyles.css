@@ -9,6 +9,11 @@ body {
   /* height: 1000px; */
 }
 
+h2 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
 h3 {
   font-size: 17px;
   font-weight: 600;
@@ -51,7 +56,7 @@ header {
 .btn {
   margin: 0;
   padding: 0 1.5em;
-  height: 46px;
+  height: 30px;
 
   border: 2px solid;
   border-radius: 3em;
