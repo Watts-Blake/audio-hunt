@@ -4,23 +4,22 @@ const bcrypt = require('bcryptjs');
 const db = require('../db/models');
 const asyncHandler = require('express-async-handler');
 
-const { loginUser, restoreUser, requireAuth } = require('../auth');
+const { loginUser, restoreUser, requireAuth, logoutUser } = require('../auth');
 
 // MIDDLEWARE ***********************************************************************
 router.use(restoreUser);
 
 // ROUTER ***************************************************************************
 
-/* GET home page. */
+// GET /
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Audio Hunt', authenticated: res.locals.authenticated });
 });
-
-// TEST ROUTE TO LOG IN USER
+// GET /login
 router.get('/login', (req, res) => {
   res.render('login');
 });
-
+// POST /login
 router.post('/login', asyncHandler(async (req, res) => {
   const {
       email,
@@ -41,7 +40,13 @@ router.post('/login', asyncHandler(async (req, res) => {
 
   res.render('login', { email });
 }));
+// POST /logout
+router.post('/logout', (req, res) => {
+  logoutUser(req, res);
 
+  res.redirect('/');
+});
+// GET /random
 router.get('/random', requireAuth, (req, res) => {
   res.send('urniujknfvedjnkrf;vebfdgg');
 });

@@ -27,13 +27,15 @@ html(lang="en")
       div.topRightNav.container
         div.login_signNav.container
           if authenticated
-            button.logoutNav.btn.btn--primary--outline Log Out
+            form(action='/logout' method='post')
+              button.logoutNav.btn.btn--primary--outline Log Out
           else
-            button.loginNav.btn.btn--secondary--outline Login
-            button.signUpNav.btn.btn--primary--outline Sign Up
+            a.loginNav.btn.btn--secondary--outline(href="/login") Login
+            a.signUpNav.btn.btn--primary--outline(href="/signup") Sign Up
         div.profileNav
-          a.profPicNav(href="")
-            img(src="", alt="ProfPic")
+          if authenticated
+            a.profPicNav(href="")
+              img(src="", alt="ProfPic")
 
     main.main.content
       block content
