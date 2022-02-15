@@ -9,4 +9,9 @@ block content
       label(for="password") Password
       input.form_input(type="password" name="password" id="password" placeholder="password...")
     button.btn.btn--primary--outline(type='submit') Submit
-    //- button.btn.btn--primary--outline Demo User
+  form(action="/users/login" method="POST")
+    div.form_group
+      input.form_input(type="hidden" name="email" id="email" value='test@test.com')
+    div.form_group
+      input.form_input(type="hidden" name="password" id="password" value='password')
+    button.btn.btn--primary--outline(type='submit') Demo User

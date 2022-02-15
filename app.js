@@ -28,7 +28,7 @@ app.use(
   session({
     name: "Audio Hunt Session Cookie",
     secret: sessionSecret,
-    // store,
+    store,
     saveUninitialized: false,
     resave: false,
   })
