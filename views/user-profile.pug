@@ -11,5 +11,14 @@ block content
       button.btn.btn--secondary--outline Edit My Profile
 
   .main_body.container
-    .user_posts.container THIS IS THE USER POSTS CONTAINER
+    .user_posts.container
+      .media
+        img.media__img(src="/bruh.jpg")
+        .media__body
+          h3= post.title
+          span= post.shortDescription
+          .media__body__bottom
+            small # of comments
+            small artist name
+            small album name
     .user_comments_preview.container THIS IS THE COMMENTS PREVIEW THING

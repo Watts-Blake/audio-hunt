@@ -9,6 +9,17 @@ body {
   /* height: 1000px; */
 }
 
+h3 {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0;
+}
+
+small {
+  color: #b3b3b3;
+  font-size: 12px;
+}
+
 header {
   background-color: #191414;
   margin-bottom: 20px;
@@ -121,13 +132,14 @@ header {
 */
 
 .media {
-  width: 60%;
+  width: 100%;
   height: 150px;
 
   margin: 0 auto;
 
   display: flex;
   flex-direction: row;
+  /* justify-content: flex-start; */
   align-items: center;
 }
 .media__img {
@@ -140,16 +152,19 @@ header {
 }
 .media__body {
   width: 100%;
-  height: 80%;
+  height: 75%;
 
   display: flex;
   flex-direction: column;
   justify-content: space-around;
 }
+.media__body > span {
+  color: #b3b3b3;
+}
 .media__body__bottom {
-  width: 30%;
+  width: 75%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 /* FORMS ***********************************************/

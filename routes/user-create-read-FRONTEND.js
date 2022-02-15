@@ -13,9 +13,17 @@ router.use(restoreUser);
 
 // ROUTES *****************************************************************
 // GET /users *************************************************************
-router.get("/profile-page-demo", function (req, res, next) {
-  res.render("user-profile");
-});
+router.get("/profile-page-demo", asyncHandler(async (req, res, next) => {
+  const post = await db.Post.build({
+    userId: 1,
+    songId: 1,
+    title: 'Title Of Song Post!',
+    shortDescription: 'this is a short description of the post',
+    content: 'f jefiesrsjkerflskjrf  surhsiru hriu hsi iur hiruhir hwoiu hwi  hi uuh se ',
+  });
+
+  res.render("user-profile", { post });
+}));
 
 
 
