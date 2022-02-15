@@ -42,11 +42,12 @@
 .user_posts {
   border: 1px solid blue;
 
-  width: 75%;
+  width: 70%;
   min-height: 100px;
 }
 .user_comments_preview {
   border: 1px solid green;
 
+  width: 30%;
   min-height: 100px;
 }
