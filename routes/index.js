@@ -46,6 +46,17 @@ router.post('/logout', (req, res) => {
 
   res.redirect('/');
 });
+// GET /signup
+router.get('/signup', (req, res) => {
+  res.render('signup');
+});
+// POST /signup
+router.post('/signup', asyncHandler(async (req, res, next) => {
+  // TODO redirect user and log them in
+}))
+
+
+
 // GET /random
 router.get('/random', requireAuth, (req, res) => {
   res.send('urniujknfvedjnkrf;vebfdgg');

@@ -1,0 +1,24 @@
+extends layout.pug
+
+block content
+  form(action='#' method='method')
+    .form_group
+      label(for='name') Name
+      input.form_input(type='text', name='name' id="name" placeholder='Name' autofocus=true required)
+    .form_group
+      label(for='email') Email
+      input.form_input(type='email' name='email' id="email" placeholder='Email' required)
+    .form_group
+      label(for='bio') Bio
+      textarea.form_input(name='bio' id='bio' placeholder="Please enter a short bio here. But only if you'd like... ;)")
+    .form_group
+      label(for='password') Password
+      input.form_input(type='password', name='password' id="password" required )
+    .form_group
+      label(for='confirmPassword') Confirm Password
+      input.form_input(type='confirmPassword', name='confirmPassword' id="confirmPassword" required )
+    label.form_checkbox_group
+      input.form_checkbox_group__input(type="checkbox" required)
+      div.form_checkbox_group__box
+      span Are you 16 years of age or older?
+    button.btn.btn-primary(type='submit') Sign Up
