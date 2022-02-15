@@ -1,0 +1,11 @@
+extends layout.pug
+
+block content
+  form(action="/login" method="POST")
+    div.form_group
+      label(for="email") Email
+      input.form_input(type="email" name="email" id="email" placeholder="email...")
+    div.form_group
+      label(for="password") Password
+      input.form_input(type="password" name="password" id="password" placeholder="password...")
+    button.btn.btn--primary--outline Submit

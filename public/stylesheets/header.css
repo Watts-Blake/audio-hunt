@@ -43,7 +43,8 @@ header,
 }
 
 .signUpNav,
-.loginNav {
+.loginNav,
+.logoutNav {
   /* background-color: #16bb53; */
   /* border-radius: 3em; */
   font-size: 10px;
