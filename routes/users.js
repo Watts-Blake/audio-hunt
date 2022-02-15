@@ -1,51 +1,65 @@
 // PACKAGE IMPORTS ******************************************************************
 var express = require("express");
 const bcrypt = require("bcryptjs");
+const csrf = require('csurf'); 
 // const asyncHandler = require("express-async-handler");
+const { validationResult } = require("express-validator");
 
 // MODULE IMPORTS *******************************************************************
 const { loginUser, restoreUser, requireAuth, logoutUser } = require("../auth");
 const db = require("../db/models");
-const asyncHandler = (handler) => (req, res, next) =>
-  handler(req, res, next).catch(next);
+const { signupValidators, loginValidators } = require('./utils/user-validator');
+const { asyncHandler } = require('./utils/utils');
 // MIDDLEWARE ***********************************************************************
 var router = express.Router();
 
 router.use(restoreUser);
+const csrfProtection = csrf({ cookie: true });
 
 // ROUTES *****************************************************************
 // GET /users *************************************************************
-router.get("/", function (req, res, next) {
-  res.send("respond with a resource");
-});
+// router.get("/", function (req, res, next) {
+//   res.send("respond with a resource");
+// });
 // GET /users/login
-router.get("/login", (req, res) => {
-  res.render("login");
+router.get("/login", csrfProtection, (req, res) => {
+  res.render("login", {
+    title: 'Log in',
+    csrfToken: req.csrfToken()
+  });
 });
+
 // POST /users/login
 router.post(
   "/login",
+  csrfProtection,
+  loginValidators,
   asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
     const user = await db.User.findOne({ where: { email } });
 
-    if (user !== null) {
-      const passwordMatch = await bcrypt.compare(
-        password,
-        user.hashedPassword.toString()
-      );
+    let errors = []
+    const validatorErrors = validationResult(req);
+    if (user !== null && validatorErrors.isEmpty()) {
 
-      if (passwordMatch) {
         loginUser(req, res, user);
 
         return res.redirect("/");
-      }
+
+    } else {
+      errors = validatorErrors.array().map((err) => err.msg)
+      
     }
 
-    return res.render("login", { email });
+    res.render("login", { 
+    title: 'Log in',
+    errors,
+    csrfToken: req.csrfToken()
+    });
   })
 );
+
 // POST /users/logout
 router.post("/logout", (req, res) => {
   logoutUser(req, res);
@@ -53,29 +67,81 @@ router.post("/logout", (req, res) => {
   return res.redirect("/");
 });
 // GET /users/signup
-router.get("/signup", (req, res) => {
-  return res.render("signup", { user: {} });
+router.get("/signup",
+  csrfProtection,
+  (req, res) => {
+  return res.render("signup", { 
+    user: {},
+    title: 'Sing up',
+    csrfToken: req.csrfToken()
+  });
 });
 // POST /users/signup
 router.post(
   "/signup",
+  signupValidators,
+  csrfProtection,
   asyncHandler(async (req, res, next) => {
-    const { username, email, bio, password, confirmPassword } = req.body;
+    const { username, email, bio, password } = req.body;
     // TODO: implement express-validator
 
+    const validatorErrors = validationResult(req);
+    // console.log("************************", validatorErrors);
     const user = db.User.build({ username, email, bio });
 
-    if (password !== confirmPassword) {
-      res.render("signup", user);
+    if(validatorErrors.isEmpty()) {
+  
+      const hashedPassword = await bcrypt.hash(password, 12);
+      user.hashedPassword = hashedPassword;
+      await user.save();
+
+      loginUser(req, res, user);
+      return res.redirect("/");
+
+    } else {
+			const errors = validatorErrors.array().map((err) => err.msg)
+      console.log(user.bio);
+      res.render("signup", {
+        user,
+        title: 'Sign up',
+        errors,
+        csrfToken: req.csrfToken(),
+      });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 12);
-    user.hashedPassword = hashedPassword;
-    await user.save();
 
-    loginUser(req, res, user);
-    return res.redirect("/");
+
   })
 );
+
+
+// GET /user/:id
+router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
+  const id = await req.params.id * 1;
+
+  const user = await db.User.findByPk(id);
+
+  if(user) {
+    const { 
+      username,
+      bio,
+      header,
+      email,
+      // profileUrl
+    } = user
+
+    res.render(`/users/${id}`, {
+      username,
+      bio,
+      header,
+      email,
+      // profileUrl
+    })
+  } else {
+    // TODO 
+
+  }
+
+}));
 
 module.exports = router;
