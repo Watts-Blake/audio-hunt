@@ -10,6 +10,9 @@ const session = require("express-session");
 const store = require("connect-pg-simple");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+//--------------------------test router---------------------------DELETE
+const test = require("./routes/test");
+//--------------------------test router---------------------------DELETE
 const { sessionSecret } = require("./config");
 
 const app = express();
@@ -39,7 +42,13 @@ app.use(
 
 // create Session table if it doesn't already exist
 // store.sync();
+//------------------------------------------Testing Routers----------------DELETE
+//
 
+app.use("/users", test);
+
+//
+//------------------------------------------Testing Routers----------------DELETE
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 

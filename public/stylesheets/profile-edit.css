@@ -1,0 +1,74 @@
+.profile_edit_container {
+  flex-direction: column;
+  align-content: space-between;
+  min-height: 700px;
+  min-width: 400px;
+  width: 75%;
+  padding: 15px 50px;
+  text-align: center;
+}
+.profile_edit {
+  flex-direction: column;
+  padding-top: 10px;
+}
+
+.pic_prof_group {
+  flex-direction: column;
+  gap: 15px;
+}
+
+.edit_pfp {
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+  border: 2.5px solid #1db954;
+}
+
+.btn-chng-pfp {
+  padding: 0 1em;
+  text-transform: none;
+  height: 30px;
+}
+.email_user_group {
+  flex-direction: column;
+  justify-content: space-around;
+}
+.prof_edit_bot_group {
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 5px;
+}
+
+.confirm_deactivate_group {
+  flex-direction: row;
+  gap: 10px;
+}
+
+#editBio {
+  max-height: 120px;
+  width: 100%;
+}
+
+#editHeader {
+  width: 100%;
+}
+
+.deactivateProfBtn {
+  border-color: #900303;
+  color: #900303;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, margin-top 0.2s;
+}
+
+.deactivateProfBtn:hover {
+  background: #900303;
+  border-color: #900303;
+  color: #ffffff;
+}
+
+.deactivateProfBtn:active {
+  margin-top: 2px;
+  background: #900303;
+}
+.deactivateProfBtn:active {
+  margin-top: 2px;
+}

@@ -5,4 +5,5 @@
     h2.user_banner__body__name= user.username
     span.user_banner__body__headline= user.header
     a.user_banner__body__email= user.email
-    button.btn.btn--secondary--outline Edit My Profile
+    a(href=`/users/${user.id}/edit`).btn.btn--secondary--outline.editProfBtn
+      button Edit My Profile

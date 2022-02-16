@@ -78,5 +78,12 @@
   border-bottom: 1px solid #b3b3b3;
 }
 .comment_preview > .media_body::before {
-  content: '\1F4AC'
+  content: "\1F4AC";
+}
+
+.editProfBtn {
+  width: 140px;
+  font-size: 10px;
+  padding: 0px 15px;
+  text-transform: capitalize;
 }

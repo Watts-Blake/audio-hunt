@@ -1,15 +1,15 @@
 // PACKAGE IMPORTS ******************************************************************
 var express = require("express");
 const bcrypt = require("bcryptjs");
-const csrf = require('csurf');
+const csrf = require("csurf");
 // const asyncHandler = require("express-async-handler");
 const { validationResult } = require("express-validator");
 
 // MODULE IMPORTS *******************************************************************
 const { loginUser, restoreUser, requireAuth, logoutUser } = require("../auth");
 const db = require("../db/models");
-const { signupValidators, loginValidators } = require('./utils/user-validator');
-const { asyncHandler, getTimeElapsed } = require('./utils/utils');
+const { signupValidators, loginValidators } = require("./utils/user-validator");
+const { asyncHandler, getTimeElapsed } = require("./utils/utils");
 // MIDDLEWARE ***********************************************************************
 var router = express.Router();
 
@@ -24,8 +24,8 @@ const csrfProtection = csrf({ cookie: true });
 // GET /users/login
 router.get("/login", csrfProtection, (req, res) => {
   res.render("login", {
-    title: 'Log in',
-    csrfToken: req.csrfToken()
+    title: "Log in",
+    csrfToken: req.csrfToken(),
   });
 });
 
@@ -39,23 +39,20 @@ router.post(
 
     const user = await db.User.findOne({ where: { email } });
 
-    let errors = []
+    let errors = [];
     const validatorErrors = validationResult(req);
     if (user !== null && validatorErrors.isEmpty()) {
+      loginUser(req, res, user);
 
-        loginUser(req, res, user);
-
-        return res.redirect("/");
-
+      return res.redirect("/");
     } else {
-      errors = validatorErrors.array().map((err) => err.msg)
-
+      errors = validatorErrors.array().map((err) => err.msg);
     }
 
     res.render("login", {
-    title: 'Log in',
-    errors,
-    csrfToken: req.csrfToken()
+      title: "Log in",
+      errors,
+      csrfToken: req.csrfToken(),
     });
   })
 );
@@ -67,13 +64,11 @@ router.post("/logout", (req, res) => {
   return res.redirect("/");
 });
 // GET /users/signup
-router.get("/signup",
-  csrfProtection,
-  (req, res) => {
+router.get("/signup", csrfProtection, (req, res) => {
   return res.render("signup", {
     user: {},
-    title: 'Sing up',
-    csrfToken: req.csrfToken()
+    title: "Sign up",
+    csrfToken: req.csrfToken(),
   });
 });
 // POST /users/signup
@@ -89,66 +84,62 @@ router.post(
     // console.log("************************", validatorErrors);
     const user = db.User.build({ username, email, bio });
 
-    if(validatorErrors.isEmpty()) {
-
+    if (validatorErrors.isEmpty()) {
       const hashedPassword = await bcrypt.hash(password, 12);
       user.hashedPassword = hashedPassword;
       await user.save();
 
       loginUser(req, res, user);
       return res.redirect("/");
-
     } else {
-			const errors = validatorErrors.array().map((err) => err.msg)
+      const errors = validatorErrors.array().map((err) => err.msg);
       console.log(user.bio);
       res.render("signup", {
         user,
-        title: 'Sign up',
+        title: "Sign up",
         errors,
         csrfToken: req.csrfToken(),
       });
     }
-
-
-
   })
 );
 
-
 // GET /users/:id
-router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
-  const id = await req.params.id * 1;
+router.get(
+  "/:id(\\d+)",
+  asyncHandler(async (req, res, next) => {
+    const id = (await req.params.id) * 1;
 
-  const user = await db.User.findByPk(id,  {
-    include: [
-    {
-      model: db.Comment,
-      include: db.Post,
-    },
-    {
-      model: db.Post,
-      include: [db.Song, db.Comment]
-    }],
-  });
-
-
-
-  if (user) {
-    getTimeElapsed(user);
-
-    const userPosts = user.Posts;
-    const userComments = user.Comments;
-
-    res.render(`user-profile`, {
-      user, userPosts, userComments,
+    const user = await db.User.findByPk(id, {
+      include: [
+        {
+          model: db.Comment,
+          include: db.Post,
+        },
+        {
+          model: db.Post,
+          include: [db.Song, db.Comment],
+        },
+      ],
     });
 
-  } else {
-    const error = new Error('We could not find this user!');
-    error.status = 404;
-    next(error);
-  }
+    if (user) {
+      getTimeElapsed(user);
 
-}));
+      const userPosts = user.Posts;
+      const userComments = user.Comments;
+
+      res.render(`user-profile`, {
+        user,
+        userPosts,
+        userComments,
+      });
+    } else {
+      const error = new Error("We could not find this user!");
+      error.status = 404;
+      next(error);
+    }
+  })
+);
 
 module.exports = router;
