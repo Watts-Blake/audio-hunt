@@ -17,7 +17,7 @@ block content
       div.form_group
         label(for="password") Password
         input.form_input(type="password" name="password" id="password" placeholder="password...")
-      button.btn.btn--primary--outline(type='submit') Submit
+      button.btn.btn--primary--outline.submit_button(type='submit') Submit
     form.hidden_form(action="/users/login" method="POST")
       button.btn.btn--primary--outline.btn--demo(type='submit') Demo User
       input(type="hidden" name="email" id="email" value='test@test.com')

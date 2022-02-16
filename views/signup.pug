@@ -29,11 +29,10 @@ block content
       input.form_checkbox_group__input(type="checkbox" required)
       div.form_checkbox_group__box
       span Are you 16 years of age or older?
-    button.btn.btn--primary--outline(type='submit') Sign Up
-  form(action="/users/login" method="POST")
-    div.form_group
-      input.form_input(type="hidden" name="email" id="email" value='test@test.com')
-    div.form_group
-      input.form_input(type="hidden" name="password" id="password" value='password')
+    button.btn.btn--primary--outline.submit_button(type='submit') Sign Up
+  .forms_container
+    form.hidden_form(action="/users/login" method="POST")
+      button.btn.btn--primary--outline.btn--demo(type='submit') Demo User
+      input(type="hidden" name="email" id="email" value='test@test.com')
+      input(type="hidden" name="password" id="password" value='password')
       input(type="hidden" name="_csrf" value=csrfToken)
-    button.btn.btn--primary--outline.btn--demo(type='submit') Demo User

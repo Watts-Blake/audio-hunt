@@ -2,7 +2,7 @@
   position: absolute;
   width: 200px;
   bottom: 0;
-  right: 0;
+  right: 16px;
 
   display: flex;
   justify-content: flex-end;
@@ -10,3 +10,10 @@
 .forms_container {
   position: relative;
 }
+
+.submit_button {
+  margin-top: 16px;
+  margin-left: 16px;
+}
+
+/* FORM ADJUSTMENTS */
