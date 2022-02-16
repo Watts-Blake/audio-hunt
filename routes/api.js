@@ -16,6 +16,7 @@ const csrfProtection = csrf({ cookie: true });
 
 // ROUTES *****************************************************************
 // PUT /users/:id
+// !!! PLEASE TEST THIS ROUTE !!!
 router.put(
   '/users/:id(\\d+)',
   requireAuth,
@@ -44,6 +45,7 @@ router.put(
 
 
 // DELETE /users/:id
+// !!! PLEASE TEST THIS ROUTE !!!
 router.delete(
   '/users/:id(\\d+)',
   requireAuth,

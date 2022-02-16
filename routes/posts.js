@@ -16,6 +16,7 @@ const csrfProtection = csrf({ cookie: true });
 
 // ROUTES *****************************************************************
 // GET posts/:id
+// !!! PLEASE TEST THIS ROUTE !!!
 router.get(
   '/:id(\\d+)',
   csrfProtection,

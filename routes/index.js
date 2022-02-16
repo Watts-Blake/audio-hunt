@@ -16,15 +16,15 @@ router.use(restoreUser);
 // ROUTER ***************************************************************************
 
 // GET /
+// !!! PLEASE TEST THIS ROUTE !!!
 router.get(
   "/",
   asyncHandler(async (req, res, next)  => {
     const posts = await db.Post.findAll({
-      include: [db.User, db.Comment]
+      include: [db.User, db.Comment, db.Song]
     });
 
-
-
+    res.render('index', { posts });
 
     // return res.render("index", {
     //   title: "Audio Hunt",
