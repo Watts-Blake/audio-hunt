@@ -11,5 +11,11 @@ const getTimeElapsed = (user) => {
   });
 }
 
+const getJoinedDate = (user) => {
+	
+	const fullDate = user.createdAt.toLocaleString('default', {year: 'numeric', month: 'short', day: 'numeric' })
 
-module.exports = { asyncHandler, getTimeElapsed }
+	return fullDate
+}
+
+module.exports = { asyncHandler, getTimeElapsed, getJoinedDate }
