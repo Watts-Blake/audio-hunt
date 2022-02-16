@@ -41,4 +41,23 @@ router.route("/:id(\\d+)/edit").get(
   })
 );
 
+router.route("/:id(\\d+)/edit/image").get(
+  csrfProtection,
+  asyncHandler(async (req, res, next) => {
+    const id = (await req.params.id) * 1;
+
+    const user = await db.User.findByPk(id);
+
+    if (user) {
+      res.render(`profile-image-edit`, {
+        user,
+      });
+    } else {
+      const error = new Error("We could not find this user!");
+      error.status = 404;
+      next(error);
+    }
+  })
+);
+
 module.exports = router;

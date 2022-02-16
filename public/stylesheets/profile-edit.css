@@ -29,14 +29,23 @@
   text-transform: none;
   height: 30px;
 }
-.email_user_group {
+.email_user_discard_group {
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   height: 277px;
 }
 
-.discard_changes {
+.container.email_user_group {
+  flex-direction: column;
+  height: 200px;
+}
+
+.edit_prof_format {
   height: 30px;
+}
+
+.discard_changes_btn {
+  margin-bottom: 0px;
 }
 
 .prof_edit_bot_group {
