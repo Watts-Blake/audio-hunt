@@ -131,7 +131,6 @@ header {
   margin-top: 2px;
 }
 
-
 /* MEDIA CARDS (POST CARDS ON THE HOME PAGE) *************************************/
 
 /*
@@ -262,4 +261,57 @@ header {
 /* shows check-mark image when checked */
 .form_checkbox_group__input:checked + .form_checkbox_group__box::after {
   transform: scale(1);
+}
+
+/* MODAL******************************************* */
+
+.modalDiv {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(12, 10, 10, 0.8);
+  backdrop-filter: blur(5px);
+}
+
+.modal {
+  margin: 0 auto;
+  height: 50%;
+  width: 50%;
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+  border-radius: 1em;
+  padding: 1em;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
+}
+
+.btn-container {
+  flex-direction: row;
+  gap: 20px;
+}
+
+.btn--red {
+  border-color: #900303;
+  color: #900303;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, margin-top 0.2s;
+}
+
+.btn--red:hover {
+  background: #900303;
+  border-color: #900303;
+  color: #ffffff;
+}
+
+.btn--red:active {
+  margin-top: 2px;
+  background: #900303;
+}
+.btn--red:active {
+  margin-top: 2px;
 }

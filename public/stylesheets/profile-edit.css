@@ -29,10 +29,25 @@
   text-transform: none;
   height: 30px;
 }
-.email_user_group {
+.email_user_discard_group {
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
+  height: 277px;
 }
+
+.container.email_user_group {
+  flex-direction: column;
+  height: 200px;
+}
+
+.edit_prof_format {
+  height: 30px;
+}
+
+.discard_changes_btn {
+  margin-bottom: 0px;
+}
+
 .prof_edit_bot_group {
   flex-direction: column;
   justify-content: space-around;
@@ -53,22 +68,22 @@
   width: 100%;
 }
 
-.deactivateProfBtn {
+.btn--red {
   border-color: #900303;
   color: #900303;
   transition: background 0.2s, color 0.2s, border-color 0.2s, margin-top 0.2s;
 }
 
-.deactivateProfBtn:hover {
+.btn--red:hover {
   background: #900303;
   border-color: #900303;
   color: #ffffff;
 }
 
-.deactivateProfBtn:active {
+.btn--red:active {
   margin-top: 2px;
   background: #900303;
 }
-.deactivateProfBtn:active {
+.btn--red:active {
   margin-top: 2px;
 }
