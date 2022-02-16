@@ -12,6 +12,8 @@ block content
             input.form_input(type='text', name='username' id="editUsername" value=user.username autofocus=true required)
             label(for='editEmail') Email
             input.form_input(type='text', name='email' id="editEmail" value=user.email required)
+            a(href=`/users/${user.id}`).btn.btn--secondary--outline.deactivateProfBtn.discard_changes
+              button Discard Changes
         .container.prof_edit_bot_group
           .form_group.container
             label(for='editHeader') Header

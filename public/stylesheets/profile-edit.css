@@ -32,7 +32,13 @@
 .email_user_group {
   flex-direction: column;
   justify-content: space-around;
+  height: 277px;
 }
+
+.discard_changes {
+  height: 30px;
+}
+
 .prof_edit_bot_group {
   flex-direction: column;
   justify-content: space-around;
