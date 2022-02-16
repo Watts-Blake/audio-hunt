@@ -61,7 +61,7 @@ header {
 .btn {
   margin: 0;
   padding: 0 1.5em;
-  height: 30px;
+  height: 40px;
 
   border: 2px solid;
   border-radius: 3em;
@@ -131,9 +131,6 @@ header {
   margin-top: 2px;
 }
 
-.btn--demo {
-  margin-bottom: 30px;
-}
 
 /* MEDIA CARDS (POST CARDS ON THE HOME PAGE) *************************************/
 

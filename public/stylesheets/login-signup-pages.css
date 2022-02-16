@@ -1,0 +1,12 @@
+.hidden_form {
+  position: absolute;
+  width: 200px;
+  bottom: 0;
+  right: 0;
+
+  display: flex;
+  justify-content: flex-end;
+}
+.forms_container {
+  position: relative;
+}
