@@ -1,0 +1,32 @@
+extends layout.pug
+
+block content
+  include includes/profile-banner.pug
+
+  div.main_body_titles.container
+    h2 Your Posts
+    h2 Your Comments
+  .main_body.container
+    .user_posts.container
+      each post in userPosts
+        a(href=`/posts/${post.id}`).media
+          img.media__img(src=post.Song.albumImgUrl)
+          .media__body
+            h3= post.title
+            span= post.shortDescription
+            .media__body__bottom
+              small= post.Song.artistName
+              small= post.Song.albumName
+          .comment_count.container
+            span= post.Comments.length
+    .user_comments_preview.container
+      each comment in userComments
+        a(href=`/`).comment_preview.media
+          .media_body
+            //- ::before - speech bubble
+            p= comment.content
+            small= comment.Post.title
+          .time_elapsed
+            span= comment.dataValues.timeElapsed
+            br
+            small ago

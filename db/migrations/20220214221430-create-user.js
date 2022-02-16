@@ -34,7 +34,7 @@ module.exports = {
       },
       profileImg: {
         type: Sequelize.STRING,
-        defaultValue: "../assets/images/profileImg/profilePic1",
+        defaultValue: "/assets/images/profileImg/profilePic2.jpg",
       },
       createdAt: {
         allowNull: false,
