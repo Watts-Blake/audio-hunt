@@ -14,7 +14,7 @@ block content
               input.form_input.edit_prof_format(type='text', name='username' id="editUsername" value=user.username autofocus=true required)
               label(for='editEmail') Email
               input.form_input.edit_prof_format(type='text', name='email' id="editEmail" value=user.email required)
-            a(href=`/users/${user.id}`).btn.btn--secondary--outline.deactivateProfBtn.discard_changes_btn.edit_prof_format
+            a(href=`/users/${user.id}`).btn.btn--secondary--outline.btn--red.discard_changes_btn.edit_prof_format
               button Discard Changes
         .container.prof_edit_bot_group
           .form_group.container
@@ -25,7 +25,7 @@ block content
           .form_group.container.confirm_deactivate_group
             a(href=`/users/${user.id}/edit`).btn.btn--primary--outline.confirmProfBtn.edit_prof_format
               button Confirm Changes
-            a.btn.btn--secondary--outline.deactivateProfBtn.edit_prof_format
+            a.btn.btn--secondary--outline.edit_prof_format#deactivateProfBtn.btn--red
               button(type='button') Deactivate Account
   include includes/modal-confirm-delete.pug
   script(src="/javascripts/profile-edit.js")
