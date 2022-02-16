@@ -2,37 +2,35 @@ extends layout.pug
 
 block content
   if errors
-    //- set styles for Errors
-    div(class='alert alert-danger')
-      p The following error(s) occurred:
+    .error_container
       ul
         each error in errors
-          li= error
+          li: small= error
   form(action='/users/signup' method='post')
     input(type="hidden" name="_csrf" value=csrfToken)
     .form_group
       label(for='username') Name
-      input.form_input(type='text', name='username' id="username" placeholder='User Name' value=user.username autofocus=true required)
+      input.form_input(type='text', name='username' id="username" placeholder='User Name' value=user.username autofocus=true )
     .form_group
       label(for='email') Email
-      input.form_input(type='email' name='email' id="email" value=user.email placeholder='Email' required)
+      input.form_input(type='email' name='email' id="email" value=user.email placeholder='Email' )
     .form_group
       label(for='bio') Bio
-      textarea.form_input(name='bio' id='bio' placeholder="Please enter a short bio here. But only if you'd like... ;)") #{user.bio}
+      textarea.form_input(name='bio' id='bio' placeholder="Please enter a short bio here. Very, very bad things could happen should you choose to not.") #{user.bio}
     .form_group
       label(for='password') Password
-      input.form_input(type='password', name='password' id="password" required )
+      input.form_input(type='password', name='password' id="password"  )
     .form_group
       label(for='confirmPassword') Confirm Password
-      input.form_input(type='password', name='confirmPassword' id="confirmPassword" required )
-    label.form_checkbox_group
-      input.form_checkbox_group__input(type="checkbox" required)
+      input.form_input(type='password', name='confirmPassword' id="confirmPassword"  )
+    label.form_checkbox_group(for="yearsOfAge")
+      input.form_checkbox_group__input(type="checkbox" name="yearsOfAge" id="yearsOfAge" )
       div.form_checkbox_group__box
       span Are you 16 years of age or older?
     button.btn.btn--primary--outline.submit_button(type='submit') Sign Up
   .forms_container
     form.hidden_form(action="/users/login" method="POST")
       button.btn.btn--primary--outline.btn--demo(type='submit') Demo User
-      input(type="hidden" name="email" value='test@test.com')
-      input(type="hidden" name="password" value='password')
-      input(type="hidden" name="_csrf" value=csrfToken)
+      input(type="hidden" value='test@test.com')
+      input(type="hidden" value='password')
+      input(type="hidden" value=csrfToken)

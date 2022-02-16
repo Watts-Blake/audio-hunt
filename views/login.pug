@@ -2,12 +2,10 @@ extends layout.pug
 
 block content
   if errors
-    //- set styles for Errors
-    div(class='alert alert-danger')
-      p The following error(s) occurred:
+    .error_container
       ul
         each error in errors
-          li= error
+          li: small= error
   .forms_container
     form.visible_form(action="/users/login" method="POST")
       input(type="hidden" name="_csrf" value=csrfToken)

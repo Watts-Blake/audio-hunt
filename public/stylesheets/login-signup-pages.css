@@ -16,4 +16,16 @@
   margin-left: 16px;
 }
 
-/* FORM ADJUSTMENTS */
+/* ERROR CONTAINERS */
+.error_container {
+  border-left: 2px solid rgb(197, 2, 2);
+  border-radius: 1em;
+
+  padding: 1em;
+  margin: 0 1em;
+
+  color: #FFFFFF;
+}
+.error_container li {
+  padding: .1em;
+}
