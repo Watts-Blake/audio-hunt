@@ -9,7 +9,7 @@ const { validationResult } = require("express-validator");
 const { loginUser, restoreUser, requireAuth, logoutUser } = require("../auth");
 const db = require("../db/models");
 const { signupValidators, loginValidators } = require('./utils/user-validator');
-const { asyncHandler, getTimeElapsed } = require('./utils/utils');
+const { asyncHandler, getTimeElapsed, getJoinedDate } = require('./utils/utils');
 // MIDDLEWARE ***********************************************************************
 var router = express.Router();
 
@@ -100,7 +100,6 @@ router.post(
 
     } else {
 			const errors = validatorErrors.array().map((err) => err.msg)
-      console.log(user.bio);
       res.render("signup", {
         user,
         title: 'Sign up',
@@ -135,12 +134,13 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
 
   if (user) {
     getTimeElapsed(user);
+    const date = getJoinedDate(user);
 
     const userPosts = user.Posts;
     const userComments = user.Comments;
 
     res.render(`user-profile`, {
-      user, userPosts, userComments,
+      user, userPosts, userComments, date
     });
 
   } else {
