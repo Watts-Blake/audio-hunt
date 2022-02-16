@@ -12,10 +12,7 @@ const getTimeElapsed = (user) => {
 }
 
 const getJoinedDate = (user) => {
-	// console.log(user.createdAt)
-	// const month = user.createdAt.getMonth();
-	// const date = user.createdAt.getDay();
-	// const year = user.createdAt.getYear();
+	
 	const fullDate = user.createdAt.toLocaleString('default', {year: 'numeric', month: 'short', day: 'numeric' })
 
 	return fullDate
