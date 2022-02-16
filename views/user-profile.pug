@@ -8,23 +8,25 @@ block content
     h2 Your Comments
   .main_body.container
     .user_posts.container
-      .media
-        img.media__img(src="/bruh.jpg")
-        .media__body
-          h3 Bruh
-          span Bruh
-          .media__body__bottom
-            small artist name
-            small album name
-        .comment_count.container
-          span 1000
+      each post in userPosts
+        a(href=`/posts/${post.id}`).media
+          img.media__img(src=post.Song.albumImgUrl)
+          .media__body
+            h3= post.title
+            span= post.shortDescription
+            .media__body__bottom
+              small= post.Song.artistName
+              small= post.Song.albumName
+          .comment_count.container
+            span= post.Comments.length
     .user_comments_preview.container
-      .comment_preview.media
-        .media_body
-          //- ::before for speech bubble
-          p this is a comment
-          small on "This Post"
-        .time_elapsed
-          span 1d
-          br
-          small ago
+      each comment in userComments
+        a(href=`/`).comment_preview.media
+          .media_body
+            //- ::before - speech bubble
+            p= comment.content
+            small= comment.Post.title
+          .time_elapsed
+            span= comment.dataValues.timeElapsed
+            br
+            small ago

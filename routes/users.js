@@ -9,7 +9,7 @@ const { validationResult } = require("express-validator");
 const { loginUser, restoreUser, requireAuth, logoutUser } = require("../auth");
 const db = require("../db/models");
 const { signupValidators, loginValidators } = require('./utils/user-validator');
-const { asyncHandler } = require('./utils/utils');
+const { asyncHandler, getTimeElapsed } = require('./utils/utils');
 // MIDDLEWARE ***********************************************************************
 var router = express.Router();
 
@@ -120,11 +120,29 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
   const id = await req.params.id * 1;
 
   const user = await db.User.findByPk(id,  {
-    include: [db.Post, db.Comment],
+    include: [
+    {
+      model: db.Comment,
+      include: db.Post,
+    },
+    {
+      model: db.Post,
+      include: [db.Song, db.Comment]
+    }],
   });
 
-  if(user) {
-    res.render(`user-profile`, { user });
+
+
+  if (user) {
+    getTimeElapsed(user);
+
+    const userPosts = user.Posts;
+    const userComments = user.Comments;
+
+    res.render(`user-profile`, {
+      user, userPosts, userComments,
+    });
+
   } else {
     const error = new Error('We could not find this user!');
     error.status = 404;

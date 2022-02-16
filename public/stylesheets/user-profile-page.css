@@ -52,10 +52,12 @@
   padding: 10px 0;
 
   align-items: flex-start;
+  justify-content: space-between;
 }
 .user_posts {
   width: 70%;
   min-height: 100px;
+  justify-content: flex-start;
 }
 .user_comments_preview {
   width: 30%;
@@ -66,9 +68,9 @@
 
 /* COMMENT PREVIEWS *******************************************/
 .user_comments_preview {
-  border: 2px solid #FFFFFF;
+  border: 2px solid #535353;
   border-radius: 1em;
-  min-height: 150px;
+  min-height: 800px;
 }
 .comment_preview {
   height: 85px;
