@@ -17,7 +17,7 @@ const csrfProtection = csrf({ cookie: true });
 // ROUTES *****************************************************************
 // PUT /users/:id
 router.put(
-  '/users/:id',
+  '/users/:id(\\d+)',
   requireAuth,
   csrfProtection,
   signupValidators,
@@ -45,7 +45,7 @@ router.put(
 
 // DELETE /users/:id
 router.delete(
-  '/users/:id',
+  '/users/:id(\\d+)',
   requireAuth,
   asyncHandler(async (req, res, next) => {
     const userId = req.params.id * 1;

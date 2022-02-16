@@ -4,6 +4,8 @@ const bcrypt = require("bcryptjs");
 // const asyncHandler = require('express-async-handler');
 // MODULE IMPORTS *******************************************************************
 const { loginUser, restoreUser, requireAuth, logoutUser } = require("../auth");
+const { asyncHandler, getTimeElapsed, getJoinedDate } = require('./utils/utils');
+
 const db = require("../db/models");
 
 // MIDDLEWARE ***********************************************************************
@@ -14,13 +16,22 @@ router.use(restoreUser);
 // ROUTER ***************************************************************************
 
 // GET /
-router.get("/", function (req, res, next) {
-  
-  return res.render("index", {
-    title: "Audio Hunt",
-    authenticated: res.locals.authenticated,
-  });
-});
+router.get(
+  "/",
+  asyncHandler(async (req, res, next)  => {
+    const posts = await db.Post.findAll({
+      include: [db.User, db.Comment]
+    });
+
+
+
+
+    // return res.render("index", {
+    //   title: "Audio Hunt",
+    //   authenticated: res.locals.authenticated,
+    // });
+  })
+)
 
 // GET /random
 router.get("/random", requireAuth, (req, res) => {
