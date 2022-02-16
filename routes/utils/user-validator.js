@@ -5,33 +5,33 @@ const db = require("../../db/models");
 const signupValidators = [
   check('username')
     .exists({ checkFalsy: true })
-    .withMessage('Please provide a value for Last Name')
+    .withMessage('Please provide a name')
     .isLength({ max: 50 })
-    .withMessage('Last Name must not be more than 50 characters long'),
+    .withMessage('Name must be shorter than 50 characters. Sorry...'),
   check('email')
 		.exists({ checkFalsy: true })
-		.withMessage('Please provide a value for Email Address')
+		.withMessage('Please provide an email (we promise not to blow up your inbox)')
 		.isLength({ max: 255 })
-		.withMessage('Email Address must not be more than 255 characters long')
+		.withMessage('Email must be shorter than 255 characters...')
 		.isEmail()
-		.withMessage('Email Address is not a valid email')
+		.withMessage('The email address you entered is not a valid email. Not sure what you were doing there...')
 		.custom((value) => {
 			return db.User.findOne({ where: { email: value } })
 				.then((user) => {
 					if (user) {
-						return Promise.reject('The provided Email Address is already in use by another account');
+						return Promise.reject('This email is already in use by another account sus 😳');
 					}
 				});
 		}),
 	check('password')
     .exists({ checkFalsy: true })
-    .withMessage('Please provide a value for Password'),
+    .withMessage('Please provide a password'),
 	check('confirmPassword')
 		.exists({ checkFalsy: true })
-		.withMessage('Please provide a value for Confirm Password')
+		.withMessage('Please confirm your password')
 		.custom((value, { req }) => {
 			if (value !== req.body.password) {
-				throw new Error('Confirm Password does not match Password');
+				throw new Error('Password confirmation does not match... 🙂');
 			}
 			return true;
 		})
@@ -65,7 +65,7 @@ const loginValidators = [
       return true;
     })
 ];
-	
+
 
 
 module.exports = {
