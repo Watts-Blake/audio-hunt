@@ -93,7 +93,6 @@ router.post(
       return res.redirect("/");
     } else {
       const errors = validatorErrors.array().map((err) => err.msg);
-      console.log(user.bio);
       res.render("signup", {
         user,
         title: "Sign up",
