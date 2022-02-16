@@ -50,6 +50,11 @@ header {
   align-items: center;
 }
 
+.hidden{
+  display: none;
+  visibility: hidden;
+}
+
 /* BUTTONS *********************************************/
 
 /* button structure */
@@ -124,6 +129,10 @@ header {
 }
 .btn--secondary:active {
   margin-top: 2px;
+}
+
+.btn--demo {
+  margin-bottom: 30px;
 }
 
 /* MEDIA CARDS (POST CARDS ON THE HOME PAGE) *************************************/

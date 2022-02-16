@@ -15,6 +15,7 @@ router.use(restoreUser);
 
 // GET /
 router.get("/", function (req, res, next) {
+  
   return res.render("index", {
     title: "Audio Hunt",
     authenticated: res.locals.authenticated,

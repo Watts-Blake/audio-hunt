@@ -11,7 +11,7 @@ html(lang="en")
     header.container.sp_between
       div.topLeftNav.container
         div
-          a(href="")
+          a(href="/")
             div.logoNav
         div.searchBarNav
           div.searchIconNav
@@ -21,9 +21,9 @@ html(lang="en")
             input(type="text" name="searchBar" placeHolder='Search Audio Hunt')
       nav.topCenterNav.container
         a.homeNav(href="/") Home
-        a.createAPostNav(href="") Create
-        a.songPostsNav(href="")  Collections
-        a.aboutUsNav(href="") About
+        a.createAPostNav(href="/") Create
+        a.songPostsNav.hidden(href="/")  Collections
+        a.aboutUsNav(href="/") About
       div.topRightNav.container
         div.login_signNav.container
           if authenticated
@@ -32,10 +32,10 @@ html(lang="en")
           else
             a.loginNav.btn.btn--secondary--outline(href="/users/login") Login
             a.signUpNav.btn.btn--primary--outline(href="/users/signup") Sign Up
-        div.profileNav
-          if authenticated
-            a.profPicNav(href="")
-              img(src="", alt="ProfPic")
+        if authenticated
+          div.profileNav
+            a.profPicNav(href=`/users/${user.id}`)
+              img(src=user.profileImg, alt="ProfPic")
 
     main.main.content
       block content

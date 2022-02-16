@@ -1,6 +1,6 @@
 .logoNav {
-  width: 35px;
-  height: 35px;
+  width: 46px;
+  height: 46px;
   background-image: url("../assets/images/logo.png");
   background-size: contain;
   background-repeat: no-repeat;
@@ -61,6 +61,21 @@ header,
 .signUpNav {
   min-width: 109px;
   padding: 0 1.3em;
+}
+
+.topRightNav{
+  justify-content: right;
+}
+
+.profileNav{
+  width: 46px;
+  margin-right: 10px;
+}
+
+.profPicNav > img{
+  border-radius: 50%;
+  max-height: 46px;
+
 }
 
 /*
