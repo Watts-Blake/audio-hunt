@@ -150,7 +150,7 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
       const error = new Error("We could not find this user!");
       error.status = 404;
       next(error);
-    }
+    }}
   })
 );
 
