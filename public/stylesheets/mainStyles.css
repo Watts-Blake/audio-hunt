@@ -263,3 +263,37 @@ header {
 .form_checkbox_group__input:checked + .form_checkbox_group__box::after {
   transform: scale(1);
 }
+
+/* MODAL******************************************* */
+
+.modalDiv{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(12, 10, 10, 0.8);
+  backdrop-filter: blur(5px);
+
+}
+
+.modal {
+  margin: 0 auto; 
+  height: 50%;
+  width: 50%;
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+  border-radius: 1em;
+  padding: 1em;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
+}
+
+.btn-container {
+  flex-direction: row;
+  gap: 20px;
+}

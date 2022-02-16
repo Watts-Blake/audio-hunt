@@ -21,5 +21,7 @@ block content
           .form_group.container.confirm_deactivate_group
             a(href=`/users/${user.id}/edit`).btn.btn--primary--outline.confirmProfBtn
               button Confirm Changes
-            a(href=`/users/${user.id}/delete`).btn.btn--secondary--outline.deactivateProfBtn
-              button Deactivate Account
+            a.btn.btn--secondary--outline.deactivateProfBtn
+              button(type='button') Deactivate Account
+  include includes/modal-confirm-delete.pug
+  script(src="/javascripts/profile-edit.js")
