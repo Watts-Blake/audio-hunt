@@ -135,23 +135,12 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
 
     });
 
-    if (user) {
-      getTimeElapsed(user);
-
-      const userPosts = user.Posts;
-      const userComments = user.Comments;
-
-      res.render(`user-profile`, {
-        user,
-        userPosts,
-        userComments,
-      });
-    } else {
-      const error = new Error("We could not find this user!");
-      error.status = 404;
-      next(error);
-    }}
-  })
+  } else {
+   const error = new Error("We could not find this user!");
+   error.status = 404;
+   next(error);
+  }
+})
 );
 
 module.exports = router;
