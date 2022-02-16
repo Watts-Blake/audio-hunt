@@ -23,7 +23,6 @@
   border-radius: 100%;
 
   object-fit: contain;
-
 }
 .user_banner__body {
   height: 100%;
@@ -33,6 +32,9 @@
   flex-direction: column;
   justify-content: space-around;
 }
+.user_banner__body__name {
+  font-size: 22px;
+}
 .user_banner__body > button {
   width: 14em;
   font-size: 10px;
@@ -41,8 +43,8 @@
 /* BODY SKELETON **********************************************/
 .main_body_titles {
   justify-content: space-between;
-  width: 75%;
-  margin: 0 auto;
+  width: 73%;
+  margin: 15px auto;
 }
 
 .main_body {
