@@ -10,6 +10,7 @@ const session = require("express-session");
 const store = require("connect-pg-simple");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+const apiRouter = require('./routes/api');
 //--------------------------test router---------------------------DELETE
 const test = require("./routes/test");
 //--------------------------test router---------------------------DELETE
@@ -51,6 +52,7 @@ app.use("/users", test);
 //------------------------------------------Testing Routers----------------DELETE
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use(apiRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
