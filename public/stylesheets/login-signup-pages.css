@@ -1,0 +1,31 @@
+.hidden_form {
+  position: absolute;
+  width: 200px;
+  bottom: 0;
+  right: 16px;
+
+  display: flex;
+  justify-content: flex-end;
+}
+.forms_container {
+  position: relative;
+}
+
+.submit_button {
+  margin-top: 16px;
+  margin-left: 16px;
+}
+
+/* ERROR CONTAINERS */
+.error_container {
+  border-left: 2px solid rgb(197, 2, 2);
+  border-radius: 1em;
+
+  padding: 1em;
+  margin: 0 1em;
+
+  color: #FFFFFF;
+}
+.error_container li {
+  padding: .1em;
+}
