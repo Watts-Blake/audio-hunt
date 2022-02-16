@@ -50,7 +50,7 @@ header {
   align-items: center;
 }
 
-.hidden{
+.hidden {
   display: none;
   visibility: hidden;
 }
@@ -159,7 +159,7 @@ header {
   justify-content: space-between;
   align-items: center;
 
-  transition: border-bottom .5s, background-color .25s, border-radius .25s;
+  transition: border-bottom 0.5s, background-color 0.25s, border-radius 0.25s;
 }
 .media:hover {
   border-radius: 1em;
@@ -190,13 +190,13 @@ header {
   min-height: 75px;
 
   margin: 1em;
-  padding: .2em;
+  padding: 0.2em;
 
   flex-direction: column;
   justify-content: space-evenly;
 }
 .comment_count::before {
-  content: '\1F4AC';
+  content: "\1F4AC";
 }
 .media__body__bottom {
   width: 40%;

@@ -6,4 +6,6 @@
     span.user_banner__body__headline= user.header
     span.user_banner__body__joinedOn 🎉Joined date : #{date}
     a.user_banner__body__email= user.email
-    button.btn.btn--secondary--outline Edit My Profile
+    a(href=`/users/${user.id}/edit`).btn.btn--secondary--outline
+      button Edit My Profile
+
