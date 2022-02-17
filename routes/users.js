@@ -152,6 +152,7 @@ router.get(
         userId: res.locals.user.id,
       }
       res.render(`user-profile`, {
+        title: 'please fix this',
         user,
         userPosts,
         userComments,

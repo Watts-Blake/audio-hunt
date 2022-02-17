@@ -107,9 +107,16 @@ const postValidators = [
     .withMessage('Your short description must be shorter than 255 characters...')
 ];
 
+const commentValidators = [
+  check('content')
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide content for your comment')
+];
+
 module.exports = {
   signupValidators,
   loginValidators,
   editProfileValidators,
   postValidators,
+  commentValidators,
 };

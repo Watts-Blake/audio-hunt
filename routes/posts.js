@@ -7,7 +7,7 @@ const { validationResult } = require("express-validator");
 const { loginUser, restoreUser, requireAuth, logoutUser } = require("../auth");
 const db = require("../db/models");
 const { postValidators } = require('./utils/validations');
-const { asyncHandler, getTimeElapsed, getJoinedDate } = require('./utils/utils');
+const { asyncHandler, getTimeElapsed, getPostTimeElapsed } = require('./utils/utils');
 // MIDDLEWARE ***********************************************************************
 var router = express.Router();
 
@@ -15,27 +15,36 @@ router.use(restoreUser);
 const csrfProtection = csrf({ cookie: true });
 
 // ROUTES *****************************************************************
-// GET posts/:id
-// !!! PLEASE TEST THIS ROUTE !!!
+// GET /posts/:id
 router.get(
-  '/:id(\\d+)',
-  csrfProtection,
+  '/:id(\\d)',
   asyncHandler(async (req, res, next) => {
-    const postId = req.params.id * 1;
+    const id = (await req.params.id) * 1;
 
-    const post = await db.Post.findByPk(postId, {
-      include: [db.Comment, db.User, db.Song]
+    const post = await db.Post.findByPk(id, {
+      include: [ db.Song, db.User, db.Comment ],
     });
 
     if (post) {
-      res.render('post', { post, csrfToken: req.csrfToken() });
+      const timeElapsed = getPostTimeElapsed(post);
+
+      const loggedInUser = {
+        profImg: res.locals.user.profileImg,
+        postId: res.locals.user.id,
+      }
+      res.render('song-post', {
+        post,
+        loggedInUser,
+        timeElapsed,
+      });
     } else {
-      const error = new Error("We could not find the post you were looking for! Sorry!");
+      const error = new Error("We could not find this post!");
       error.status = 404;
       next(error);
     }
-  }
-  ));
+  })
+);
+
 
 // GET posts/new
 // !!! PLEASE TEST THIS ROUTE !!!
@@ -88,8 +97,6 @@ router.post('/new',
     }
   })
 );
-
-// GET /posts/:id
 
 
 

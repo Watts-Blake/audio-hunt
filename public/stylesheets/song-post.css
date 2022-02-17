@@ -1,0 +1,27 @@
+.post_header {
+  /* height: 300px; */
+  width: 80%;
+  margin: 0 auto;
+}
+.media__body.post_body {
+  margin: 20px;
+}
+.post_image {
+  width: 175px;
+  border: 2px solid #b3b3b3;
+  border-radius: 1em;
+}
+.user_banner.container.media {
+  padding: 2em;
+
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+/* COMMENTS SECTION */
+#post_body_container {
+  flex-direction: column;
+}
+#comments {
+  width: 100%;
+}
