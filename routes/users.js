@@ -70,7 +70,7 @@ router.post(
 // POST /users/logout
 router.post("/logout", (req, res) => {
   logoutUser(req, res);
-req.session.save(()=> {res.redirect('/')})
+  req.session.save(()=> res.redirect('/'))
   return
 });
 // GET /users/signup
