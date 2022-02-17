@@ -17,22 +17,19 @@ const app = require("../app");
 var router = express.Router();
 
 router.use(restoreUser);
-// router.use((req, res, next) => {
-//   console.log(res.locals.user.id);
-//   next();
-// });
+
 const csrfProtection = csrf({ cookie: true });
 
 // ROUTES *****************************************************************
 // PUT /users/:id
-router.use((req, res, next) => {
-  console.log('id',res.locals.user.id);
-  next();
-});
+// router.use((req, res, next) => {
+//   console.log('id',res.locals.user.id);
+//   next();
+// });
 router.put(
   "/users/:id(\\d+)",
   requireAuth,
-  // csrfProtection,
+  csrfProtection,
   editProfileValidators,
   asyncHandler(async (req, res, next) => {
     console.log("fuck yo bishhhhhhh");

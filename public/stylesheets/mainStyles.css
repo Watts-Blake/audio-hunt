@@ -142,7 +142,7 @@ header {
 */
 
 .media {
-  width: 100%;
+  /* width: 100%; */
   height: 150px;
 
   box-sizing: content-box;
@@ -157,6 +157,7 @@ header {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  justify-items: stretch;
 
   transition: border-bottom 0.5s, background-color 0.25s, border-radius 0.25s;
 }

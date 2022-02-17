@@ -25,12 +25,13 @@ const deleteUserFetch = async (userId) => {
 
 const updateUserFetch = async (userId, body) => {
   const cookies = document.cookie;
+  console.log(cookies);
   try {
     const res = await fetch(`/api/users/${userId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "Cookie": cookies,
+        // "Cookie": cookies,
       },
       body: JSON.stringify(body),
     });
@@ -43,9 +44,10 @@ const updateUserFetch = async (userId, body) => {
     const confirmMessage = await res.json();
     console.log('we guuuuuuuuuuuuuuuuuuuuuuuuuuuuccci')
     console.log(confirmMessage);
-    window.location.href = "/";
+    window.location.href = `/users/${userId}`;
   } catch (error) {
     if (error.status >= 400 && error.status <= 600) {
+      console.log('bruh');
       const errorObj = await error.json();
       console.log(errorObj);
 
@@ -110,7 +112,8 @@ document.addEventListener("DOMContentLoaded", (e) => {
     const email = formData.get("email");
     const header = formData.get("header");
     const bio = formData.get("editBio");
-    const body = { username, email, header, bio };
+    const _csrf = formData.get("_csrf")
+    const body = { username, email, header, bio, _csrf };
 
     e.preventDefault();
     updateUserFetch(userId, body);
