@@ -53,7 +53,8 @@ router.post(
     if (user !== null && validatorErrors.isEmpty()) {
       loginUser(req, res, user);
 
-      return res.redirect("/");
+      req.session.save(()=> {res.redirect('/')})
+      return
     } else {
       errors = validatorErrors.array().map((err) => err.msg);
     }
@@ -69,8 +70,8 @@ router.post(
 // POST /users/logout
 router.post("/logout", (req, res) => {
   logoutUser(req, res);
-
-  return res.redirect("/");
+req.session.save(()=> {res.redirect('/')})
+  return
 });
 // GET /users/signup
 router.get("/signup", csrfProtection, (req, res) => {
@@ -99,7 +100,8 @@ router.post(
       await user.save();
 
       loginUser(req, res, user);
-      return res.redirect("/");
+      req.session.save(()=> {res.redirect('/')})
+      return
     } else {
       const errors = validatorErrors.array().map((err) => err.msg);
       res.render("signup", {
