@@ -18,9 +18,10 @@ block content
       span= post.Comments.length
   .main_body.container#post_body_container
     input(type="text" placeholder="What do you think?")
-    button
+    button Send
     each comment in post.Comments
       //- if a user's profile is deactivated, don't show their comment
       .media#comments
         p= comment.content
-        span= comment.
+        span= comment.User.username
+        span= comment.dataValues.timeElapsed

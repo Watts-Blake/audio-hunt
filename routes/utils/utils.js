@@ -1,7 +1,7 @@
 const asyncHandler = (handler) => (req, res, next) => handler(req, res, next).catch(next);
 
-const getTimeElapsed = (user) => {
-  return user.Comments.map(comment => {
+const getTimeElapsed = (tableEntry) => {
+  return tableEntry.Comments.map(comment => {
     const ms = new Date() - comment.createdAt;
     const hoursAgo = Math.floor(ms / 3600000);
     const daysAgo = Math.floor(hoursAgo / 24);

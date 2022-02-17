@@ -22,11 +22,16 @@ router.get(
     const id = (await req.params.id) * 1;
 
     const post = await db.Post.findByPk(id, {
-      include: [ db.Song, db.User, db.Comment ],
+      include: [db.Song, db.User, {
+        model: db.Comment,
+        include: db.User,
+      }],
     });
 
     if (post) {
       const timeElapsed = getPostTimeElapsed(post);
+      getTimeElapsed(post);
+      console.log(post.Comments);
 
       const loggedInUser = {
         profImg: res.locals.user.profileImg,
