@@ -35,7 +35,7 @@ app.use(
   session({
     name: "Audio Hunt Session Cookie",
     secret: sessionSecret,
-    storeSession,
+    store: storeSession,
     saveUninitialized: false,
     resave: false,
   })
@@ -44,13 +44,8 @@ app.use(
 // create Session table if it doesn't already exist
 // store.sync();
 //------------------------------------------Testing Routers----------------DELETE
-//
-app.use((req, res, next) => {
-  console.log("this is path", req.path);
-  next();
-});
+
 app.use("/api", apiRoute);
-app.use("/users", test);
 
 //
 //------------------------------------------Testing Routers----------------DELETE
