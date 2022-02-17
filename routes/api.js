@@ -6,7 +6,7 @@ const { validationResult } = require("express-validator");
 // MODULE IMPORTS *******************************************************************
 const { loginUser, restoreUser, requireAuth, logoutUser } = require("../auth");
 const db = require("../db/models");
-const { signupValidators, loginValidators } = require("./utils/validations");
+const { signupValidators, loginValidators, editProfileValidators } = require("./utils/validations");
 const {
   asyncHandler,
   getTimeElapsed,
@@ -33,7 +33,7 @@ router.put(
   "/users/:id(\\d+)",
   requireAuth,
   // csrfProtection,
-  signupValidators,
+  editProfileValidators,
   asyncHandler(async (req, res, next) => {
     console.log("fuck yo bishhhhhhh");
     const { username, header, email, bio, profileImg } = req.body;
@@ -57,16 +57,9 @@ router.put(
       await user.update({ username, header, email, bio, profileImg });
       return res.json("Update successful.");
     } else {
-      // are we going to have auth trouble here??
       const errors = validationErrors.array().map((e) => e.msg);
       console.log('if validations are not empty')
       res.status(400).json(errors)
-      // res.render("profile-edit", {
-      //   title: "Edit Your Profile",
-      //   user,
-      //   errors,
-      //   csrfToken: req.csrfToken(),
-      // });
     }
   })
 );

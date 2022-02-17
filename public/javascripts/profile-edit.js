@@ -36,7 +36,7 @@ const updateUserFetch = async (userId, body) => {
     });
 
     if (!res.ok) {
-      console.log('you suck');
+      console.log('wswfdgbcgn');
       throw res;
     }
     console.log(res)
@@ -44,8 +44,37 @@ const updateUserFetch = async (userId, body) => {
     console.log('we guuuuuuuuuuuuuuuuuuuuuuuuuuuuccci')
     console.log(confirmMessage);
     window.location.href = "/";
-  } catch (err) {
-    // console.error(err);
+  } catch (error) {
+    if (error.status >= 400 && error.status <= 600) {
+      const errorObj = await error.json();
+      console.log(errorObj);
+
+      const errorsContainer = document.querySelector('.error-container');
+      let errorsHTML = [
+        `
+        <div class="alert alert-danger">
+            Something went wrong. Please try again.
+        </div>
+      `,
+      ];
+
+      // console.log(errors);
+
+      if (errorObj && Array.isArray(errorObj)) {
+        errorsHTML = errorObj.map(message => {
+          return `
+          <div class="alert alert-danger">
+              ${message}
+          </div>
+        `
+        });
+      }
+
+      errorsContainer.innerHTML = errorsHTML.join('');
+    } else {
+      alert('Something went wrong. Please check your internet connection and try again.')
+    }
+
   }
 };
 

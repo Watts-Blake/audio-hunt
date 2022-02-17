@@ -49,9 +49,3 @@ module.exports = {
   requireAuth,
   restoreUser,
 };
-
-
-app.use((req, res, next) => {
-  console.log(res.locals.authenticated);
-  next();
-});

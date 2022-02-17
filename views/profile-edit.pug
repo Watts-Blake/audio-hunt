@@ -1,5 +1,6 @@
 extends layout.pug
 block content
+  .error-container
   form.profile_edit_container.user_banner.container#editForm(action=`/users/${user.id}/edit`, method="post")
     input(type="hidden" name="_csrf" value=csrfToken)
     .user_banner__body.container.profile_edit
@@ -19,9 +20,9 @@ block content
         .container.prof_edit_bot_group
           .form_group.container
             label(for='editHeader') Header
-            input.form_input.edit_prof_format(type='text', name='header' id="editHeader" value=user.header required)
+            input.form_input.edit_prof_format(type='text', name='header' id="editHeader" value=user.header)
             label(for='editBio') Bio
-            textarea.form_input(cols="60", rows="5"  id="editBio" name='editBio' required) #{user.bio}
+            textarea.form_input(cols="60", rows="5"  id="editBio" name='editBio') #{user.bio}
           .form_group.container.confirm_deactivate_group
             a.btn.btn--primary--outline.confirmProfBtn.edit_prof_format#confirmChangesBtn
               button Confirm Changes
