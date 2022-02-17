@@ -8,7 +8,7 @@ const { validationResult } = require("express-validator");
 // MODULE IMPORTS *******************************************************************
 const { loginUser, restoreUser, requireAuth, logoutUser } = require("../auth");
 const db = require("../db/models");
-const { signupValidators, loginValidators } = require("./utils/user-validator");
+const { signupValidators, loginValidators } = require("./utils/validations");
 const {
   asyncHandler,
   getTimeElapsed,
