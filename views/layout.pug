@@ -35,7 +35,10 @@ html(lang="en")
         if authenticated
           div.profileNav
             a.profPicNav(href=`/users/${locals.user.id}`)
-              img(src=locals.user.profileImg, alt="ProfPic")
+              if loggedInUserProfImg
+                img(src=loggedInUserProfImg, alt="ProfPic")
+              else
+                img(src=locals.user.profileImg, alt="ProfPic")
 
 
     main.main.content

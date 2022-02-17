@@ -1,4 +1,3 @@
-const app = require("./app");
 const db = require("./db/models");
 
 const loginUser = (req, res, user) => {
@@ -26,11 +25,11 @@ const restoreUser = async (req, res, next) => {
     const { userId } = req.session.auth;
 
     try {
-      const user = await db.User.findByPk(userId);
+      const loggedInUser = await db.User.findByPk(userId);
 
-      if (user) {
+      if (loggedInUser) {
         res.locals.authenticated = true;
-        res.locals.user = user;
+        res.locals.user = loggedInUser;
         return next();
       }
     } catch (error) {

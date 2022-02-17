@@ -13,8 +13,7 @@ const usersRouter = require("./routes/users");
 const postsRouter = require("./routes/posts");
 const apiRouter = require('./routes/api');
 //--------------------------test router---------------------------DELETE
-const test = require("./routes/test");
-const apiRoute = require("./routes/api");
+
 //--------------------------test router---------------------------DELETE
 const { sessionSecret } = require("./config");
 
@@ -47,9 +46,7 @@ app.use(
 store.sync();
 //------------------------------------------Testing Routers----------------DELETE
 
-app.use("/api", apiRoute);
 
-//
 //------------------------------------------Testing Routers----------------DELETE
 app.use("/", indexRouter);
 app.use("/users", usersRouter);

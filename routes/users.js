@@ -114,8 +114,7 @@ router.post(
   })
 );
 
-// GET /users/:id
-
+// GET /users/:id *** PROFILE PAGE
 router.get(
   "/:id(\\d+)",
   asyncHandler(async (req, res, next) => {
@@ -134,6 +133,13 @@ router.get(
       ],
     });
 
+
+
+    let isAuthorized = true;
+    if (req.session.auth.userId !== id) {
+      isAuthorized = false;
+    }
+
     if (user) {
       getTimeElapsed(user);
       const date = getJoinedDate(user);
@@ -141,11 +147,14 @@ router.get(
       const userPosts = user.Posts;
       const userComments = user.Comments;
 
+      const loggedInUserProfImg = res.locals.user.profileImg
       res.render(`user-profile`, {
         user,
         userPosts,
         userComments,
         date,
+        isAuthorized,
+        loggedInUserProfImg,
       });
     } else {
       const error = new Error("We could not find this user!");
@@ -155,12 +164,21 @@ router.get(
   })
 );
 
+// GET /users/:id/edit *** PROFILE EDIT PAGE
 router.route("/:id(\\d+)/edit").get(
   csrfProtection,
+  requireAuth,
   asyncHandler(async (req, res, next) => {
     const id = (await req.params.id) * 1;
 
     const user = await db.User.findByPk(id);
+
+    if (req.session.auth.userId !== id) {
+      const error = new Error('Sneaky sneaky :)))) This is not your account silly boy :))))')
+      error.status = 403;
+      return next(error);
+      // req.session.save(()=> {res.redirect('/')})
+    }
 
     if (user) {
       res.render(`profile-edit`, {
