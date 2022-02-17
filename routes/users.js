@@ -147,14 +147,17 @@ router.get(
       const userPosts = user.Posts;
       const userComments = user.Comments;
 
-      const loggedInUserProfImg = res.locals.user.profileImg
+      const loggedInUser = {
+        profImg: res.locals.user.profileImg,
+        userId: res.locals.user.id,
+      }
       res.render(`user-profile`, {
         user,
         userPosts,
         userComments,
         date,
         isAuthorized,
-        loggedInUserProfImg,
+        loggedInUser,
       });
     } else {
       const error = new Error("We could not find this user!");

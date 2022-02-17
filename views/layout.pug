@@ -34,10 +34,11 @@ html(lang="en")
             a.signUpNav.btn.btn--primary--outline(href="/users/signup") Sign Up
         if authenticated
           div.profileNav
-            a.profPicNav(href=`/users/${locals.user.id}`)
-              if loggedInUserProfImg
-                img(src=loggedInUserProfImg, alt="ProfPic")
-              else
+            if loggedInUser
+              a.profPicNav(href=`/users/${loggedInUser.userId}`)
+                img(src=loggedInUser.profImg, alt="ProfPic")
+            else
+              a.profPicNav(href=`/users/${locals.user.id}`)
                 img(src=locals.user.profileImg, alt="ProfPic")
 
 
