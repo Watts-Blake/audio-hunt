@@ -88,7 +88,7 @@ router.post('/new',
   })
 );
 
-
+// GET /posts/:id
 
 
 
