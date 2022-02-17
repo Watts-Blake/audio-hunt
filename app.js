@@ -5,9 +5,9 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const { sequelize } = require("./db/models");
 const session = require("express-session");
-// const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 // USING CONNECT-PG-SIMPLE INSTEAD OF ^
-const store = require("connect-pg-simple");
+// const store = require("connect-pg-simple");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const postsRouter = require("./routes/posts");
@@ -30,21 +30,21 @@ app.use(cookieParser(sessionSecret));
 app.use(express.static(path.join(__dirname, "public")));
 
 // set up session middleware
-// const store = new SequelizeStore({ db: sequelize });
-const storeSession = new (store(session))();
+const store = new SequelizeStore({ db: sequelize });
+// const storeSession = new (store(session))();
 
 app.use(
   session({
     name: "Audio Hunt Session Cookie",
     secret: sessionSecret,
-    store: storeSession,
+    store,
     saveUninitialized: false,
     resave: false,
   })
 );
 
 // create Session table if it doesn't already exist
-// store.sync();
+store.sync();
 //------------------------------------------Testing Routers----------------DELETE
 
 app.use("/api", apiRoute);
