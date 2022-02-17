@@ -8,8 +8,15 @@ const { validationResult } = require("express-validator");
 // MODULE IMPORTS *******************************************************************
 const { loginUser, restoreUser, requireAuth, logoutUser } = require("../auth");
 const db = require("../db/models");
-const { signupValidators, loginValidators } = require('./utils/user-validator');
-const { asyncHandler, getTimeElapsed, getJoinedDate } = require('./utils/utils');
+const { signupValidators, loginValidators } = require("./utils/user-validator");
+const {
+  asyncHandler,
+  getTimeElapsed,
+  getJoinedDate,
+} = require("./utils/utils");
+
+const api = require("./api");
+
 // MIDDLEWARE ***********************************************************************
 var router = express.Router();
 
@@ -38,6 +45,8 @@ router.post(
     const { email, password } = req.body;
 
     const user = await db.User.findOne({ where: { email } });
+    user.activeState = true;
+    await user.save();
 
     let errors = [];
     const validatorErrors = validationResult(req);
@@ -92,7 +101,6 @@ router.post(
       loginUser(req, res, user);
       return res.redirect("/");
     } else {
-
       const errors = validatorErrors.array().map((err) => err.msg);
       res.render("signup", {
         user,
@@ -106,41 +114,43 @@ router.post(
 
 // GET /users/:id
 
-router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
-  const id = await req.params.id * 1;
+router.get(
+  "/:id(\\d+)",
+  asyncHandler(async (req, res, next) => {
+    const id = (await req.params.id) * 1;
 
-  const user = await db.User.findByPk(id,  {
-    include: [
-    {
-      model: db.Comment,
-      include: db.Post,
-    },
-    {
-      model: db.Post,
-      include: [db.Song, db.Comment]
-    }],
-  });
-
-
-
-  if (user) {
-    getTimeElapsed(user);
-    const date = getJoinedDate(user);
-
-    const userPosts = user.Posts;
-    const userComments = user.Comments;
-
-    res.render(`user-profile`, {
-      user, userPosts, userComments, date
-
+    const user = await db.User.findByPk(id, {
+      include: [
+        {
+          model: db.Comment,
+          include: db.Post,
+        },
+        {
+          model: db.Post,
+          include: [db.Song, db.Comment],
+        },
+      ],
     });
 
-  } else {
-   const error = new Error("We could not find this user!");
-   error.status = 404;
-   next(error);
-  }
-})
+    if (user) {
+      getTimeElapsed(user);
+      const date = getJoinedDate(user);
+
+      const userPosts = user.Posts;
+      const userComments = user.Comments;
+
+      res.render(`user-profile`, {
+        user,
+        userPosts,
+        userComments,
+        date,
+      });
+    } else {
+      const error = new Error("We could not find this user!");
+      error.status = 404;
+      next(error);
+    }
+  })
 );
 
 module.exports = router;
