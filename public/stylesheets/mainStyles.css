@@ -60,16 +60,16 @@ header {
 /* button structure */
 .btn {
   margin: 0;
-  padding: 0 1.5em;
-  height: 40px;
-
+  padding: 16px;
+  height: 2em;
   border: 2px solid;
   border-radius: 3em;
   text-decoration: none;
 
   text-transform: uppercase;
   text-align: center;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.00em;
+  font-size: 12px;
 
   display: flex;
   justify-content: center;

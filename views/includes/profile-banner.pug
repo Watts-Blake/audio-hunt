@@ -7,5 +7,5 @@
     span.user_banner__body__joinedOn 🎉Joined date : #{date}
     a.user_banner__body__email= user.email
     if isAuthorized
-      a(href=`/users/${user.id}/edit`).btn.btn--secondary--outline
-        button Edit My Profile
+      a(href=`/users/${user.id}/edit`)
+        button.btn.btn--secondary--outline Edit My Profile
