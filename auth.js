@@ -1,3 +1,4 @@
+const app = require("./app");
 const db = require("./db/models");
 
 const loginUser = (req, res, user) => {

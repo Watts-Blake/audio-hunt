@@ -8,7 +8,7 @@ const { validationResult } = require("express-validator");
 // MODULE IMPORTS *******************************************************************
 const { loginUser, restoreUser, requireAuth, logoutUser } = require("../auth");
 const db = require("../db/models");
-const { signupValidators, loginValidators } = require("./utils/user-validator");
+const { signupValidators, loginValidators } = require("./utils/validations");
 const {
   asyncHandler,
   getTimeElapsed,
@@ -152,5 +152,59 @@ router.get(
     }
   })
 );
+
+router.route("/:id(\\d+)/edit").get(
+  csrfProtection,
+  asyncHandler(async (req, res, next) => {
+    const id = (await req.params.id) * 1;
+
+    const user = await db.User.findByPk(id);
+
+    if (user) {
+      res.render(`profile-edit`, {
+        user,
+        csrfToken: req.csrfToken(),
+      });
+    } else {
+      const error = new Error("We could not find this user!");
+      error.status = 404;
+      next(error);
+    }
+  })
+);
+
+//-----------------------------------------DELETE IF PUT WORKS
+// router.route("/:id(\\d+)/edit").post(
+//   requireAuth,
+//   csrfProtection,
+//   signupValidators,
+//   asyncHandler(async (req, res, next) => {
+//     const { username, header, email, bio, profileImg } = req.body;
+//     const userId = req.params.id * 1;
+//     console.log("we made it");
+
+//     const user = await db.User.findByPk(userId);
+
+//     const validationErrors = validationResult(req);
+
+//     if (validationErrors.isEmpty()) {
+//       console.log("we made it in the if statement -----------------");
+//       await user.update({ username, header, email, bio, profileImg });
+//       return res.redirect(`/users/${user.id}`);
+//     } else {
+//       // are we going to have auth trouble here??
+//       console.log(
+//         "we made it in the elseeeeeeeeeeeee statement -----------------"
+//       );
+//       const errors = validationErrors.array().map((e) => e.msg);
+//       res.render("profile-edit", {
+//         title: "Edit Your Profile",
+//         user,
+//         errors,
+//         csrfToken: req.csrfToken(),
+//       });
+//     }
+//   })
+// );
 
 module.exports = router;

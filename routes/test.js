@@ -7,7 +7,7 @@ const { validationResult } = require("express-validator");
 // MODULE IMPORTS *******************************************************************
 const { loginUser, restoreUser, requireAuth, logoutUser } = require("../auth");
 const db = require("../db/models");
-const { signupValidators, loginValidators } = require("./utils/user-validator");
+const { signupValidators, loginValidators } = require("./utils/validations");
 const { asyncHandler, getTimeElapsed } = require("./utils/utils");
 // MIDDLEWARE ***********************************************************************
 var router = express.Router();
@@ -21,25 +21,6 @@ const csrfProtection = csrf({ cookie: true });
 //   res.send("respond with a resource");
 // });
 // GET /users/login
-
-router.route("/:id(\\d+)/edit").get(
-  csrfProtection,
-  asyncHandler(async (req, res, next) => {
-    const id = (await req.params.id) * 1;
-
-    const user = await db.User.findByPk(id);
-
-    if (user) {
-      res.render(`profile-edit`, {
-        user,
-      });
-    } else {
-      const error = new Error("We could not find this user!");
-      error.status = 404;
-      next(error);
-    }
-  })
-);
 
 router.route("/:id(\\d+)/edit/image").get(
   csrfProtection,

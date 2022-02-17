@@ -56,26 +56,31 @@
 .user_posts {
   width: 70%;
   min-height: 100px;
+  flex-direction: column;
+  align-items: stretch;
   justify-content: flex-start;
 }
 .user_comments_preview {
-  width: 30%;
   min-height: 200px;
-
-  align-items: flex-start;
-}
-
-/* COMMENT PREVIEWS *******************************************/
-.user_comments_preview {
   border: 2px solid #535353;
   border-radius: 1em;
   min-height: 800px;
+  width: 35%;
+
+  align-items: stretch;
+  flex-direction: column;
+  justify-content: flex-start;
 }
+
+/* COMMENT PREVIEWS *******************************************/
+
 .comment_preview {
   height: 85px;
   margin: 10px;
 
   border-bottom: 1px solid #b3b3b3;
+
+  justify-content: space-between;
 }
 .comment_preview > .media_body::before {
   content: "\1F4AC";
