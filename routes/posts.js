@@ -52,7 +52,8 @@ router.get(
     const songs = await db.Song.findAll();
 
     res.render('new-post', {
-      songs, title: 'Create a new post', csrfToken: req.csrfToken(), loggedInUser
+      post: {}, songs, title: 'Create a new post',
+      csrfToken: req.csrfToken(), loggedInUser,
     });
   })
 );
