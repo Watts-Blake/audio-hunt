@@ -6,8 +6,13 @@ const { validationResult } = require("express-validator");
 // MODULE IMPORTS *******************************************************************
 const { loginUser, restoreUser, requireAuth, logoutUser } = require("../auth");
 const db = require("../db/models");
-const { signupValidators, loginValidators } = require('./utils/validations');
-const { asyncHandler, getTimeElapsed, getJoinedDate } = require('./utils/utils');
+const { signupValidators, loginValidators } = require("./utils/user-validator");
+const {
+  asyncHandler,
+  getTimeElapsed,
+  getJoinedDate,
+} = require("./utils/utils");
+const app = require("../app");
 // MIDDLEWARE ***********************************************************************
 var router = express.Router();
 
@@ -18,7 +23,7 @@ const csrfProtection = csrf({ cookie: true });
 // PUT /users/:id
 // !!! PLEASE TEST THIS ROUTE !!!
 router.put(
-  '/users/:id(\\d+)',
+  "/users/:id(\\d+)",
   requireAuth,
   csrfProtection,
   signupValidators,
@@ -32,22 +37,22 @@ router.put(
 
     if (validationErrors.isEmpty()) {
       await user.update({ username, header, email, bio, profileImg });
-      return res.send('Update successful.');
+      return res.send("Update successful.");
     } else {
       // are we going to have auth trouble here??
-      const errors = validationErrors.array().map(e => e.msg);
-      res.render('profile-edit', {
-        title: 'Edit Your Profile', user, errors, csrfToken: req.csrfToken(),
+      const errors = validationErrors.array().map((e) => e.msg);
+      res.render("profile-edit", {
+        title: "Edit Your Profile",
+        user,
+        errors,
+        csrfToken: req.csrfToken(),
       });
     }
   })
 );
-
-
 // DELETE /users/:id
-// !!! PLEASE TEST THIS ROUTE !!!
 router.delete(
-  '/users/:id(\\d+)',
+  "/users/:id(\\d+)",
   requireAuth,
   asyncHandler(async (req, res, next) => {
     const userId = req.params.id * 1;
@@ -55,23 +60,22 @@ router.delete(
     const user = await db.User.findByPk(userId);
 
     if (req.session.auth.userId !== user.id) {
-      const err = new Error('You are not authorized to delete this user.');
+      const err = new Error("You are not authorized to delete this user.");
       err.status = 403;
       return next(err);
     }
 
     if (user) {
       user.activeState = false;
-      user.save();
+      await user.save();
       logoutUser(req, res);
-      return res.redirect('/');
+      return res.json("success");
     } else {
-      const err = new Error('User to delete was not found.');
+      const err = new Error("User to delete was not found.");
       err.status = 404;
       next(err);
     }
   })
 );
-
 
 module.exports = router;
