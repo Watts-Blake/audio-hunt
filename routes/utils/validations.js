@@ -67,6 +67,11 @@ const loginValidators = [
 ];
 
 
+const postValidators = [
+
+];
+
+
 
 module.exports = {
   signupValidators,
