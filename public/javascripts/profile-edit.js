@@ -11,14 +11,13 @@ const fetchUser = async (userId) => {
     const res = await fetch(`/api/users/${userId}`, {
       method: "DELETE",
     });
-    console.log("right here");
+
     if (!res.ok) {
       console.log("");
       throw res;
     }
     const something = await res.json();
     window.location.href = "/";
-    console.log(something);
   } catch (err) {
     console.error(err);
   }

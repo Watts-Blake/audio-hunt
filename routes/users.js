@@ -45,6 +45,8 @@ router.post(
     const { email, password } = req.body;
 
     const user = await db.User.findOne({ where: { email } });
+    user.activeState = true;
+    await user.save();
 
     let errors = [];
     const validatorErrors = validationResult(req);
