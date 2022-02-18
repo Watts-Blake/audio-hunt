@@ -8,6 +8,7 @@ const { loginUser, restoreUser, requireAuth, logoutUser } = require("../auth");
 const db = require("../db/models");
 const { postValidators } = require('./utils/validations');
 const { asyncHandler, getTimeElapsed, getPostTimeElapsed } = require('./utils/utils');
+const { Router } = require("express");
 // MIDDLEWARE ***********************************************************************
 var router = express.Router();
 
@@ -17,16 +18,21 @@ const csrfProtection = csrf({ cookie: true });
 // ROUTES *****************************************************************
 // GET /posts/:id
 router.get(
-  '/:id(\\d)',
+  '/:id(\\d+)',
   asyncHandler(async (req, res, next) => {
     const id = (await req.params.id) * 1;
 
     const post = await db.Post.findByPk(id, {
-      include: [ db.Song, db.User, db.Comment ],
+      include: [db.Song, db.User, {
+        model: db.Comment,
+        include: db.User,
+      }],
     });
 
     if (post) {
       const timeElapsed = getPostTimeElapsed(post);
+      getTimeElapsed(post);
+      console.log(post.Comments);
 
       const loggedInUser = {
         profImg: res.locals.user.profileImg,
@@ -46,7 +52,7 @@ router.get(
 );
 
 
-// GET posts/new
+// GET posts/new *** NEW POST FORM/PAGE
 // !!! PLEASE TEST THIS ROUTE !!!
 router.get(
   '/new',
@@ -67,7 +73,7 @@ router.get(
   })
 );
 
-// POST /posts
+// POST /posts *** CREATE NEW POST
 router.post('/new',
   postValidators,
   requireAuth,
@@ -109,6 +115,67 @@ router.post('/new',
   })
 );
 
+// GET /posts/:id/edit *** SONG POST EDIT PAGE
+router.get(
+  '/:id(\\d+)/edit',
+  requireAuth,
+  csrfProtection,
+  asyncHandler(async (req, res, next) => {
+    const id = (await req.params.id) * 1;
+
+    const post = await db.Post.findByPk(id);
+
+    if (req.session.auth.userId !== id) {
+      const error = new Error('Sneaky sneaky :)))) This is not your post silly boy :))))')
+      error.status = 403;
+      return next(error);
+    }
+
+    if (post) {
+      const loggedInUser = {
+        profImg: res.locals.user.profileImg,
+        userId: res.locals.user.id,
+      }
+      res.render(`song-post-edit`, {
+        title: `EDIT POST: ${post.title}`,
+        post,
+        csrfToken: req.csrfToken(),
+        loggedInUser,
+      });
+    } else {
+      const error = new Error("We could not find this user!");
+      error.status = 404;
+      next(error);
+    }
+
+  })
+)
+
+router.post(
+  '/:id(\\d+)/edit',
+  requireAuth, // !!! CHECK HERE FOR ERRORS !!!
+  postValidators,
+  csrfProtection,
+  asyncHandler(async (req, res, next) => {
+    const { title, shortDescription, content } = req.body;
+    const id = req.params.id * 1;
+
+    const post = await db.Post.findByPk(id);
+
+    const validationErrors = validationResult(req);
+
+    if (validationErrors.isEmpty()) {
+      await post.update({ title, shortDescription, content });
+      req.session.save(() => res.redirect(`/posts/${id}`));
+      return;
+    } else {
+      const errors = validationErrors.array().map((e) => e.msg);
+      res.render(`song-post-edit`, {
+        errors, post, csrfToken: req.csrfToken(),
+      });
+    }
+  })
+)
 
 
 module.exports = router;
