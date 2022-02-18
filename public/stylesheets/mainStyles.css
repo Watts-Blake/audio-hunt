@@ -143,8 +143,8 @@ option {
 }
 /* white buttons when clicked */
 .btn--secondary--outline:active {
-  /* margin-top: 2px; */
-  background: rgb(77, 77, 77);
+  border-color: rgb(139, 139, 139);
+  background: rgb(139, 139, 139);
 }
 
 /* red button */
