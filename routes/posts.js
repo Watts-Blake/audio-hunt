@@ -25,10 +25,25 @@ router.get(
 
     const post = await db.Post.findByPk(id, {
       include: [db.Song, db.User, {
+        order: [[{ model: db.Comment }, "createdAt", "DESC"]],
         model: db.Comment,
         include: db.User,
       }],
     });
+
+    // ??? HOW TO ORDER COMMENTS BY createdAt ???
+
+    // const comments = await db.Comment.findAll({
+    //   order: [["createdAt", "DESC"]],
+    //   where: { postId: id },
+    //   include: [db.User, {
+    //     model: db.Post,
+    //     include: db.Song,
+    //   }]
+    // });
+
+    // console.log(comments.Post);
+
     let isAuthorized = true;
     if (!req?.session?.auth?.userId || req.session.auth.userId !== post.userId ) {
       isAuthorized = false;
@@ -37,11 +52,10 @@ router.get(
     if (post) {
       const timeElapsed = getPostTimeElapsed(post);
       getTimeElapsed(post);
-      console.log(post.Comments);
 
       const loggedInUser = {
-        profImg: res.locals.user.profileImg,
-        userId: res.locals.user.id,
+        profImg: res?.locals?.user?.profileImg,
+        userId: res?.locals?.user?.id,
       }
       res.render('song-post', {
         post,

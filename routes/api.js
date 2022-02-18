@@ -4,7 +4,7 @@ const csrf = require("csurf");
 const { validationResult } = require("express-validator");
 
 // MODULE IMPORTS *******************************************************************
-const { loginUser, restoreUser, requireAuth, logoutUser } = require("../auth");
+const { loginUser, restoreUser, requireAuth, requireAuthAPI, logoutUser } = require("../auth");
 const db = require("../db/models");
 const { editProfileValidators, commentValidators } = require("./utils/validations");
 const {
@@ -108,7 +108,7 @@ router.delete(
 // POST /comments *** POST A COMMENT
 router.post(
   '/comments',
-  // requireAuth,
+  requireAuthAPI,
   // commentValidators,
   // csrfProtection,
   asyncHandler(async (req, res, next) => {
@@ -120,8 +120,9 @@ router.post(
     if (validatorErrors.isEmpty()) {
       await comment.save();
       getPostTimeElapsed(comment);
+      comment.dataValues.userId = res.locals.user.id;
       comment.dataValues.username = res.locals.user.username;
-      console.log(comment);
+      comment.dataValues.profileImg = res.locals.user.profileImg;
       return res.json(comment);
     } else {
       const errors = validatorErrors.array().map(e => e.msg);

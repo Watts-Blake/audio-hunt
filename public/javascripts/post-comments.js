@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', e => {
     const body = { content, _csrf, postId };
 
     try {
-      console.log(body);
+      // FETCH REQUEST ****************************************
       const res = await fetch('/api/comments', {
         method: 'POST',
         headers: {
@@ -22,15 +22,18 @@ document.addEventListener('DOMContentLoaded', e => {
         body: JSON.stringify(body),
       });
 
+      if (res.status === 401) {
+        alert('Please login or sign up before commenting!');
+      }
+
       if (!res.ok) {
         console.log('res not ok');
         throw res;
       }
 
-      const { content, timeElapsed, username } = await res.json()
-      // console.log(content, id, postId, userId, timeElapsed, username);
+      const { content, timeElapsed, username, profileImg, userId } = await res.json()
 
-      // clear the comment off of the text input
+      // DOM MANIPULATION *********************************
       document.querySelector('input.form_input').value = "";
 
       const commentSection = document.getElementById('post_body_container');
@@ -39,6 +42,9 @@ document.addEventListener('DOMContentLoaded', e => {
       newCommentContainer.classList.add('media');
       newCommentContainer.setAttribute('id', 'comments');
       newCommentContainer.innerHTML = `
+      <a class="profPicNav" href="/users/${userId}">
+        <img class="comment_pfp" src="${profileImg}", alt="ProfPic">
+      </a>
       <p>${content}</p>
       <span>${username}</span>
       <span>${timeElapsed}</span>
@@ -47,10 +53,10 @@ document.addEventListener('DOMContentLoaded', e => {
       commentSection.append(newCommentContainer);
 
     } catch (error) {
+      // IF FETCH FAILS ***********************************
       if (error.status >= 400 && error.status <= 600) {
         const errorObj = await error.json();
-        console.log(errorObj);
-
+        // DOM MANIPULATION ERROR CONTAINER ***************
         const errorsContainer = document.querySelector('.error-container');
         let errorsHTML = [
           `

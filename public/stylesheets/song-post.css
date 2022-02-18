@@ -26,3 +26,7 @@
 #comments {
   width: 100%;
 }
+.profPicNav > .comment_pfp {
+  width: 75px;
+  height: 75px;
+}

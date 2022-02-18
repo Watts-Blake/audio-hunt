@@ -27,6 +27,8 @@ block content
     each comment in post.Comments
       //- if a user's profile is deactivated, don't show their comment
       .media#comments
+        a.profPicNav(href=`/users/${comment.User.id}`)
+          img.comment_pfp(src=comment.User.profileImg, alt="ProfPic")
         p= comment.content
         span= comment.User.username
         span= comment.dataValues.timeElapsed
