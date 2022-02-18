@@ -32,5 +32,13 @@ block content
         p= comment.content
         span= comment.User.username
         span= comment.dataValues.timeElapsed
+        if loggedInUser.userId === comment.User.id
+          .form_group
+            a#edit_comment.btn.btn--secondary--outline Edit
+            a#delete_comment.btn.btn--red Delete
+        else if loggedInUser.userId === post.User.id
+          .form_group
+            a#delete_comment.btn.btn--red Delete
+
 
   script(src="/javascripts/post-comments.js" type="module")

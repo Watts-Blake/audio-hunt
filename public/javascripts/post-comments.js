@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', e => {
+  /* CREATING A NEW COMMENT ************************************
+  *************************************************************/
   const commentForm = document.getElementById('comment_form');
 
   document.getElementById('send_button').addEventListener('click', async e => {
@@ -88,4 +90,24 @@ document.addEventListener('DOMContentLoaded', e => {
     }
   });
 
+
+  /* EDITING A COMMENT ****************************************
+  *************************************************************/
+  // WIP
+  document.querySelectorAll('#edit_comment').forEach(btn => {
+    btn.addEventListener('click', e => {
+      alert('bruh');
+    });
+  });
+
+  /* DELETING A COMMENT ****************************************
+  *************************************************************/
+  document.querySelectorAll('#delete_comment').forEach(btn => {
+    btn.addEventListener('click', e => {
+      if (window.confirm('Are you sure you want to delete this comment?')) {
+        // ??? HOW TO GET COMMENT ID ???
+        console.log('this is the delete button');
+      }
+    });
+  });
 });
