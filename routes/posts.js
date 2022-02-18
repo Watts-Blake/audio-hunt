@@ -20,7 +20,6 @@ const csrfProtection = csrf({ cookie: true });
 // GET /posts/:id
 router.get(
   '/:id(\\d+)',
-  csrfProtection,
   asyncHandler(async (req, res, next) => {
     const id = (await req.params.id) * 1;
 
@@ -30,9 +29,8 @@ router.get(
         include: db.User,
       }],
     });
-
     let isAuthorized = true;
-    if (req.session.auth.userId !== post.userId) {
+    if (!req?.session?.auth?.userId || req.session.auth.userId !== post.userId ) {
       isAuthorized = false;
     }
 
@@ -50,7 +48,6 @@ router.get(
         loggedInUser,
         timeElapsed,
         isAuthorized,
-        csrfToken: req.csrfToken(),
       });
     } else {
       const error = new Error("We could not find this post!");
@@ -105,7 +102,7 @@ router.post('/new',
       where: {
         songName,
         artistName
-      }
+      } 
     })
 
     const post = db.Post.build({
