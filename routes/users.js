@@ -45,25 +45,26 @@ router.post(
     const { email, password } = req.body;
 
     const user = await db.User.findOne({ where: { email } });
-    user.activeState = true;
-    await user.save();
-
+    
     let errors = [];
     const validatorErrors = validationResult(req);
     if (user !== null && validatorErrors.isEmpty()) {
+      user.activeState = true;
+      await user.save();
+
       loginUser(req, res, user);
 
       req.session.save(()=> {res.redirect('/')})
       return
     } else {
       errors = validatorErrors.array().map((err) => err.msg);
+      res.render("login", {
+        title: "Log in",
+        errors,
+        csrfToken: req.csrfToken(),
+      });
     }
 
-    res.render("login", {
-      title: "Log in",
-      errors,
-      csrfToken: req.csrfToken(),
-    });
   })
 );
 

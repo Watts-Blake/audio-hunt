@@ -65,6 +65,7 @@ router.get(
     }
 
     const songs = await db.Song.findAll({ order: db.Song.songName});
+    console.log(songs.toString());
 
     res.render('new-post', {
       post: {}, songs, title: 'Create a new post',
@@ -91,6 +92,10 @@ router.post('/new',
       } 
     })
 
+    let errors = []
+    if(!song) {
+      errors.push('Please select a song.')
+    }
 
     const post = db.Post.build({
       title, shortDescription, content, songId: song.id, userId: req.session.auth.userId
