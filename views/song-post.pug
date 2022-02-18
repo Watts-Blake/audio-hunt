@@ -23,15 +23,13 @@ block content
       span= relDate
     .container.post_media_footer
       a.listen__btn.btn.btn--primary--outline(href=post.Song.songUrl target="_blank") &#160;&#160;Listen&#160;&#160;
+  .comment_error_container.hidden
+  form.container#comment_form
+    input.form_input(type="text" name="content" placeholder="What do you think?")
+    input(type="hidden", name="_csrf" value=csrfToken)
+    button#send_button Send
 
-
-
-  .error-container
   .main_body.container#post_body_container
-    form#comment_form
-      input.form_input(type="text" name="content" placeholder="What do you think?")
-      input(type="hidden", name="_csrf" value=csrfToken)
-      button#send_button Send
     each comment in post.Comments
       //- if a user's profile is deactivated, don't show their comment
       .media#comments
@@ -40,5 +38,13 @@ block content
         p= comment.content
         span= comment.User.username
         span= comment.dataValues.timeElapsed
+        if loggedInUser.userId === comment.User.id
+          .form_group
+            a#edit_comment.btn.btn--secondary--outline Edit
+            a#delete_comment.btn.btn--red Delete
+        else if loggedInUser.userId === post.User.id
+          .form_group
+            a#delete_comment.btn.btn--red Delete
+
 
   script(src="/javascripts/post-comments.js" type="module")

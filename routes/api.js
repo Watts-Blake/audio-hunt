@@ -13,7 +13,6 @@ const {
   getJoinedDate,
   getPostTimeElapsed,
 } = require("./utils/utils");
-const app = require("../app");
 // MIDDLEWARE ***********************************************************************
 var router = express.Router();
 
@@ -22,7 +21,7 @@ router.use(restoreUser);
 const csrfProtection = csrf({ cookie: true });
 
 // ROUTES *****************************************************************
-// PUT /users/:id *** EDIT USER ACCOUNT
+// PUT api/users/:id *** EDIT USER ACCOUNT
 router.put(
   "/users/:id(\\d+)",
   requireAuth,
@@ -51,7 +50,7 @@ router.put(
     }
   })
 );
-// DELETE /users/:id *** DELETE USER ACCOUNT
+// DELETE api/users/:id *** DELETE USER ACCOUNT
 router.delete(
   "/users/:id(\\d+)",
   requireAuth,
@@ -79,7 +78,7 @@ router.delete(
   })
 );
 
-// DELETE /posts/:id *** DELETE A POST
+// DELETE api/posts/:id *** DELETE A POST
 router.delete(
   '/posts/:id(\\d+)',
   requireAuth,
@@ -105,12 +104,12 @@ router.delete(
 )
 
 
-// POST /comments *** POST A COMMENT
+// POST api/comments *** POST A COMMENT
 router.post(
   '/comments',
   requireAuthAPI,
-  // commentValidators,
-  // csrfProtection,
+  commentValidators,
+  csrfProtection,
   asyncHandler(async (req, res, next) => {
     const { content, postId } = req.body;
 
@@ -129,6 +128,12 @@ router.post(
       res.status(400).json(errors)
     }
   })
+)
+
+// PUT api/comments/:id *** EDIT A COMMENT
+router.delete(
+  '/comments/:id',
+
 )
 
 
