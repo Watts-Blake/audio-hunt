@@ -1,5 +1,5 @@
 //----------------------------------------------dont delete this, need it for prof change
-let currentPfp = ''
+
 //----------------------------------------------dont delete this, need it for prof change
 
 const deleteUserFetch = async (userId) => {
@@ -76,6 +76,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
   //-------------------------------------------------------------------------------if we have time lets refactor this
   const currentHtmlPfp = document.getElementById('current-pfp')
+  let currentPfp = currentHtmlPfp.src
   const pfpModal = document.getElementById('profile-pic-modal')
   const changeProfileBtn = document.getElementById('change-profile-picture')
   const pfp1 = document.getElementById('profile-pic-1')
