@@ -1,10 +1,6 @@
-// const fetchUser = async (userId) => {
-//   const res = await fetch(
-//     (`/users/api/${userId}`,
-//     {
-//       method: "DELETE",
-//     })
-//   );
+//----------------------------------------------dont delete this, need it for prof change
+
+//----------------------------------------------dont delete this, need it for prof change
 
 const deleteUserFetch = async (userId) => {
   try {
@@ -25,7 +21,6 @@ const deleteUserFetch = async (userId) => {
 
 const updateUserFetch = async (userId, body) => {
   const cookies = document.cookie;
-  console.log(cookies);
   try {
     const res = await fetch(`/api/users/${userId}`, {
       method: "PUT",
@@ -37,19 +32,14 @@ const updateUserFetch = async (userId, body) => {
     });
 
     if (!res.ok) {
-      console.log('wswfdgbcgn');
       throw res;
     }
-    console.log(res)
     const confirmMessage = await res.json();
-    console.log('we guuuuuuuuuuuuuuuuuuuuuuuuuuuuccci')
-    console.log(confirmMessage);
+
     window.location.href = `/users/${userId}`;
   } catch (error) {
     if (error.status >= 400 && error.status <= 600) {
-      console.log('bruh');
       const errorObj = await error.json();
-      console.log(errorObj);
 
       const errorsContainer = document.querySelector('.error-container');
       let errorsHTML = [
@@ -59,9 +49,6 @@ const updateUserFetch = async (userId, body) => {
         </div>
       `,
       ];
-
-      // console.log(errors);
-
       if (errorObj && Array.isArray(errorObj)) {
         errorsHTML = errorObj.map(message => {
           return `
@@ -87,7 +74,20 @@ document.addEventListener("DOMContentLoaded", (e) => {
   const confirmChangesBtn = document.getElementById("confirmChangesBtn");
   const cookie = document.cookie;
 
-  console.log(cookie);
+  //-------------------------------------------------------------------------------if we have time lets refactor this
+  const currentHtmlPfp = document.getElementById('current-pfp')
+  let currentPfp = currentHtmlPfp.src
+  const pfpModal = document.getElementById('profile-pic-modal')
+  const changeProfileBtn = document.getElementById('change-profile-picture')
+  const pfp1 = document.getElementById('profile-pic-1')
+  const pfp2 = document.getElementById('profile-pic-2')
+  const pfp3 = document.getElementById('profile-pic-3')
+  const pfp4 = document.getElementById('profile-pic-4')
+  const pfp5 = document.getElementById('profile-pic-5')
+  const pfp6 = document.getElementById('profile-pic-6')
+  const pfpArr = [pfp1, pfp2, pfp3, pfp4, pfp5, pfp6]
+  //-------------------------------------------------------------------------------if we have time lets refactor this
+
   deleteBtn.addEventListener("click", (e) => {
     e.preventDefault();
     const modalDiv = document.getElementById("confirmDeleteModal");
@@ -105,6 +105,32 @@ document.addEventListener("DOMContentLoaded", (e) => {
       modalDiv.classList.add("hidden");
     });
   });
+  //--------------------------------------------------------------------------change prof pic
+    changeProfileBtn.addEventListener('click', (e) => {
+    e.preventDefault()
+    pfpModal.classList.remove('hidden')
+  })
+
+
+  pfpModal.addEventListener('click', (e) => {
+    e.preventDefault()
+      pfpArr.forEach(pic => {
+      if (e.target === pic) {
+
+        currentPfp = pic.src
+        console.log(currentPfp)
+        currentHtmlPfp.src=pic.src
+        pfpModal.classList.add('hidden')
+
+      }
+
+      if (e.target === e.currentTarget)  {
+        pfpModal.classList.add('hidden')
+      }
+  })
+  })
+  //--------------------------------------------------------------------------change prof pic
+
   const editForm = document.getElementById("editForm");
   confirmChangesBtn.addEventListener("click", (e) => {
     const formData = new FormData(editForm);
@@ -112,8 +138,9 @@ document.addEventListener("DOMContentLoaded", (e) => {
     const email = formData.get("email");
     const header = formData.get("header");
     const bio = formData.get("editBio");
+    const profileImg = currentPfp
     const _csrf = formData.get("_csrf")
-    const body = { username, email, header, bio, _csrf };
+    const body = { username, email, header, bio, profileImg, _csrf };
 
     e.preventDefault();
     updateUserFetch(userId, body);
