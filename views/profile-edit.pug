@@ -6,9 +6,9 @@ block content
     .user_banner__body.container.profile_edit
         .container
           .form_group.container.pic_prof_group
-            img.edit_pfp(src=user.profileImg, alt="profile-picture")
-            a(href=`/users/${user.id}/edit/image`).btn.btn--secondary--outline.btn-chng-pfp.edit_prof_format
-              buttonChange Change Profile Picture
+            img.edit_pfp#current-pfp(src=user.profileImg, alt="profile-picture")
+            a#change-profile-picture.btn.btn--secondary--outline.btn-chng-pfp.edit_prof_format
+              button Change Profile Picture
           .form_group.container.email_user_discard_group
             .container.email_user_group
               label(for='username') User Name
@@ -29,4 +29,6 @@ block content
             a.btn.btn--secondary--outline.edit_prof_format#deactivateProfBtn.btn--red
               button(type='button') Deactivate Account
   include includes/modal-confirm-delete.pug
+  include includes/modal-change-profile-pic.pug
   script(src="/javascripts/profile-edit.js" type='module')
+  //- script(src="/javascripts/pfp-edit.js" type='module')
