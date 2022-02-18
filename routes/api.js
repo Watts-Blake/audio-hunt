@@ -4,7 +4,7 @@ const csrf = require("csurf");
 const { validationResult } = require("express-validator");
 
 // MODULE IMPORTS *******************************************************************
-const { loginUser, restoreUser, requireAuth, logoutUser } = require("../auth");
+const { loginUser, restoreUser, requireAuth, requireAuthAPI, logoutUser } = require("../auth");
 const db = require("../db/models");
 const { editProfileValidators, commentValidators } = require("./utils/validations");
 const {
@@ -108,7 +108,7 @@ router.delete(
 // POST /comments *** POST A COMMENT
 router.post(
   '/comments',
-  // requireAuth,
+  requireAuthAPI,
   // commentValidators,
   // csrfProtection,
   asyncHandler(async (req, res, next) => {

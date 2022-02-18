@@ -22,6 +22,10 @@ document.addEventListener('DOMContentLoaded', e => {
         body: JSON.stringify(body),
       });
 
+      if (res.status === 401) {
+        alert('Please login or sign up before commenting!');
+      }
+
       if (!res.ok) {
         console.log('res not ok');
         throw res;
