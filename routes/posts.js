@@ -57,11 +57,17 @@ router.get(
         profImg: res?.locals?.user?.profileImg,
         userId: res?.locals?.user?.id,
       }
+      const date = new Date(post.Song.releaseDate).toDateString()
+
+      const dateString = date.split(' ')
+      dateString.splice(0,1)
+      const relDate = dateString.join(' ')
       res.render('song-post', {
         post,
         loggedInUser,
         timeElapsed,
         isAuthorized,
+        relDate
       });
     } else {
       const error = new Error("We could not find this post!");

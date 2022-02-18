@@ -44,7 +44,7 @@ textarea {
 
 select {
   background-color: transparent;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 option {
   color: #191414;
@@ -86,7 +86,7 @@ option {
 
   text-transform: uppercase;
   text-align: center;
-  letter-spacing: 0.00em;
+  letter-spacing: 0em;
   font-size: 12px;
 
   display: flex;
@@ -107,7 +107,7 @@ option {
 .btn--primary--outline {
   border-color: #1db954;
   color: #1db954;
-  transition: background 0.2s, color 0.2s, border-color 0.2s, margin-top 0.2s;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 /* green outlined button hover */
 .btn--primary--outline:hover {
@@ -118,7 +118,7 @@ option {
 /* green buttons when clicked */
 .btn--primary:active,
 .btn--primary--outline:active {
-  margin-top: 2px;
+  /* margin-top: 2px; */
   background: #24a050;
   border-color: #24a050;
 }
@@ -133,20 +133,18 @@ option {
 .btn--secondary--outline {
   border-color: #ffffff;
   color: #ffffff;
-  transition: background 0.2s, color 0.2s, border-color 0.2s, margin-top 0.2s;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 /* white outline button hover */
 .btn--secondary--outline:hover {
-  background: rgb(51, 51, 51);
+  background: #ffffff;
+  color: #212121;
   border-color: #ffffff;
 }
 /* white buttons when clicked */
 .btn--secondary--outline:active {
-  margin-top: 2px;
+  /* margin-top: 2px; */
   background: rgb(77, 77, 77);
-}
-.btn--secondary:active {
-  margin-top: 2px;
 }
 
 /* red button */
@@ -158,7 +156,7 @@ option {
 .btn--red {
   border-color: #ca1b1b;
   color: #ca1b1b;
-  transition: background 0.2s, color 0.2s, border-color 0.2s, margin-top 0.2s;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 
 .btn--red:hover {
@@ -168,13 +166,9 @@ option {
 }
 
 .btn--red:active {
-  margin-top: 2px;
+  /* margin-top: 2px; */
   background: #ca1b1b;
 }
-.btn--red:active {
-  margin-top: 2px;
-}
-
 
 /* MEDIA CARDS (POST CARDS ON THE HOME PAGE) *************************************/
 
