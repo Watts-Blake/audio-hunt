@@ -42,15 +42,17 @@ document.addEventListener('DOMContentLoaded', e => {
       newCommentContainer.classList.add('media');
       newCommentContainer.setAttribute('id', 'comments');
       newCommentContainer.innerHTML = `
-      <a class="profPicNav" href="/users/${userId}">
-        <img class="comment_pfp" src="${profileImg}", alt="ProfPic">
-      </a>
-      <p>${content}</p>
-      <span>${username}</span>
-      <span>${timeElapsed}</span>
+        <a class="profPicNav" href="/users/${userId}">
+          <img class="comment_pfp" src="${profileImg}", alt="ProfPic">
+        </a>
+        <p>${content}</p>
+        <span>${username}</span>
+        <span>${timeElapsed}</span>
       `;
 
-      commentSection.append(newCommentContainer);
+      const collection = Array.from(commentSection.children);
+      collection.unshift(newCommentContainer);
+      collection.forEach(e => commentSection.append(e));
 
     } catch (error) {
       // IF FETCH FAILS ***********************************

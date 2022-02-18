@@ -19,11 +19,11 @@ block content
       if isAuthorized
         a.btn.btn--secondary--outline(href=`/posts/${post.id}/edit`) Edit Post
   .comment_error_container.hidden
+  form.container#comment_form
+    input.form_input(type="text" name="content" placeholder="What do you think?")
+    input(type="hidden", name="_csrf" value=csrfToken)
+    button#send_button Send
   .main_body.container#post_body_container
-    form#comment_form
-      input.form_input(type="text" name="content" placeholder="What do you think?")
-      input(type="hidden", name="_csrf" value=csrfToken)
-      button#send_button Send
     each comment in post.Comments
       //- if a user's profile is deactivated, don't show their comment
       .media#comments
