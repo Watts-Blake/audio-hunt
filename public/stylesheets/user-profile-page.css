@@ -10,6 +10,7 @@
   border-radius: 1em;
 
   justify-content: flex-start;
+  flex-direction: column;
 }
 .user_banner__pfp {
   height: 150px;

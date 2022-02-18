@@ -1,0 +1,25 @@
+extends layout.pug
+
+block content
+  .container
+    h1= title
+  if errors
+    .error_container
+      ul
+        each error in errors
+          li: small= error
+  form(action=`/posts/${post.id}/edit` method='POST')
+    input(type="hidden" name="_csrf" value=csrfToken)
+    .form_group
+      label(for='title') Title
+      input.form_input(type='text', name='title' id="title" placeholder='What\'s your post about?' value=post.title autofocus=true )
+    .form_group
+      label(for='shortDescription') Short Description
+      input.form_input(type='text' name='shortDescription' id="shortDescription" value=post.shortDescription placeholder='Short description of your post...' )
+    .form_group
+      label(for='content') Thoughts?
+      textarea.form_input(name='content' id='content' placeholder="Tell everyone what you think!" rows="5" cols="5") #{post.content}
+    button.btn.btn--primary--outline.submit_button(type='submit') Confirm Changes
+    button.btn.btn--red.submit_button#delete_post_button(type="button") Delete Post
+  include includes/modal-confirm-delete
+  script(src="/javascripts/post-delete.js")

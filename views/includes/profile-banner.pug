@@ -1,11 +1,14 @@
 .user_banner.container
-  .user_banner__pfp
-    img(src=user.profileImg, alt="profile-picture")
-  .user_banner__body
-    h2.user_banner__body__name= user.username
-    span.user_banner__body__headline= user.header
-    span.user_banner__body__joinedOn 🎉Joined date : #{date}
-    a.user_banner__body__email= user.email
-    a(href=`/users/${user.id}/edit`).btn.btn--secondary--outline
-      button Edit My Profile
-
+  .container
+    .user_banner__pfp
+      img(src=user.profileImg, alt="profile-picture")
+    .user_banner__body
+      h2.user_banner__body__name= user.username
+      span.user_banner__body__headline= user.header
+      span.user_banner__body__joinedOn 🎉Joined date : #{date}
+      a.user_banner__body__email= user.email
+      if isAuthorized
+        a(href=`/users/${user.id}/edit`)
+          button.btn.btn--secondary--outline Edit My Profile
+  .container
+    p= user.bio

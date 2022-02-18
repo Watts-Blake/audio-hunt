@@ -43,24 +43,6 @@ const editProfileValidators = [
     .withMessage('Please provide a user name.')
     .isLength({ max: 50 })
     .withMessage('Name must be shorter than 50 characters. Sorry...'),
-  // check('email')
-  // 	.exists({ checkFalsy: true })
-  // 	.withMessage('Please provide an email (we promise not to blow up your inbox)')
-  // 	.isLength({ max: 255 })
-  // 	.withMessage('Email must be shorter than 255 characters...')
-  // 	.isEmail()
-  // 	.withMessage('The email address you entered is not a valid email. Not sure what you were doing there...')
-  // 	.custom((value) => {
-  // 		return db.User.findOne({ where: { email: value } })
-  // 			.then((user) => {
-  // 				if (user) {
-  // 					if(user.email === value) {
-  // 						return true
-  // 					} else {
-  // 					return Promise.reject('This email is already in use by another account sus 😳');
-  // 				}}
-  // 			});
-  // 	}),
   check('email')
     .exists({ checkFalsy: true })
     .withMessage('Please provide an email (we promise not to blow up your inbox)')
@@ -113,13 +95,28 @@ const loginValidators = [
 
 
 const postValidators = [
-
+  check('title')
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a title for your Post')
+    .isLength({ max: 100 })
+    .withMessage('Title be shorter than 100 characters. Sorry...'),
+  check('shortDescription')
+    .exists({ checkFalsy: true })
+    .withMessage("Make sure to add a short description!")
+    .isLength({ max: 255 })
+    .withMessage('Your short description must be shorter than 255 characters...')
 ];
 
-
+const commentValidators = [
+  check('content')
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide content for your comment')
+];
 
 module.exports = {
   signupValidators,
   loginValidators,
-  editProfileValidators
+  editProfileValidators,
+  postValidators,
+  commentValidators,
 };

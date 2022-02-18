@@ -45,32 +45,33 @@ router.post(
     const { email, password } = req.body;
 
     const user = await db.User.findOne({ where: { email } });
-    user.activeState = true;
-    await user.save();
-
+    
     let errors = [];
     const validatorErrors = validationResult(req);
     if (user !== null && validatorErrors.isEmpty()) {
+      user.activeState = true;
+      await user.save();
+
       loginUser(req, res, user);
 
       req.session.save(()=> {res.redirect('/')})
       return
     } else {
       errors = validatorErrors.array().map((err) => err.msg);
+      res.render("login", {
+        title: "Log in",
+        errors,
+        csrfToken: req.csrfToken(),
+      });
     }
 
-    res.render("login", {
-      title: "Log in",
-      errors,
-      csrfToken: req.csrfToken(),
-    });
   })
 );
 
 // POST /users/logout
 router.post("/logout", (req, res) => {
   logoutUser(req, res);
-req.session.save(()=> {res.redirect('/')})
+  req.session.save(()=> res.redirect('/'))
   return
 });
 // GET /users/signup
@@ -100,7 +101,7 @@ router.post(
       await user.save();
 
       loginUser(req, res, user);
-      req.session.save(()=> {res.redirect('/')})
+      req.session.save(() => res.redirect('/'));
       return
     } else {
       const errors = validatorErrors.array().map((err) => err.msg);
@@ -114,8 +115,7 @@ router.post(
   })
 );
 
-// GET /users/:id
-
+// GET /users/:id *** PROFILE PAGE
 router.get(
   "/:id(\\d+)",
   asyncHandler(async (req, res, next) => {
@@ -134,6 +134,13 @@ router.get(
       ],
     });
 
+
+
+    let isAuthorized = true;
+    if (req.session.auth.userId !== id) {
+      isAuthorized = false;
+    }
+
     if (user) {
       getTimeElapsed(user);
       const date = getJoinedDate(user);
@@ -141,11 +148,18 @@ router.get(
       const userPosts = user.Posts;
       const userComments = user.Comments;
 
+      const loggedInUser = {
+        profImg: res.locals.user.profileImg,
+        userId: res.locals.user.id,
+      }
       res.render(`user-profile`, {
+        title: 'please fix this',
         user,
         userPosts,
         userComments,
         date,
+        isAuthorized,
+        loggedInUser,
       });
     } else {
       const error = new Error("We could not find this user!");
@@ -155,12 +169,21 @@ router.get(
   })
 );
 
+// GET /users/:id/edit *** PROFILE EDIT PAGE
 router.route("/:id(\\d+)/edit").get(
   csrfProtection,
+  requireAuth,
   asyncHandler(async (req, res, next) => {
     const id = (await req.params.id) * 1;
 
     const user = await db.User.findByPk(id);
+
+    if (req.session.auth.userId !== id) {
+      const error = new Error('Sneaky sneaky :)))) This is not your account silly boy :))))')
+      error.status = 403;
+      return next(error);
+      // req.session.save(()=> {res.redirect('/')})
+    }
 
     if (user) {
       res.render(`profile-edit`, {
@@ -175,38 +198,6 @@ router.route("/:id(\\d+)/edit").get(
   })
 );
 
-//-----------------------------------------DELETE IF PUT WORKS
-// router.route("/:id(\\d+)/edit").post(
-//   requireAuth,
-//   csrfProtection,
-//   signupValidators,
-//   asyncHandler(async (req, res, next) => {
-//     const { username, header, email, bio, profileImg } = req.body;
-//     const userId = req.params.id * 1;
-//     console.log("we made it");
 
-//     const user = await db.User.findByPk(userId);
-
-//     const validationErrors = validationResult(req);
-
-//     if (validationErrors.isEmpty()) {
-//       console.log("we made it in the if statement -----------------");
-//       await user.update({ username, header, email, bio, profileImg });
-//       return res.redirect(`/users/${user.id}`);
-//     } else {
-//       // are we going to have auth trouble here??
-//       console.log(
-//         "we made it in the elseeeeeeeeeeeee statement -----------------"
-//       );
-//       const errors = validationErrors.array().map((e) => e.msg);
-//       res.render("profile-edit", {
-//         title: "Edit Your Profile",
-//         user,
-//         errors,
-//         csrfToken: req.csrfToken(),
-//       });
-//     }
-//   })
-// );
 
 module.exports = router;

@@ -26,7 +26,6 @@
 
 .btn-chng-pfp {
   padding: 0 1em;
-  text-transform: none;
   height: 30px;
 }
 .email_user_discard_group {
@@ -66,24 +65,4 @@
 
 #editHeader {
   width: 100%;
-}
-
-.btn--red {
-  border-color: #900303;
-  color: #900303;
-  transition: background 0.2s, color 0.2s, border-color 0.2s, margin-top 0.2s;
-}
-
-.btn--red:hover {
-  background: #900303;
-  border-color: #900303;
-  color: #ffffff;
-}
-
-.btn--red:active {
-  margin-top: 2px;
-  background: #900303;
-}
-.btn--red:active {
-  margin-top: 2px;
 }

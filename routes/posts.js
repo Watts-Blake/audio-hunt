@@ -6,8 +6,9 @@ const { validationResult } = require("express-validator");
 // MODULE IMPORTS *******************************************************************
 const { loginUser, restoreUser, requireAuth, logoutUser } = require("../auth");
 const db = require("../db/models");
-const { signupValidators, loginValidators } = require('./utils/validations');
-const { asyncHandler, getTimeElapsed, getJoinedDate } = require('./utils/utils');
+const { postValidators } = require('./utils/validations');
+const { asyncHandler, getTimeElapsed, getPostTimeElapsed } = require('./utils/utils');
+const { Router } = require("express");
 // MIDDLEWARE ***********************************************************************
 var router = express.Router();
 
@@ -15,77 +16,103 @@ router.use(restoreUser);
 const csrfProtection = csrf({ cookie: true });
 
 // ROUTES *****************************************************************
-// GET posts/:id
-// !!! PLEASE TEST THIS ROUTE !!!
+// GET /posts/:id
 router.get(
   '/:id(\\d+)',
-  csrfProtection,
   asyncHandler(async (req, res, next) => {
-    const postId = req.params.id * 1;
+    const id = (await req.params.id) * 1;
 
-    const post = await db.Post.findByPk(postId, {
-      include: [db.Comment, db.User, db.Song]
+    const post = await db.Post.findByPk(id, {
+      include: [db.Song, db.User, {
+        model: db.Comment,
+        include: db.User,
+      }],
     });
 
     if (post) {
-      res.render('post', { post, csrfToken: req.csrfToken() });
+      const timeElapsed = getPostTimeElapsed(post);
+      getTimeElapsed(post);
+      console.log(post.Comments);
+
+      const loggedInUser = {
+        profImg: res.locals.user.profileImg,
+        postId: res.locals.user.id,
+      }
+      res.render('song-post', {
+        post,
+        loggedInUser,
+        timeElapsed,
+      });
     } else {
-      const error = new Error("We could not find the post you were looking for! Sorry!");
+      const error = new Error("We could not find this post!");
       error.status = 404;
       next(error);
     }
-  }
-));
+  })
+);
 
-// GET posts/new
+
+// GET posts/new *** NEW POST FORM/PAGE
 // !!! PLEASE TEST THIS ROUTE !!!
 router.get(
   '/new',
   requireAuth,
   csrfProtection,
   asyncHandler(async (req, res, next) => {
+    const loggedInUser = {
+      profImg: res.locals.user.profileImg,
+      userId: res.locals.user.id,
+    }
+
+    const songs = await db.Song.findAll({ order: db.Song.songName});
+    console.log(songs.toString());
+
     res.render('new-post', {
-      user: {}, title: 'Create a new post!', csrfToken: req.csrfToken()
+      post: {}, songs, title: 'Create a new post',
+      csrfToken: req.csrfToken(), loggedInUser,
     });
   })
 );
 
-// POST /posts
-router.post('/',
-  // EXPRESS VALIDATOR
+// POST /posts *** CREATE NEW POST
+router.post('/new',
+  postValidators,
+  requireAuth,
   csrfProtection,
   asyncHandler(async (req, res, next) => {
+    const { title, shortDescription, content, songDetail } = req.body;
 
-  })
-)
+    const songName = songDetail.split(' by ')[0];
+    const artistName = songDetail.split(' by ')[1];
 
+    const song = await db.Song.findOne({
+      where: {
+        songName,
+        artistName
+      } 
+    })
 
-// POST /users/signup GET RID OF  THIS AFTER LOOKING !!!!!!!!!!!!!!!!!
-router.post(
-  "/signup",
-  signupValidators,
-  csrfProtection,
-  asyncHandler(async (req, res, next) => {
-    const { username, email, bio, password } = req.body;
-    // TODO: implement express-validator
+    let errors = []
+    if(!song) {
+      errors.push('Please select a song.')
+    }
+
+    const post = db.Post.build({
+      title, shortDescription, content, songId: song.id, userId: req.session.auth.userId
+    });
 
     const validatorErrors = validationResult(req);
-    // console.log("************************", validatorErrors);
-    const user = db.User.build({ username, email, bio });
-
     if (validatorErrors.isEmpty()) {
-      const hashedPassword = await bcrypt.hash(password, 12);
-      user.hashedPassword = hashedPassword;
-      await user.save();
-
-      loginUser(req, res, user);
-      return res.redirect("/");
+      await post.save();
+      req.session.save(()=> res.redirect(`/posts/${post.id}`));
+      return
     } else {
-
       const errors = validatorErrors.array().map((err) => err.msg);
-      res.render("signup", {
-        user,
-        title: "Sign up",
+      const songs = await db.Song.findAll();
+      res.render("new-post", {
+        songs,
+        post,
+        title: "Create a new post",
         errors,
         csrfToken: req.csrfToken(),
       });
@@ -93,8 +120,67 @@ router.post(
   })
 );
 
+// GET /posts/:id/edit *** SONG POST EDIT PAGE
+router.get(
+  '/:id(\\d+)/edit',
+  requireAuth,
+  csrfProtection,
+  asyncHandler(async (req, res, next) => {
+    const id = (await req.params.id) * 1;
 
+    const post = await db.Post.findByPk(id);
 
+    if (req.session.auth.userId !== id) {
+      const error = new Error('Sneaky sneaky :)))) This is not your post silly boy :))))')
+      error.status = 403;
+      return next(error);
+    }
+
+    if (post) {
+      const loggedInUser = {
+        profImg: res.locals.user.profileImg,
+        userId: res.locals.user.id,
+      }
+      res.render(`song-post-edit`, {
+        title: `EDIT POST: ${post.title}`,
+        post,
+        csrfToken: req.csrfToken(),
+        loggedInUser,
+      });
+    } else {
+      const error = new Error("We could not find this user!");
+      error.status = 404;
+      next(error);
+    }
+
+  })
+)
+
+router.post(
+  '/:id(\\d+)/edit',
+  requireAuth, // !!! CHECK HERE FOR ERRORS !!!
+  postValidators,
+  csrfProtection,
+  asyncHandler(async (req, res, next) => {
+    const { title, shortDescription, content } = req.body;
+    const id = req.params.id * 1;
+
+    const post = await db.Post.findByPk(id);
+
+    const validationErrors = validationResult(req);
+
+    if (validationErrors.isEmpty()) {
+      await post.update({ title, shortDescription, content });
+      req.session.save(() => res.redirect(`/posts/${id}`));
+      return;
+    } else {
+      const errors = validationErrors.array().map((e) => e.msg);
+      res.render(`song-post-edit`, {
+        errors, post, csrfToken: req.csrfToken(),
+      });
+    }
+  })
+)
 
 
 module.exports = router;

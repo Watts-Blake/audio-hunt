@@ -10,6 +10,8 @@ block content
     input(type="hidden" name="_csrf" value=csrfToken)
     .form_group
       label(for='username') Name
+      if errors
+        span
       input.form_input(type='text', name='username' id="username" placeholder='User Name' value=user.username autofocus=true )
     .form_group
       label(for='email') Email

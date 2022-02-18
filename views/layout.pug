@@ -21,7 +21,10 @@ html(lang="en")
             input(type="text" name="searchBar" placeHolder='Search Audio Hunt')
       nav.topCenterNav.container
         a.homeNav(href="/") Home
-        a.createAPostNav(href="/") Create
+        if authenticated
+          a.createAPostNav(href="/posts/new") Create
+        else
+          a.createAPostNav(href="/users/login") Create
         a.songPostsNav.hidden(href="/")  Collections
         a.aboutUsNav(href="/") About
       div.topRightNav.container
@@ -34,8 +37,12 @@ html(lang="en")
             a.signUpNav.btn.btn--primary--outline(href="/users/signup") Sign Up
         if authenticated
           div.profileNav
-            a.profPicNav(href=`/users/${locals.user.id}`)
-              img(src=locals.user.profileImg, alt="ProfPic")
+            if loggedInUser
+              a.profPicNav(href=`/users/${loggedInUser.userId}`)
+                img(src=loggedInUser.profImg, alt="ProfPic")
+            else
+              a.profPicNav(href=`/users/${locals.user.id}`)
+                img(src=locals.user.profileImg, alt="ProfPic")
 
 
     main.main.content
