@@ -58,7 +58,7 @@ router.get(
       userId: res.locals.user.id,
     }
 
-    const songs = await db.Song.findAll();
+    const songs = await db.Song.findAll({ order: db.Song.songName});
 
     res.render('new-post', {
       post: {}, songs, title: 'Create a new post',
@@ -73,10 +73,21 @@ router.post('/new',
   requireAuth,
   csrfProtection,
   asyncHandler(async (req, res, next) => {
-    const { title, shortDescription, content, songId } = req.body;
+    const { title, shortDescription, content, songDetail } = req.body;
+
+    const songName = songDetail.split(' by ')[0];
+    const artistName = songDetail.split(' by ')[1];
+
+    const song = await db.Song.findOne({
+      where: {
+        songName,
+        artistName
+      } 
+    })
+
 
     const post = db.Post.build({
-      title, shortDescription, content, songId, userId: req.session.auth.userId
+      title, shortDescription, content, songId: song.id, userId: req.session.auth.userId
     });
 
     const validatorErrors = validationResult(req);

@@ -20,10 +20,11 @@ block content
       label(for='content') Thoughts?
       textarea.form_input(name='content' id='content' placeholder="Tell everyone what you think!" rows="5" cols="5") #{post.content}
     .form_group
-      label(for="songId") Song
-      select.form_input(name="songId" id="songId")
+      label(for="songDetail") Song
+      input.form_input(list="songList" name="songDetail" id="songDetail")
+      datalist(id="songList")
         each song in songs
-          option(value=song.id)= song.songName
+          option(value=`${song.songName} by ${song.artistName}`)
     button.btn.btn--primary--outline.submit_button(type='submit') Post
 
   .forms_container
