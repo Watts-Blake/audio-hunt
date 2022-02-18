@@ -1,0 +1,15 @@
+.profile-pictures {
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  border: 2.5px solid #1db954;
+}
+
+#pfp-container {
+  width: 776px;
+  flex-direction: column;
+}
+
+#profile-pic-modal {
+  flex-wrap: wrap;
+}

@@ -62,19 +62,19 @@ header,
   padding: 0 1.3em;
 }
 
-.topRightNav{
+.topRightNav {
   justify-content: right;
 }
 
-.profileNav{
+.profileNav {
   width: 46px;
   margin-right: 10px;
 }
 
-.profPicNav > img{
+.profPicNav > img {
   border-radius: 50%;
   max-height: 46px;
-
+  border: 2.5px solid #1db954;
 }
 
 /*
