@@ -11,6 +11,7 @@ const {
   asyncHandler,
   getTimeElapsed,
   getJoinedDate,
+  getPostTimeElapsed,
 } = require("./utils/utils");
 const app = require("../app");
 // MIDDLEWARE ***********************************************************************
@@ -21,11 +22,7 @@ router.use(restoreUser);
 const csrfProtection = csrf({ cookie: true });
 
 // ROUTES *****************************************************************
-// PUT /users/:id
-// router.use((req, res, next) => {
-//   console.log('id',res.locals.user.id);
-//   next();
-// });
+// PUT /users/:id *** EDIT USER ACCOUNT
 router.put(
   "/users/:id(\\d+)",
   requireAuth,
@@ -54,7 +51,7 @@ router.put(
     }
   })
 );
-// DELETE /users/:id
+// DELETE /users/:id *** DELETE USER ACCOUNT
 router.delete(
   "/users/:id(\\d+)",
   requireAuth,
@@ -82,7 +79,7 @@ router.delete(
   })
 );
 
-// DELETE /posts/:id
+// DELETE /posts/:id *** DELETE A POST
 router.delete(
   '/posts/:id(\\d+)',
   requireAuth,
@@ -106,5 +103,33 @@ router.delete(
     }
   })
 )
+
+
+// POST /comments *** POST A COMMENT
+router.post(
+  '/comments',
+  // requireAuth,
+  // commentValidators,
+  // csrfProtection,
+  asyncHandler(async (req, res, next) => {
+    const { content, postId } = req.body;
+
+    const comment = db.Comment.build({ content, userId: req.session.auth.userId, postId });
+
+    const validatorErrors = validationResult(req);
+    if (validatorErrors.isEmpty()) {
+      await comment.save();
+      getPostTimeElapsed(comment);
+      comment.dataValues.username = res.locals.user.username;
+      console.log(comment);
+      return res.json(comment);
+    } else {
+      const errors = validatorErrors.array().map(e => e.msg);
+      res.status(400).json(errors)
+    }
+  })
+)
+
+
 
 module.exports = router;

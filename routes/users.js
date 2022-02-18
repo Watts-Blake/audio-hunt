@@ -45,7 +45,7 @@ router.post(
     const { email, password } = req.body;
 
     const user = await db.User.findOne({ where: { email } });
-    
+
     let errors = [];
     const validatorErrors = validationResult(req);
     if (user !== null && validatorErrors.isEmpty()) {

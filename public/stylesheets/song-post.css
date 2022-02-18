@@ -21,6 +21,7 @@
 /* COMMENTS SECTION */
 #post_body_container {
   flex-direction: column;
+  align-items: center;
 }
 #comments {
   width: 100%;
