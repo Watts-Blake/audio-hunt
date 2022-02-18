@@ -7,8 +7,8 @@ block content
         .container
           .form_group.container.pic_prof_group
             img.edit_pfp(src=user.profileImg, alt="profile-picture")
-            a(href=`/users/${user.id}/edit/image`).btn.btn--secondary--outline.btn-chng-pfp.edit_prof_format
-              buttonChange Change Profile Picture
+            a.change-profile-pic.btn.btn--secondary--outline.btn-chng-pfp.edit_prof_format
+              button Change Profile Picture
           .form_group.container.email_user_discard_group
             .container.email_user_group
               label(for='username') User Name

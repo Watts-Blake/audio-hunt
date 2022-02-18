@@ -54,6 +54,7 @@ router.put(
     }
   })
 );
+
 // DELETE /users/:id
 router.delete(
   "/users/:id(\\d+)",
