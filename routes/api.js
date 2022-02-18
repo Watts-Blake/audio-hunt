@@ -87,11 +87,9 @@ router.delete(
   '/posts/:id(\\d+)',
   requireAuth,
   asyncHandler(async (req, res, next) => {
-    console.log('start of route--------------------------------------')
     const id = req.params.id * 1;
 
     const post = await db.Post.findByPk(id);
-    console.log('database callllllllllllllllllllllllll')
     if (req.session.auth.userId !== post.userId) {
       const err = new Error("You are not authorized to delete this post.");
       err.status = 403;
@@ -99,13 +97,10 @@ router.delete(
     }
 
     if (post) {
-      console.log('before destroy-------------------------------------------')
-      await post.id.destroy();
-      console.log('after destroy ----------------------------------------------------')
+      // await post.destroy(); // CAN'T DESTROY THIS BECAUSE
       return res.json({userId: post.userId});
       // window.location.href = '/users/:userId'
     } else {
-      console.log('after ifffffffffffffffffffffffffffffffff')
       const err = new Error("Post to delete was not found");
       error.status = 404;
       next(err);
