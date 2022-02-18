@@ -18,7 +18,7 @@ block content
       span= post.Comments.length
       if isAuthorized
         a.btn.btn--secondary--outline(href=`/posts/${post.id}/edit`) Edit Post
-  .error-container
+  .comment_error_container.hidden
   .main_body.container#post_body_container
     form#comment_form
       input.form_input(type="text" name="content" placeholder="What do you think?")

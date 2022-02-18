@@ -57,12 +57,14 @@ document.addEventListener('DOMContentLoaded', e => {
       if (error.status >= 400 && error.status <= 600) {
         const errorObj = await error.json();
         // DOM MANIPULATION ERROR CONTAINER ***************
-        const errorsContainer = document.querySelector('.error-container');
+        const errorsContainer = document.querySelector('.comment_error_container');
+        errorsContainer.classList.remove('hidden');
+
         let errorsHTML = [
           `
-          <div class="alert alert-danger">
-              Something went wrong. Please try again.
-          </div>
+          <a href="/users/login" style="color: #FFFFFF; text-decoration: underline;">
+              Click me to log in first!
+          </a><span> 🙂</span>
         `,
         ];
 

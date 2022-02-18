@@ -109,7 +109,7 @@ router.delete(
 router.post(
   '/comments',
   requireAuthAPI,
-  // commentValidators,
+  commentValidators,
   // csrfProtection,
   asyncHandler(async (req, res, next) => {
     const { content, postId } = req.body;
