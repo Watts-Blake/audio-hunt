@@ -19,6 +19,7 @@ const csrfProtection = csrf({ cookie: true });
 // GET /posts/:id
 router.get(
   '/:id(\\d+)',
+  csrfProtection,
   asyncHandler(async (req, res, next) => {
     const id = (await req.params.id) * 1;
 
@@ -48,6 +49,7 @@ router.get(
         loggedInUser,
         timeElapsed,
         isAuthorized,
+        csrfToken: req.csrfToken(),
       });
     } else {
       const error = new Error("We could not find this post!");
@@ -95,7 +97,7 @@ router.post('/new',
       where: {
         songName,
         artistName
-      } 
+      }
     })
 
     let errors = []
