@@ -120,8 +120,9 @@ router.post(
     if (validatorErrors.isEmpty()) {
       await comment.save();
       getPostTimeElapsed(comment);
+      comment.dataValues.userId = res.locals.user.id;
       comment.dataValues.username = res.locals.user.username;
-      console.log(comment);
+      comment.dataValues.profileImg = res.locals.user.profileImg;
       return res.json(comment);
     } else {
       const errors = validatorErrors.array().map(e => e.msg);
