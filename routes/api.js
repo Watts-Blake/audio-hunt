@@ -97,9 +97,8 @@ router.delete(
     }
 
     if (post) {
-      // await post.destroy(); // CAN'T DESTROY THIS BECAUSE
+      await post.destroy(); // CAN'T DESTROY THIS BECAUSE
       return res.json({userId: post.userId});
-      // window.location.href = '/users/:userId'
     } else {
       const err = new Error("Post to delete was not found");
       error.status = 404;

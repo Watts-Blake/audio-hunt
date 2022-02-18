@@ -114,7 +114,7 @@ router.get(
 
     const post = await db.Post.findByPk(id);
 
-    if (req.session.auth.userId !== id) {
+    if (req.session.auth.userId !== post.userId) {
       const error = new Error('Sneaky sneaky :)))) This is not your post silly boy :))))')
       error.status = 403;
       return next(error);

@@ -7,9 +7,9 @@ const deletePostIdFetch = async (postId) => {
     if (!res.ok) {
       throw res;
     }
-    const userId = await res.json();
-    const id = { userId }
-    window.location.href = `/users/${id}`;
+    const { userId } = await res.json();
+    console.log(userId);
+    window.location.href = `/users/${userId}`;
   } catch (err) {
     const error = await err.json();
     console.log(error);
