@@ -104,7 +104,22 @@ const postValidators = [
     .exists({ checkFalsy: true })
     .withMessage("Make sure to add a short description!")
     .isLength({ max: 255 })
-    .withMessage('Your short description must be shorter than 255 characters...')
+    .withMessage('Your short description must be shorter than 255 characters...'),
+  check('songDetail')
+    .exists({ checkFalsy: true})
+    .withMessage("Please select a song")
+    .custom((value) => {
+      const songName = value.split(' by ')[0];
+      const artistName = value.split(' by ')[1]; 
+      return db.Song.findOne({ where: { songName, artistName } })
+        .then((song) => {
+          if (song) {
+              return true
+          } else {
+              return Promise.reject('Please select a song from the input list (AND please do not modify the selected item...)');
+          }
+        });
+    }),
 ];
 
 const commentValidators = [
