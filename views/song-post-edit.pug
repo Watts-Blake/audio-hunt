@@ -2,13 +2,13 @@ extends layout.pug
 
 block content
   .container
-          h1= title
+    h1= title
   if errors
     .error_container
       ul
         each error in errors
           li: small= error
-  form(action='/posts/new' method='post')
+  form(action=`/posts/${post.id}/edit` method='POST')
     input(type="hidden" name="_csrf" value=csrfToken)
     .form_group
       label(for='title') Title
@@ -19,9 +19,7 @@ block content
     .form_group
       label(for='content') Thoughts?
       textarea.form_input(name='content' id='content' placeholder="Tell everyone what you think!" rows="5" cols="5") #{post.content}
-    .form_group
-      label(for="songId") Song
-      select.form_input(name="songId" id="songId")
-        each song in songs
-          option(value=song.id)= song.songName
-    button.btn.btn--primary--outline.submit_button(type='submit') Post
+    button.btn.btn--primary--outline.submit_button(type='submit') Confirm Changes
+    button.btn.btn--red.submit_button#delete_post_button(type="button") Delete Post
+  include includes/modal-confirm-delete
+  script(src="/javascripts/post-delete.js")

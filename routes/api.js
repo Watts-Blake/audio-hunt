@@ -32,30 +32,24 @@ router.put(
   csrfProtection,
   editProfileValidators,
   asyncHandler(async (req, res, next) => {
-    console.log("fuck yo bishhhhhhh");
     const { username, header, email, bio, profileImg } = req.body;
     const userId = req.params.id * 1;
-    console.log('before user await user')
 
     const user = await db.User.findByPk(userId);
-    console.log('after user await')
+
     if (req.session.auth.userId !== user.id) {
-      console.log('after if req.session')
       const err = new Error("You are not authorized to delete this user.");
       err.status = 403;
       return next(err);
     }
 
-    console.log('before declaration of vaildation errors')
     const validationErrors = validationResult(req);
 
     if (validationErrors.isEmpty()) {
-      console.log('inside validation errors empty')
       await user.update({ username, header, email, bio, profileImg });
       return res.json("Update successful.");
     } else {
       const errors = validationErrors.array().map((e) => e.msg);
-      console.log('if validations are not empty')
       res.status(400).json(errors)
     }
   })
@@ -87,5 +81,32 @@ router.delete(
     }
   })
 );
+
+// DELETE /posts/:id
+router.delete(
+  '/posts/:id(\\d+)',
+  requireAuth,
+  asyncHandler(async (req, res, next) => {
+    const id = req.params.id * 1;
+
+    const post = await db.Post.findByPk(id);
+
+    if (req.session.auth.userId !== post.userId) {
+      const err = new Error("You are not authorized to delete this post.");
+      err.status = 403;
+      return next(err);
+    }
+
+    if (post) {
+      await post.destroy();
+      return res.json('success');
+      // window.location.href = '/users/:userId'
+    } else {
+      const err = new Error("Post to delete was not found");
+      error.status = 404;
+      next(err);
+    }
+  })
+)
 
 module.exports = router;

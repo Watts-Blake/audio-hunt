@@ -100,7 +100,7 @@ router.post(
       await user.save();
 
       loginUser(req, res, user);
-      req.session.save(()=> {res.redirect('/')})
+      req.session.save(() => res.redirect('/'));
       return
     } else {
       const errors = validatorErrors.array().map((err) => err.msg);
@@ -197,38 +197,6 @@ router.route("/:id(\\d+)/edit").get(
   })
 );
 
-//-----------------------------------------DELETE IF PUT WORKS
-// router.route("/:id(\\d+)/edit").post(
-//   requireAuth,
-//   csrfProtection,
-//   signupValidators,
-//   asyncHandler(async (req, res, next) => {
-//     const { username, header, email, bio, profileImg } = req.body;
-//     const userId = req.params.id * 1;
-//     console.log("we made it");
 
-//     const user = await db.User.findByPk(userId);
-
-//     const validationErrors = validationResult(req);
-
-//     if (validationErrors.isEmpty()) {
-//       console.log("we made it in the if statement -----------------");
-//       await user.update({ username, header, email, bio, profileImg });
-//       return res.redirect(`/users/${user.id}`);
-//     } else {
-//       // are we going to have auth trouble here??
-//       console.log(
-//         "we made it in the elseeeeeeeeeeeee statement -----------------"
-//       );
-//       const errors = validationErrors.array().map((e) => e.msg);
-//       res.render("profile-edit", {
-//         title: "Edit Your Profile",
-//         user,
-//         errors,
-//         csrfToken: req.csrfToken(),
-//       });
-//     }
-//   })
-// );
 
 module.exports = router;

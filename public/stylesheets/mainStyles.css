@@ -149,6 +149,33 @@ option {
   margin-top: 2px;
 }
 
+/* red button */
+.btn-container {
+  flex-direction: row;
+  gap: 20px;
+}
+
+.btn--red {
+  border-color: #ca1b1b;
+  color: #ca1b1b;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, margin-top 0.2s;
+}
+
+.btn--red:hover {
+  background: #ca1b1b;
+  border-color: #ca1b1b;
+  color: #ffffff;
+}
+
+.btn--red:active {
+  margin-top: 2px;
+  background: #ca1b1b;
+}
+.btn--red:active {
+  margin-top: 2px;
+}
+
+
 /* MEDIA CARDS (POST CARDS ON THE HOME PAGE) *************************************/
 
 /*
@@ -308,29 +335,4 @@ option {
   flex-direction: column;
   gap: 20px;
   text-align: center;
-}
-
-.btn-container {
-  flex-direction: row;
-  gap: 20px;
-}
-
-.btn--red {
-  border-color: #900303;
-  color: #900303;
-  transition: background 0.2s, color 0.2s, border-color 0.2s, margin-top 0.2s;
-}
-
-.btn--red:hover {
-  background: #900303;
-  border-color: #900303;
-  color: #ffffff;
-}
-
-.btn--red:active {
-  margin-top: 2px;
-  background: #900303;
-}
-.btn--red:active {
-  margin-top: 2px;
 }
