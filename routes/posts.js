@@ -2,6 +2,7 @@
 var express = require("express");
 const csrf = require("csurf");
 const { validationResult } = require("express-validator");
+const Sequelize = require('sequelize')
 
 // MODULE IMPORTS *******************************************************************
 const { loginUser, restoreUser, requireAuth, logoutUser } = require("../auth");
@@ -28,9 +29,8 @@ router.get(
         include: db.User,
       }],
     });
-
     let isAuthorized = true;
-    if (req.session.auth.userId !== post.userId) {
+    if (!req?.session?.auth?.userId || req.session.auth.userId !== post.userId ) {
       isAuthorized = false;
     }
 
@@ -41,7 +41,7 @@ router.get(
 
       const loggedInUser = {
         profImg: res.locals.user.profileImg,
-        postId: res.locals.user.id,
+        userId: res.locals.user.id,
       }
       res.render('song-post', {
         post,
@@ -70,8 +70,15 @@ router.get(
       userId: res.locals.user.id,
     }
 
-    const songs = await db.Song.findAll({ order: db.Song.songName});
-    console.log(songs.toString());
+    const songs = await db.Song.findAll({
+      order: [
+        [
+          Sequelize.fn('lower', Sequelize.col('songName')),
+          'ASC',
+        ],
+      ],
+    });
+    
 
     res.render('new-post', {
       post: {}, songs, title: 'Create a new post',
@@ -97,11 +104,6 @@ router.post('/new',
         artistName
       } 
     })
-
-    let errors = []
-    if(!song) {
-      errors.push('Please select a song.')
-    }
 
     const post = db.Post.build({
       title, shortDescription, content, songId: song.id, userId: req.session.auth.userId
