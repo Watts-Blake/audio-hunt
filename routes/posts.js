@@ -24,28 +24,15 @@ router.get(
     const id = (await req.params.id) * 1;
 
     const post = await db.Post.findByPk(id, {
+      order: [[{ model: db.Comment }, "createdAt", "DESC"]],
       include: [db.Song, db.User, {
-        order: [[{ model: db.Comment }, "createdAt", "DESC"]],
         model: db.Comment,
         include: db.User,
       }],
     });
 
-    // ??? HOW TO ORDER COMMENTS BY createdAt ???
-
-    // const comments = await db.Comment.findAll({
-    //   order: [["createdAt", "DESC"]],
-    //   where: { postId: id },
-    //   include: [db.User, {
-    //     model: db.Post,
-    //     include: db.Song,
-    //   }]
-    // });
-
-    // console.log(comments.Post);
-
     let isAuthorized = true;
-    if (!req?.session?.auth?.userId || req.session.auth.userId !== post.userId ) {
+    if (!req?.session?.auth?.userId || req?.session?.auth?.userId !== post?.userId ) {
       isAuthorized = false;
     }
 
