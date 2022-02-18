@@ -90,7 +90,6 @@ router.delete(
     const id = req.params.id * 1;
 
     const post = await db.Post.findByPk(id);
-
     if (req.session.auth.userId !== post.userId) {
       const err = new Error("You are not authorized to delete this post.");
       err.status = 403;
@@ -98,9 +97,8 @@ router.delete(
     }
 
     if (post) {
-      await post.destroy();
-      return res.json('success');
-      // window.location.href = '/users/:userId'
+      await post.destroy(); // CAN'T DESTROY THIS BECAUSE
+      return res.json({userId: post.userId});
     } else {
       const err = new Error("Post to delete was not found");
       error.status = 404;

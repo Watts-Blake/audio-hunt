@@ -134,8 +134,6 @@ router.get(
       ],
     });
 
-
-
     let isAuthorized = true;
     if (req.session.auth.userId !== id) {
       isAuthorized = false;

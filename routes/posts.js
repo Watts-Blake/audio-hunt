@@ -29,6 +29,11 @@ router.get(
       }],
     });
 
+    let isAuthorized = true;
+    if (req.session.auth.userId !== post.userId) {
+      isAuthorized = false;
+    }
+
     if (post) {
       const timeElapsed = getPostTimeElapsed(post);
       getTimeElapsed(post);
@@ -42,6 +47,7 @@ router.get(
         post,
         loggedInUser,
         timeElapsed,
+        isAuthorized,
       });
     } else {
       const error = new Error("We could not find this post!");
@@ -130,7 +136,7 @@ router.get(
 
     const post = await db.Post.findByPk(id);
 
-    if (req.session.auth.userId !== id) {
+    if (req.session.auth.userId !== post.userId) {
       const error = new Error('Sneaky sneaky :)))) This is not your post silly boy :))))')
       error.status = 403;
       return next(error);

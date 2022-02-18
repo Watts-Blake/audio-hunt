@@ -16,6 +16,8 @@ block content
       span= timeElapsed
       a.btn.btn--primary--outline(href=post.Song.songUrl target="_blank") Listen
       span= post.Comments.length
+      if isAuthorized
+        a.btn.btn--secondary--outline(href=`/posts/${post.id}/edit`) Edit Post
   .main_body.container#post_body_container
     input(type="text" placeholder="What do you think?")
     button Send

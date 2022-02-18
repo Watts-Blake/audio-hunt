@@ -21,5 +21,5 @@ block content
       textarea.form_input(name='content' id='content' placeholder="Tell everyone what you think!" rows="5" cols="5") #{post.content}
     button.btn.btn--primary--outline.submit_button(type='submit') Confirm Changes
     button.btn.btn--red.submit_button#delete_post_button(type="button") Delete Post
-  include includes/modal-confirm-delete
+  include includes/modal-post-delete
   script(src="/javascripts/post-delete.js")
