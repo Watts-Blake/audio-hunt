@@ -78,7 +78,7 @@ router.get(
         ],
       ],
     });
-    
+
 
     res.render('new-post', {
       post: {}, songs, title: 'Create a new post',
@@ -102,7 +102,7 @@ router.post('/new',
       where: {
         songName,
         artistName
-      } 
+      }
     })
 
     const post = db.Post.build({
