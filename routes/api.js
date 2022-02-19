@@ -2,6 +2,7 @@
 var express = require("express");
 const csrf = require("csurf");
 const { validationResult } = require("express-validator");
+const sequelize = require("sequelize");
 
 // MODULE IMPORTS *******************************************************************
 const { loginUser, restoreUser, requireAuth, requireAuthAPI, logoutUser } = require("../auth");
@@ -187,6 +188,38 @@ router.delete(
 
 )
 
+
+// GET api/search/:postTitle  Search Function
+router.get('/search/:songName',
+  asyncHandler(
+ async (req, res) => {
+  const songName = req.params.songName;
+  const posts = await db.Post.findAll({
+    include: {
+      model: db.Song,
+      where: {
+        songName: {
+          // get results based on searching words (case insensitive)
+          [sequelize.Op.iLike] :`\%${songName}\%`
+        }
+      }
+    }
+  });
+
+
+  if (posts) {
+    //WIP:  need to display the result...
+    return res.status.json(posts)
+
+  } else {
+    const err = new Error("The posts you are looking for are not found.");
+    error.status = 404;
+    next(err);
+  }
+
+  
+
+}))
 
 
 module.exports = router;
