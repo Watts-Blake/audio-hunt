@@ -75,8 +75,8 @@
 
 /* COMMENT PREVIEWS *******************************************/
 
-.comment_preview {
-  height: 85px;
+a.comment_preview.media {
+  min-height: 70px;
   margin: 10px;
 
   border-bottom: 1px solid #b3b3b3;
