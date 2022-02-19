@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', e => {
+  /* CREATING A NEW COMMENT ************************************
+  *************************************************************/
   const commentForm = document.getElementById('comment_form');
 
   document.getElementById('send_button').addEventListener('click', async e => {
@@ -42,27 +44,31 @@ document.addEventListener('DOMContentLoaded', e => {
       newCommentContainer.classList.add('media');
       newCommentContainer.setAttribute('id', 'comments');
       newCommentContainer.innerHTML = `
-      <a class="profPicNav" href="/users/${userId}">
-        <img class="comment_pfp" src="${profileImg}", alt="ProfPic">
-      </a>
-      <p>${content}</p>
-      <span>${username}</span>
-      <span>${timeElapsed}</span>
+        <a class="profPicNav" href="/users/${userId}">
+          <img class="comment_pfp" src="${profileImg}", alt="ProfPic">
+        </a>
+        <p>${content}</p>
+        <span>${username}</span>
+        <span>${timeElapsed}</span>
       `;
 
-      commentSection.append(newCommentContainer);
+      const collection = Array.from(commentSection.children);
+      collection.unshift(newCommentContainer);
+      collection.forEach(e => commentSection.append(e));
 
     } catch (error) {
       // IF FETCH FAILS ***********************************
       if (error.status >= 400 && error.status <= 600) {
         const errorObj = await error.json();
         // DOM MANIPULATION ERROR CONTAINER ***************
-        const errorsContainer = document.querySelector('.error-container');
+        const errorsContainer = document.querySelector('.comment_error_container');
+        errorsContainer.classList.remove('hidden');
+
         let errorsHTML = [
           `
-          <div class="alert alert-danger">
-              Something went wrong. Please try again.
-          </div>
+          <a href="/users/login" style="color: #FFFFFF; text-decoration: underline;">
+              Click me to log in first!
+          </a><span> 🙂</span>
         `,
         ];
 
@@ -84,4 +90,24 @@ document.addEventListener('DOMContentLoaded', e => {
     }
   });
 
+
+  /* EDITING A COMMENT ****************************************
+  *************************************************************/
+  // WIP
+  document.querySelectorAll('#edit_comment').forEach(btn => {
+    btn.addEventListener('click', e => {
+      alert('bruh');
+    });
+  });
+
+  /* DELETING A COMMENT ****************************************
+  *************************************************************/
+  document.querySelectorAll('#delete_comment').forEach(btn => {
+    btn.addEventListener('click', e => {
+      if (window.confirm('Are you sure you want to delete this comment?')) {
+        // ??? HOW TO GET COMMENT ID ???
+        console.log('this is the delete button');
+      }
+    });
+  });
 });

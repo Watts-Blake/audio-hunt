@@ -122,6 +122,10 @@ router.get(
     const id = (await req.params.id) * 1;
 
     const user = await db.User.findByPk(id, {
+      order: [
+        [{ model: db.Comment }, "createdAt", "DESC"],
+        [{ model: db.Post }, "createdAt", "DESC"],
+      ],
       include: [
         {
           model: db.Comment,

@@ -113,7 +113,7 @@ const songValidator = [
     .withMessage("Please select a song")
     .custom((value) => {
       const songName = value.split(' by ')[0];
-      const artistName = value.split(' by ')[1]; 
+      const artistName = value.split(' by ')[1];
       return db.Song.findOne({ where: { songName, artistName } })
         .then((song) => {
           if (song) {
@@ -129,7 +129,7 @@ const songValidator = [
 const commentValidators = [
   check('content')
     .exists({ checkFalsy: true })
-    .withMessage('Please provide content for your comment')
+    .withMessage('Make sure you type something first! 🙂')
 ];
 
 module.exports = {
