@@ -11,8 +11,9 @@ body {
 
 h1 {
   text-align: center;
-  margin: 25px;
-  font-size: 18px;
+  margin: 40px 0;
+  font-weight : 700;
+  font-size: 2em;
 }
 
 h2 {
@@ -40,6 +41,7 @@ header {
 
 textarea {
   resize: vertical;
+  white-space: pre-wrap;
 }
 
 select {

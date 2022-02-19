@@ -7,6 +7,10 @@
   width: 38px;
 }
 
+#comment_form {
+  gap: 35px;
+}
+
 .comment_content {
   width: 100%;
   display: inline-block;
