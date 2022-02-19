@@ -9,4 +9,35 @@ extends layout
 
 block content
   h1= title
-  p Welcome to your home page, fill this out already
+  .main_body.container
+    .user_posts.container
+      p Most Popular Posts
+      each post in posts
+        a(href=`/posts/${post.id}`).media
+          img.media__img(src=post.Song.albumImgUrl)
+          .media__body
+            h3= post.title
+            span= post.shortDescription
+            .media__body__bottom
+              small= post.Song.artistName
+              small= post.Song.albumName
+          .comment_count.container
+            span= post.Comments.length
+
+    //- .container.post_media_footer
+    //-   span= post.Song.artistName
+    //-   span= post.Song.albumName
+    //-   span= post.Song.releaseDate
+    //-   span= post.User.username
+      //- span= timeElapsed
+    //- .user_comments_preview.container
+    //-   each comment in userComments
+    //-     a.comment_preview.media(href=`/posts/${comment.postId}`)
+    //-       .media_body
+    //-         //- ::before - speech bubble
+    //-         p= comment.content
+    //-         small= comment.Post.title
+    //-       .time_elapsed
+    //-         span= comment.dataValues.timeElapsed
+    //-         br
+    //-         small ago
