@@ -5,7 +5,7 @@ const sequelize = require("sequelize")
 
 // MODULE IMPORTS *******************************************************************
 const { loginUser, restoreUser, requireAuth, logoutUser } = require("../auth");
-const { asyncHandler, getTimeElapsed, getJoinedDate } = require('./utils/utils');
+const { asyncHandler, getPostTimeElapsed } = require('./utils/utils');
 
 const db = require("../db/models");
 
@@ -22,35 +22,34 @@ router.get(
   "/",
   asyncHandler(async (req, res, next)  => {
     const posts = await db.Post.findAll({
+      // order: [[{model: db.Comment}, "createdAt", "DESC"]],
       include: [db.User, db.Song, db.Comment],
     });
 
-    // const comments = await db.Comments.findAll({
-
-    // })
 
     posts.sort((a, b) => {
       return b.Comments.length - a.Comments.length
     });
 
     posts.length = 10
+    
+    const comments = await db.Comment.findAll(
+      {
+        order: [["createdAt", "DESC"]],
+        limit: 10
+      }
+    );
+      
+    comments.forEach(comment => {
+      getPostTimeElapsed(comment);
 
-    // comments.sort((a, b) => {
-    //   return a.Comments.
-    // })
-
-
-    // const recentPost = await db.Post.findAll({
-    //   include: [db.User, db.Song, db.Comment],
-    //   order: [[{ model: db.Comment }, "createdAt", "DESC"]],
-    //   limit: 10
-    // });
+    })
 
     
-
     res.render('index', { 
       title: "Audio Hunt",
-      posts
+      posts,
+      comments
      });
   })
 )
