@@ -4,8 +4,12 @@ block content
   include includes/profile-banner.pug
 
   div.main_body_titles.container
-    h2 Your Posts
-    h2 Your Comments
+    if isAuthorized
+      h2 Your Posts
+      h2 Your Comments
+    else
+      h2 #{user.username}'s Posts
+      h2 #{user.username}'s Comments
   .main_body.container
     .user_posts.container
       each post in userPosts
