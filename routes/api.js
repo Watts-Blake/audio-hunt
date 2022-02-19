@@ -209,7 +209,7 @@ router.get('/search/:songName',
 
   if (posts) {
     //WIP:  need to display the result...
-    return res.status.json(posts)
+    return res.status(200).json(posts)
 
   } else {
     const err = new Error("The posts you are looking for are not found.");
