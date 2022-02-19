@@ -32,19 +32,22 @@ block content
   .main_body.container#post_body_container
     each comment in post.Comments
       //- if a user's profile is deactivated, don't show their comment
-      .media#comments
-        a.profPicNav(href=`/users/${comment.User.id}`)
-          img.comment_pfp(src=comment.User.profileImg, alt="ProfPic")
-        p= comment.content
-        span= comment.User.username
-        span= comment.dataValues.timeElapsed
-        if loggedInUser.userId === comment.User.id
-          .form_group
-            a#edit_comment.btn.btn--secondary--outline Edit
-            a#delete_comment.btn.btn--red Delete
-        else if loggedInUser.userId === post.User.id
-          .form_group
-            a#delete_comment.btn.btn--red Delete
+      .media#comments.container
+        .container.comment_left
+          a.profPicNav.comments_pfp(href=`/users/${comment.User.id}`)
+            img.comment_pfp(src=comment.User.profileImg, alt="ProfPic")
+          span= comment.User.usernamemin
+        .container.comment_content
+          p.container(disabled name="", cols="30", rows="3")= comment.content
+        .container
+          span= comment.dataValues.timeElapsed
+          if loggedInUser.userId === comment.User.id
+            .form_group
+              a.btn#edit_comment.edit_icon &#9881
+              a.btn#delete_comment.delete_icon &#x1f5d1;
+          else if loggedInUser.userId === post.User.id
+            .form_group
+              a.btn#delete_comment.delete_icon &#x1f5d1;
 
 
   script(src="/javascripts/post-comments.js" type="module")

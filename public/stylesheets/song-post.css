@@ -7,7 +7,29 @@
   width: 38px;
 }
 
-.settings_icon:hover {
+.comment_content {
+  min-width: 60%;
+  display: inline-block;
+  min-height: 60px;
+}
+#comments_container {
+  width: 70%;
+  min-height: 200px;
+}
+.comments_pfp {
+  justify-self: start;
+}
+.comment_left {
+  width: 100px;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.settings_icon:hover,
+.edit_icon:hover,
+.delete_icon:hover {
   font-weight: 600;
 }
 .edit_post {
@@ -93,4 +115,14 @@ textarea.container {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.delete_icon,
+.edit_icon {
+  font-size: 20px;
+  border: none;
+}
+
+.delete_icon {
+  color: #ca1b1b;
 }
