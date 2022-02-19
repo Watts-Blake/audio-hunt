@@ -34,7 +34,10 @@ const signupValidators = [
         throw new Error('Password confirmation does not match... 🙂');
       }
       return true;
-    })
+    }),
+    check("yearsOfAge")
+      .exists({ checkFalsy: true })
+      .withMessage('Please check in the age confirmation')
 ];
 
 const editProfileValidators = [
@@ -104,7 +107,10 @@ const postValidators = [
     .exists({ checkFalsy: true })
     .withMessage("Make sure to add a short description!")
     .isLength({ max: 255 })
-    .withMessage('Your short description must be shorter than 255 characters...'),
+    .withMessage('Your short description must be shorter than 255 characters...')
+];
+
+const songValidator = [
   check('songDetail')
     .exists({ checkFalsy: true})
     .withMessage("Please select a song")
@@ -120,7 +126,8 @@ const postValidators = [
           }
         });
     }),
-];
+]
+
 
 const commentValidators = [
   check('content')
@@ -134,4 +141,5 @@ module.exports = {
   editProfileValidators,
   postValidators,
   commentValidators,
+  songValidator,
 };

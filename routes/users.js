@@ -42,10 +42,10 @@ router.post(
   csrfProtection,
   loginValidators,
   asyncHandler(async (req, res) => {
-    const { email, password } = req.body;
+    const { email } = req.body;
 
     const user = await db.User.findOne({ where: { email } });
-
+    
     let errors = [];
     const validatorErrors = validationResult(req);
     if (user !== null && validatorErrors.isEmpty()) {
@@ -139,7 +139,7 @@ router.get(
     });
 
     let isAuthorized = true;
-    if (!req?.session?.auth?.userId || req.session.auth.userId !== id ) {
+    if (req?.session?.auth?.userId !== id) {
       isAuthorized = false;
     }
 

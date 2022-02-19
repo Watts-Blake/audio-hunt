@@ -1,10 +1,11 @@
 // PACKAGE IMPORTS ******************************************************************
 var express = require("express");
 const bcrypt = require("bcryptjs");
-// const asyncHandler = require('express-async-handler');
+const sequelize = require("sequelize")
+
 // MODULE IMPORTS *******************************************************************
 const { loginUser, restoreUser, requireAuth, logoutUser } = require("../auth");
-const { asyncHandler, getTimeElapsed, getJoinedDate } = require('./utils/utils');
+const { asyncHandler, getPostTimeElapsed } = require('./utils/utils');
 
 const db = require("../db/models");
 
@@ -21,21 +22,41 @@ router.get(
   "/",
   asyncHandler(async (req, res, next)  => {
     const posts = await db.Post.findAll({
-      include: [db.User, db.Comment, db.Song]
+      // order: [[{model: db.Comment}, "createdAt", "DESC"]],
+      include: [db.User, db.Song, db.Comment],
     });
 
-    res.render('index', { posts });
 
-    // return res.render("index", {
-    //   title: "Audio Hunt",
-    //   authenticated: res.locals.authenticated,
-    // });
+    posts.sort((a, b) => {
+      return b.Comments.length - a.Comments.length
+    });
+
+    posts.length = 10
+    
+    const comments = await db.Comment.findAll(
+      {
+        order: [["createdAt", "DESC"]],
+        limit: 10
+      }
+    );
+      
+    comments.forEach(comment => {
+      getPostTimeElapsed(comment);
+
+    })
+
+    
+    res.render('index', { 
+      title: "Audio Hunt",
+      posts,
+      comments
+     });
   })
 )
 
 // GET /random
-router.get("/random", requireAuth, (req, res) => {
-  res.send("urniujknfvedjnkrcszfvbzdbxgdfgxcfvefdvsebfdgg");
+router.get("/about",(req, res) => {
+  res.render('about')
 });
 
 module.exports = router;

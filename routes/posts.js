@@ -7,7 +7,7 @@ const Sequelize = require('sequelize')
 // MODULE IMPORTS *******************************************************************
 const { loginUser, restoreUser, requireAuth, logoutUser } = require("../auth");
 const db = require("../db/models");
-const { postValidators } = require('./utils/validations');
+const { postValidators, songValidator } = require('./utils/validations');
 const { asyncHandler, getTimeElapsed, getPostTimeElapsed } = require('./utils/utils');
 const { Router } = require("express");
 // MIDDLEWARE ***********************************************************************
@@ -99,6 +99,7 @@ router.get(
 // POST /posts *** CREATE NEW POST
 router.post('/new',
   postValidators,
+  songValidator,
   requireAuth,
   csrfProtection,
   asyncHandler(async (req, res, next) => {
@@ -147,7 +148,7 @@ router.get(
 
     const post = await db.Post.findByPk(id);
 
-    if (req.session.auth.userId !== post.userId) {
+    if (req?.session?.auth?.userId !== post?.userId) {
       const error = new Error('Sneaky sneaky :)))) This is not your post silly boy :))))')
       error.status = 403;
       return next(error);

@@ -33,8 +33,8 @@ router.put(
 
     const user = await db.User.findByPk(userId);
 
-    if (req.session.auth.userId !== user.id) {
-      const err = new Error("You are not authorized to edit this user.");
+    if (req.session.auth.userId !== user?.id) {
+      const err = new Error("You are not authorized to delete this user.");
       err.status = 403;
       return next(err);
     }
@@ -59,7 +59,7 @@ router.delete(
 
     const user = await db.User.findByPk(userId);
 
-    if (req.session.auth.userId !== user.id) {
+    if (req.session.auth.userId !== user?.id) {
       const err = new Error("You are not authorized to delete this user.");
       err.status = 403;
       return next(err);
@@ -86,7 +86,7 @@ router.delete(
     const id = req.params.id * 1;
 
     const post = await db.Post.findByPk(id);
-    if (req.session.auth.userId !== post.userId) {
+    if (req.session.auth.userId !== post?.userId) {
       const err = new Error("You are not authorized to delete this post.");
       err.status = 403;
       return next(err);
