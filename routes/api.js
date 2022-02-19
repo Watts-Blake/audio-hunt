@@ -93,7 +93,7 @@ router.delete(
     }
 
     if (post) {
-      await post.destroy(); // CAN'T DESTROY THIS BECAUSE
+      await post.destroy();
       return res.json({userId: post.userId});
     } else {
       const err = new Error("Post to delete was not found");
@@ -132,7 +132,28 @@ router.post(
 
 // PUT api/comments/:id *** EDIT A COMMENT
 router.delete(
-  '/comments/:id',
+  '/comments/:id(\\d+)',
+  requireAuthAPI,
+  asyncHandler(async (req, res, next) => {
+    const id = req.params.id;
+
+    const comment = await db.Comment.findByPk(id);
+
+    if (req.session.auth.userId !== comment.userId) {
+      const err = new Error("You are not authorized to delete this comment.");
+      err.status = 403;
+      return next(err);
+    }
+
+    if (comment) {
+      await comment.destroy();
+      res.status(204).json();
+    } else {
+      const err = new Error("The comment you wanted to delete was not found.");
+      error.status = 404;
+      next(err);
+    }
+  })
 
 )
 

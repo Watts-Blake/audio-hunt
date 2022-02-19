@@ -103,10 +103,30 @@ document.addEventListener('DOMContentLoaded', e => {
   /* DELETING A COMMENT ****************************************
   *************************************************************/
   document.querySelectorAll('#delete_comment').forEach(btn => {
-    btn.addEventListener('click', e => {
+    btn.addEventListener('click', async e => {
+      const commentId = e.currentTarget.dataset.comment;
+
       if (window.confirm('Are you sure you want to delete this comment?')) {
-        // ??? HOW TO GET COMMENT ID ???
-        console.log('this is the delete button');
+        console.log(commentId);
+        try {
+          const res = await fetch(`/api/comments/${commentId}`, {
+            method: 'delete',
+          });
+
+          if (res.status === 403) {
+            return alert('You don\'t have permission to delete this! >:(');
+          } else if (!res.ok) {
+            console.log('error from fetch response');
+            throw res;
+          }
+
+          const comment = document.querySelector(`#comments[data-comment="${commentId}"]`)
+          comment.remove();
+
+        } catch (err) {
+          alert('Something went wrong while deleting your comment! :( Please check your internet connection and try again.');
+
+        }
       }
     });
   });

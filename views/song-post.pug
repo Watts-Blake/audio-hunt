@@ -32,8 +32,7 @@ block content
   .main_body.container#post_body_container
     each comment in post.Comments
       //- if a user's profile is deactivated, don't show their comment
-      .media#comments.container
-
+      .media#comments.container(data-comment=comment.id)
         .container.comment_left
           a.profPicNav.comments_pfp(href=`/users/${comment.User.id}`)
             img.comment_pfp(src=comment.User.profileImg, alt="ProfPic")
@@ -45,10 +44,10 @@ block content
           if loggedInUser.userId === comment.User.id
             .form_group
               a.btn#edit_comment.edit_icon &#9881
-              a.btn#delete_comment.delete_icon &#x1f5d1;
+              a(data-comment=comment.id).btn#delete_comment.delete_icon &#x1f5d1;
           else if loggedInUser.userId === post.User.id
             .form_group
-              a.btn#delete_comment.delete_icon &#x1f5d1;
+              a(data-comment=comment.id).btn#delete_comment.delete_icon &#x1f5d1;
           span= comment.dataValues.timeElapsed
 
 

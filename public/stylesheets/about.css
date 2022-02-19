@@ -1,0 +1,42 @@
+.about_container {
+  gap: 10px;
+  color: #ffffff;
+}
+
+.about_container_each {
+  flex-direction: column;
+  height: 220px;
+  width: 200px;
+}
+
+.about_outline {
+  background-color: #191414;
+  border-radius: 3em;
+  border: 2.5px solid #1db954;
+}
+
+.about_pfp {
+  height: 100px;
+  width: 100px;
+  border-radius: 100%;
+  border: 2.5px solid #1db954;
+}
+
+.about_name {
+  padding: 5px;
+}
+
+.about_links {
+  font-size: 12px;
+  color: #b3b3b3;
+}
+.about_links:hover {
+  font-weight: bold;
+}
+.github:hover {
+  color: #ffffff;
+}
+
+.linkedin:hover {
+  color: #0077b5;
+}
