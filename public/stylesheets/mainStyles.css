@@ -223,6 +223,17 @@ option {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  text-overflow: ellipsis;
+}
+.comment_preview_p {
+  max-width: 140px;
+  overflow-wrap: normal;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.comment_preview_p::after {
+  /* content: '...'; */
 }
 .comment_count {
   min-width: 75px;

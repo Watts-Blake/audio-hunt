@@ -34,7 +34,7 @@ router.put(
     const user = await db.User.findByPk(userId);
 
     if (req.session.auth.userId !== user.id) {
-      const err = new Error("You are not authorized to delete this user.");
+      const err = new Error("You are not authorized to edit this user.");
       err.status = 403;
       return next(err);
     }
@@ -81,7 +81,7 @@ router.delete(
 // DELETE api/posts/:id *** DELETE A POST
 router.delete(
   '/posts/:id(\\d+)',
-  requireAuth,
+  requireAuthAPI,
   asyncHandler(async (req, res, next) => {
     const id = req.params.id * 1;
 
@@ -131,11 +131,41 @@ router.post(
 )
 
 // PUT api/comments/:id *** EDIT A COMMENT
+router.put(
+  '/comments/:id(\\d+)',
+  requireAuthAPI,
+  // csrfProtection,
+  commentValidators,
+  asyncHandler(async (req, res, next) => {
+    const id = req.params.id * 1;
+    const { content } = req.body;
+
+    const comment = await db.Comment.findByPk(id);
+
+    if (req.session.auth.userId !== comment.userId) {
+      const err = new Error("You are not authorized to edit this comment!");
+      err.status = 403;
+      return next(err);
+    }
+
+    const validationErrors = validationResult(req);
+
+    if (validationErrors.isEmpty()) {
+      await comment.update({ content });
+      return res.status(201).json("Update successful.");
+    } else {
+      const errors = validationErrors.array().map((e) => e.msg);
+      res.status(400).json(errors);
+    }
+  })
+);
+
+// DELETE api/comments/:id *** DELETE A COMMENT
 router.delete(
   '/comments/:id(\\d+)',
   requireAuthAPI,
   asyncHandler(async (req, res, next) => {
-    const id = req.params.id;
+    const id = req.params.id * 1;
 
     const comment = await db.Comment.findByPk(id);
 

@@ -38,12 +38,12 @@ block content
             img.comment_pfp(src=comment.User.profileImg, alt="ProfPic")
           span= comment.User.usernamemin
         .container.comment_content
-          p(disabled name="", cols="30", rows="3")= comment.content
+          p(data-comment=comment.id)= comment.content
           small= comment.User.username
         .container
           if loggedInUser.userId === comment.User.id
             .form_group
-              a.btn#edit_comment.edit_icon &#9881
+              a(data-comment=comment.id).btn#edit_comment.edit_icon &#9881
               a(data-comment=comment.id).btn#delete_comment.delete_icon &#x1f5d1;
           else if loggedInUser.userId === post.User.id
             .form_group
