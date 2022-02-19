@@ -34,8 +34,8 @@ router.get(
 )
 
 // GET /random
-router.get("/random", requireAuth, (req, res) => {
-  res.send("urniujknfvedjnkrcszfvbzdbxgdfgxcfvefdvsebfdgg");
+router.get("/about",(req, res) => {
+  res.render('about')
 });
 
 module.exports = router;
