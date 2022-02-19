@@ -33,14 +33,15 @@ block content
     each comment in post.Comments
       //- if a user's profile is deactivated, don't show their comment
       .media#comments.container
+
         .container.comment_left
           a.profPicNav.comments_pfp(href=`/users/${comment.User.id}`)
             img.comment_pfp(src=comment.User.profileImg, alt="ProfPic")
           span= comment.User.usernamemin
         .container.comment_content
-          p.container(disabled name="", cols="30", rows="3")= comment.content
+          p(disabled name="", cols="30", rows="3")= comment.content
+          small= comment.User.username
         .container
-          span= comment.dataValues.timeElapsed
           if loggedInUser.userId === comment.User.id
             .form_group
               a.btn#edit_comment.edit_icon &#9881
@@ -48,6 +49,7 @@ block content
           else if loggedInUser.userId === post.User.id
             .form_group
               a.btn#delete_comment.delete_icon &#x1f5d1;
+          span= comment.dataValues.timeElapsed
 
 
   script(src="/javascripts/post-comments.js" type="module")
