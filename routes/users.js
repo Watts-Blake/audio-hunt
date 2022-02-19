@@ -139,7 +139,7 @@ router.get(
     });
 
     let isAuthorized = true;
-    if (req.session.auth.userId !== id) {
+    if (req?.session?.auth?.userId !== id) {
       isAuthorized = false;
     }
 
@@ -151,8 +151,8 @@ router.get(
       const userComments = user.Comments;
 
       const loggedInUser = {
-        profImg: res.locals.user.profileImg,
-        userId: res.locals.user.id,
+        profImg: res?.locals?.user?.profileImg,
+        userId: res?.locals?.user?.id,
       }
       res.render(`user-profile`, {
         title: 'please fix this',
