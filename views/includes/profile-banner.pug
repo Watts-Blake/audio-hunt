@@ -1,14 +1,15 @@
 .user_banner.container
-  .container
+  .container.pfp_info
     .user_banner__pfp
       img(src=user.profileImg, alt="profile-picture")
     .user_banner__body
       h2.user_banner__body__name= user.username
       span.user_banner__body__headline= user.header
-      span.user_banner__body__joinedOn 🎉Joined date : #{date}
+      span.user_banner__body__joinedOn 🎉Joined date: #{date}
       a.user_banner__body__email= user.email
       if isAuthorized
         a(href=`/users/${user.id}/edit`)
           button.btn.btn--secondary--outline Edit My Profile
-  .container
-    p= user.bio
+    .user_banner__bio
+      span Bio
+      small= user.bio
