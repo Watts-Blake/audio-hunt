@@ -8,11 +8,11 @@ const deletePostIdFetch = async (postId) => {
       throw res;
     }
     const { userId } = await res.json();
-    console.log(userId);
+    // console.log(userId);
     window.location.href = `/users/${userId}`;
   } catch (err) {
     const error = await err.json();
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
     containerDiv.addEventListener('click', e => {
       if (e.target === okDeleteBtn) {
-        console.log('bruhfuefu');
+        // console.log('bruhfuefu');
         e.stopPropagation();
         deletePostIdFetch(postId);
       }

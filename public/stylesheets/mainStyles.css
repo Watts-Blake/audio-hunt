@@ -234,9 +234,7 @@ option {
   overflow: hidden;
   white-space: nowrap;
 }
-.comment_preview_p::after {
-  /* content: '...'; */
-}
+
 .comment_count {
   min-width: 75px;
   min-height: 75px;

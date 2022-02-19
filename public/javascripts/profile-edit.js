@@ -9,7 +9,7 @@ const deleteUserFetch = async (userId) => {
     });
 
     if (!res.ok) {
-      console.log("");
+      // console.log("");
       throw res;
     }
     const something = await res.json();
@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
       if (e.target === pic) {
 
         currentPfp = pic.src
-        console.log(currentPfp)
+        // console.log(currentPfp)
         currentHtmlPfp.src=pic.src
         pfpModal.classList.add('hidden')
 
