@@ -34,7 +34,10 @@ const signupValidators = [
         throw new Error('Password confirmation does not match... 🙂');
       }
       return true;
-    })
+    }),
+    check("yearsOfAge")
+      .exists({ checkFalsy: true })
+      .withMessage('Please check in the age confirmation')
 ];
 
 const editProfileValidators = [
