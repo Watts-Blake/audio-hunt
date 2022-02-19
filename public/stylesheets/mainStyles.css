@@ -249,9 +249,11 @@ option {
   content: "\1F4AC";
 }
 .media__body__bottom {
-  width: 40%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 /* FORMS ***********************************************/
