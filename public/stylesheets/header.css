@@ -20,13 +20,24 @@ header,
   gap: 15px;
 }
 
+.topCenterNav {
+  width: 200px;
+  justify-content: space-around;
+}
+
 .searchInputNav {
   background-color: aliceblue;
   color: black;
   border-radius: 1em;
-  height: 1.5em;
+  height: 2em;
   line-height: 1.4em;
   padding-left: 5px;
+  display: flex;
+  align-items: center;
+}
+
+#search_bar {
+  padding: 10px;
 }
 
 .sp_around {
@@ -68,12 +79,13 @@ header,
 
 .profileNav {
   width: 46px;
-  margin-right: 10px;
+  margin: 0 10px;
 }
 
 .profPicNav > img {
   border-radius: 50%;
-  max-height: 46px;
+  height: 46px;
+  width: 46px;
   border: 2.5px solid #1db954;
 }
 

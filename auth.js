@@ -18,6 +18,13 @@ const requireAuth = (req, res, next) => {
   return next();
 };
 
+const requireAuthAPI = (req, res, next) => {
+  if (!res.locals.authenticated) {
+    return res.status(401).json('not authorized');
+  }
+  return next();
+}
+
 const restoreUser = async (req, res, next) => {
   console.log(req.session);
 
@@ -46,5 +53,6 @@ module.exports = {
   loginUser,
   logoutUser,
   requireAuth,
+  requireAuthAPI,
   restoreUser,
 };

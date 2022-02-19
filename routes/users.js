@@ -42,10 +42,10 @@ router.post(
   csrfProtection,
   loginValidators,
   asyncHandler(async (req, res) => {
-    const { email, password } = req.body;
+    const { email } = req.body;
 
     const user = await db.User.findOne({ where: { email } });
-
+    
     let errors = [];
     const validatorErrors = validationResult(req);
     if (user !== null && validatorErrors.isEmpty()) {
@@ -122,6 +122,10 @@ router.get(
     const id = (await req.params.id) * 1;
 
     const user = await db.User.findByPk(id, {
+      order: [
+        [{ model: db.Comment }, "createdAt", "DESC"],
+        [{ model: db.Post }, "createdAt", "DESC"],
+      ],
       include: [
         {
           model: db.Comment,
@@ -135,7 +139,7 @@ router.get(
     });
 
     let isAuthorized = true;
-    if (!req?.session?.auth?.userId || req.session.auth.userId !== id ) {
+    if (req.session.auth.userId !== id) {
       isAuthorized = false;
     }
 
@@ -147,8 +151,8 @@ router.get(
       const userComments = user.Comments;
 
       const loggedInUser = {
-        profImg: res?.locals?.user?.profileImg,
-        userId: res?.locals?.user?.id,
+        profImg: res.locals.user.profileImg,
+        userId: res.locals.user.id,
       }
       res.render(`user-profile`, {
         title: 'please fix this',

@@ -7,7 +7,7 @@ const Sequelize = require('sequelize')
 // MODULE IMPORTS *******************************************************************
 const { loginUser, restoreUser, requireAuth, logoutUser } = require("../auth");
 const db = require("../db/models");
-const { postValidators } = require('./utils/validations');
+const { postValidators, songValidator } = require('./utils/validations');
 const { asyncHandler, getTimeElapsed, getPostTimeElapsed } = require('./utils/utils');
 const { Router } = require("express");
 // MIDDLEWARE ***********************************************************************
@@ -20,34 +20,43 @@ const csrfProtection = csrf({ cookie: true });
 // GET /posts/:id
 router.get(
   '/:id(\\d+)',
+  csrfProtection,
   asyncHandler(async (req, res, next) => {
     const id = (await req.params.id) * 1;
 
     const post = await db.Post.findByPk(id, {
+      order: [[{ model: db.Comment }, "createdAt", "DESC"]],
       include: [db.Song, db.User, {
         model: db.Comment,
         include: db.User,
       }],
     });
+
     let isAuthorized = true;
-    if (!req?.session?.auth?.userId || req.session.auth.userId !== post.userId ) {
+    if (!req?.session?.auth?.userId || req?.session?.auth?.userId !== post?.userId ) {
       isAuthorized = false;
     }
 
     if (post) {
       const timeElapsed = getPostTimeElapsed(post);
       getTimeElapsed(post);
-      console.log(post.Comments);
 
       const loggedInUser = {
-        profImg: res.locals.user.profileImg,
-        userId: res.locals.user.id,
+        profImg: res?.locals?.user?.profileImg,
+        userId: res?.locals?.user?.id,
       }
+      const date = new Date(post.Song.releaseDate).toDateString()
+
+      const dateString = date.split(' ')
+      dateString.splice(0,1)
+      const relDate = dateString.join(' ')
       res.render('song-post', {
         post,
         loggedInUser,
         timeElapsed,
         isAuthorized,
+        relDate,
+        csrfToken: req.csrfToken(),
       });
     } else {
       const error = new Error("We could not find this post!");
@@ -78,7 +87,7 @@ router.get(
         ],
       ],
     });
-    
+
 
     res.render('new-post', {
       post: {}, songs, title: 'Create a new post',
@@ -90,6 +99,7 @@ router.get(
 // POST /posts *** CREATE NEW POST
 router.post('/new',
   postValidators,
+  songValidator,
   requireAuth,
   csrfProtection,
   asyncHandler(async (req, res, next) => {
@@ -102,7 +112,7 @@ router.post('/new',
       where: {
         songName,
         artistName
-      } 
+      }
     })
 
     const post = db.Post.build({
@@ -138,7 +148,7 @@ router.get(
 
     const post = await db.Post.findByPk(id);
 
-    if (req.session.auth.userId !== post.userId) {
+    if (req?.session?.auth?.userId !== post?.userId) {
       const error = new Error('Sneaky sneaky :)))) This is not your post silly boy :))))')
       error.status = 403;
       return next(error);

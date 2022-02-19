@@ -4,7 +4,7 @@ const csrf = require("csurf");
 const { validationResult } = require("express-validator");
 
 // MODULE IMPORTS *******************************************************************
-const { loginUser, restoreUser, requireAuth, logoutUser } = require("../auth");
+const { loginUser, restoreUser, requireAuth, requireAuthAPI, logoutUser } = require("../auth");
 const db = require("../db/models");
 const { editProfileValidators, commentValidators } = require("./utils/validations");
 const {
@@ -13,7 +13,6 @@ const {
   getJoinedDate,
   getPostTimeElapsed,
 } = require("./utils/utils");
-const app = require("../app");
 // MIDDLEWARE ***********************************************************************
 var router = express.Router();
 
@@ -22,7 +21,7 @@ router.use(restoreUser);
 const csrfProtection = csrf({ cookie: true });
 
 // ROUTES *****************************************************************
-// PUT /users/:id *** EDIT USER ACCOUNT
+// PUT api/users/:id *** EDIT USER ACCOUNT
 router.put(
   "/users/:id(\\d+)",
   requireAuth,
@@ -34,7 +33,7 @@ router.put(
 
     const user = await db.User.findByPk(userId);
 
-    if (req.session.auth.userId !== user.id) {
+    if (req.session.auth.userId !== user?.id) {
       const err = new Error("You are not authorized to delete this user.");
       err.status = 403;
       return next(err);
@@ -51,7 +50,7 @@ router.put(
     }
   })
 );
-// DELETE /users/:id *** DELETE USER ACCOUNT
+// DELETE api/users/:id *** DELETE USER ACCOUNT
 router.delete(
   "/users/:id(\\d+)",
   requireAuth,
@@ -60,7 +59,7 @@ router.delete(
 
     const user = await db.User.findByPk(userId);
 
-    if (req.session.auth.userId !== user.id) {
+    if (req.session.auth.userId !== user?.id) {
       const err = new Error("You are not authorized to delete this user.");
       err.status = 403;
       return next(err);
@@ -79,7 +78,7 @@ router.delete(
   })
 );
 
-// DELETE /posts/:id *** DELETE A POST
+// DELETE api/posts/:id *** DELETE A POST
 router.delete(
   '/posts/:id(\\d+)',
   requireAuth,
@@ -87,7 +86,7 @@ router.delete(
     const id = req.params.id * 1;
 
     const post = await db.Post.findByPk(id);
-    if (req.session.auth.userId !== post.userId) {
+    if (req.session.auth.userId !== post?.userId) {
       const err = new Error("You are not authorized to delete this post.");
       err.status = 403;
       return next(err);
@@ -105,12 +104,12 @@ router.delete(
 )
 
 
-// POST /comments *** POST A COMMENT
+// POST api/comments *** POST A COMMENT
 router.post(
   '/comments',
-  // requireAuth,
-  // commentValidators,
-  // csrfProtection,
+  requireAuthAPI,
+  commentValidators,
+  csrfProtection,
   asyncHandler(async (req, res, next) => {
     const { content, postId } = req.body;
 
@@ -120,14 +119,21 @@ router.post(
     if (validatorErrors.isEmpty()) {
       await comment.save();
       getPostTimeElapsed(comment);
+      comment.dataValues.userId = res.locals.user.id;
       comment.dataValues.username = res.locals.user.username;
-      console.log(comment);
+      comment.dataValues.profileImg = res.locals.user.profileImg;
       return res.json(comment);
     } else {
       const errors = validatorErrors.array().map(e => e.msg);
       res.status(400).json(errors)
     }
   })
+)
+
+// PUT api/comments/:id *** EDIT A COMMENT
+router.delete(
+  '/comments/:id',
+
 )
 
 

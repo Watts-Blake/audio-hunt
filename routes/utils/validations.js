@@ -104,13 +104,16 @@ const postValidators = [
     .exists({ checkFalsy: true })
     .withMessage("Make sure to add a short description!")
     .isLength({ max: 255 })
-    .withMessage('Your short description must be shorter than 255 characters...'),
+    .withMessage('Your short description must be shorter than 255 characters...')
+];
+
+const songValidator = [
   check('songDetail')
     .exists({ checkFalsy: true})
     .withMessage("Please select a song")
     .custom((value) => {
       const songName = value.split(' by ')[0];
-      const artistName = value.split(' by ')[1]; 
+      const artistName = value.split(' by ')[1];
       return db.Song.findOne({ where: { songName, artistName } })
         .then((song) => {
           if (song) {
@@ -120,12 +123,13 @@ const postValidators = [
           }
         });
     }),
-];
+]
+
 
 const commentValidators = [
   check('content')
     .exists({ checkFalsy: true })
-    .withMessage('Please provide content for your comment')
+    .withMessage('Make sure you type something first! 🙂')
 ];
 
 module.exports = {
@@ -134,4 +138,5 @@ module.exports = {
   editProfileValidators,
   postValidators,
   commentValidators,
+  songValidator,
 };

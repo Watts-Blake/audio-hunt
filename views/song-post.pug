@@ -2,33 +2,54 @@ extends layout.pug
 
 block content
   h1= post.title
-  .user_banner.container.media
+  .user_banner.container.media.post__container
     .container
       img.post_image(src=post.Song.albumImgUrl)
-      .media__body.post_body
+      .media__body.post_body_left
         h2= post.shortDescription
-        p= post.content
-    .container.post_media_footer
-      span= post.Song.artistName
+        textarea.container.text-area(disabled name="", cols="30", rows="3")= post.content
+        if isAuthorized
+          a.settings_icon(href=`/posts/${post.id}/edit`) &#9881
+      .media__body.post_body_right.container
+        a.profPicNav(href=`/users/${post.User.id}`)
+          img.comment_pfp(src=post.User.profileImg, alt="")
+        span.name= post.User.username
+        span= `${timeElapsed} ago`
+        span#num_comments= `${post.Comments.length}`
+
+    .container.media__body_mid
+      span.name= post.Song.artistName
       span= post.Song.albumName
-      span= post.Song.releaseDate
-      span= post.User.username
-      span= timeElapsed
-      a.btn.btn--primary--outline(href=post.Song.songUrl target="_blank") Listen
-      span= post.Comments.length
-      if isAuthorized
-        a.btn.btn--secondary--outline(href=`/posts/${post.id}/edit`) Edit Post
-  .error-container
+      span= relDate
+    .container.post_media_footer
+      a.listen__btn.btn.btn--primary--outline(href=post.Song.songUrl target="_blank") &#160;&#160;Listen&#160;&#160;
+  .comment_error_container.hidden
+  form.container#comment_form
+    input.form_input(type="text" name="content" placeholder="What do you think?")
+    input(type="hidden", name="_csrf" value=csrfToken)
+    button#send_button Send
+
   .main_body.container#post_body_container
-    form#comment_form
-      input.form_input(type="text" name="content" placeholder="What do you think?")
-      input(type="hidden", name="_csrf" value=csrfToken)
-      button#send_button Send
     each comment in post.Comments
       //- if a user's profile is deactivated, don't show their comment
-      .media#comments
-        p= comment.content
-        span= comment.User.username
-        span= comment.dataValues.timeElapsed
+      .media#comments.container
+
+        .container.comment_left
+          a.profPicNav.comments_pfp(href=`/users/${comment.User.id}`)
+            img.comment_pfp(src=comment.User.profileImg, alt="ProfPic")
+          span= comment.User.usernamemin
+        .container.comment_content
+          p(disabled name="", cols="30", rows="3")= comment.content
+          small= comment.User.username
+        .container
+          if loggedInUser.userId === comment.User.id
+            .form_group
+              a.btn#edit_comment.edit_icon &#9881
+              a.btn#delete_comment.delete_icon &#x1f5d1;
+          else if loggedInUser.userId === post.User.id
+            .form_group
+              a.btn#delete_comment.delete_icon &#x1f5d1;
+          span= comment.dataValues.timeElapsed
+
 
   script(src="/javascripts/post-comments.js" type="module")

@@ -21,7 +21,7 @@ block content
             span= post.Comments.length
     .user_comments_preview.container
       each comment in userComments
-        a(href=`/`).comment_preview.media
+        a.comment_preview.media(href=`/posts/${comment.postId}`)
           .media_body
             //- ::before - speech bubble
             p= comment.content
