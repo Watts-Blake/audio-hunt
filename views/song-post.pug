@@ -36,15 +36,14 @@ block content
         .container.comment_left
           a.profPicNav.comments_pfp(href=`/users/${comment.User.id}`)
             img.comment_pfp(src=comment.User.profileImg, alt="ProfPic")
-          span= comment.User.usernamemin
         .container.comment_content
           p(data-comment=comment.id)= comment.content
           small= comment.User.username
         .container
           if loggedInUser.userId === comment.User.id
             .form_group
-              a(data-comment=comment.id).btn#edit_comment.edit_icon &#9881
-              a(data-comment=comment.id).btn#delete_comment.delete_icon &#x1f5d1;
+              a.btn#edit_comment.edit_icon(data-comment=comment.id) &#9881
+              a.btn#delete_comment.delete_icon(data-comment=comment.id) &#x1f5d1;
           else if loggedInUser.userId === post.User.id
             .form_group
               a(data-comment=comment.id).btn#delete_comment.delete_icon &#x1f5d1;

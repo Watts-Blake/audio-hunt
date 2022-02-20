@@ -3,13 +3,15 @@ document.addEventListener('DOMContentLoaded', e => {
   /* CREATING A NEW COMMENT ************************************
   *************************************************************/
   const commentForm = document.getElementById('comment_form');
-
+    let numComments = document.getElementById('num_comments')
+    let currentNumComments = numComments.innerText
   document.getElementById('send_button').addEventListener('click', async e => {
     e.preventDefault();
 
     const pathArr = window.location.pathname.split("/");
     const postId = pathArr[2];
-
+    let newNumComments = currentNumComments++
+    numComments.innerText = newNumComments
     const formData = new FormData(commentForm);
     const content = formData.get('content');
     const _csrf = formData.get('_csrf');
@@ -40,17 +42,23 @@ document.addEventListener('DOMContentLoaded', e => {
       document.querySelector('input.form_input').value = "";
 
       const commentSection = document.getElementById('post_body_container');
-
       const newCommentContainer = document.createElement('div');
       newCommentContainer.classList.add('media');
       newCommentContainer.setAttribute('id', 'comments');
+      newCommentContainer.classList.add('container')
       newCommentContainer.innerHTML = `
-        <a class="profPicNav" href="/users/${userId}">
-          <img class="comment_pfp" src="${profileImg}", alt="ProfPic">
-        </a>
-        <p>${content}</p>
-        <span>${username}</span>
+        <div class="container comment_left"
+          <a class="profPicNav comments_pfp" href="/users/${userId}">
+          <img class="comment_pfp" style="border: 2.5px solid #1db954;border-radius: 50%; height:75px; width:75px; margin-right:5px; "src="${profileImg}", alt="ProfPic">
+          </a>
+        </div>
+        <div class="container comment_content">
+          <p>${content}</p>
+          <small>${username}</small>
+        </div>
+        <div class="container"
         <span>${timeElapsed}</span>
+        </div>
       `;
 
       const collection = Array.from(commentSection.children);
@@ -213,9 +221,11 @@ document.addEventListener('DOMContentLoaded', e => {
   /* DELETING A COMMENT ****************************************
   *************************************************************/
   document.querySelectorAll('#delete_comment').forEach(btn => {
+
     btn.addEventListener('click', async e => {
       const commentId = e.currentTarget.dataset.comment;
-
+    let newNumComments = currentNumComments--
+    numComments.innerText = newNumComments
       if (window.confirm('Are you sure you want to delete this comment?')) {
         // console.log(commentId);
         try {

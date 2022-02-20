@@ -34,7 +34,7 @@
   justify-content: space-around;
 }
 
-.user_banner__body>a{
+.user_banner__body > a {
   align-self: start;
 }
 
@@ -110,4 +110,8 @@ a.comment_preview.media {
   font-size: 10px;
   padding: 0px 15px;
   text-transform: capitalize;
+}
+
+.user_profile_bio {
+  text-align: center;
 }
