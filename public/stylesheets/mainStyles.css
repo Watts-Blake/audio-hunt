@@ -11,8 +11,9 @@ body {
 
 h1 {
   text-align: center;
-  margin: 25px;
-  font-size: 18px;
+  margin: 40px 0;
+  font-weight : 700;
+  font-size: 2em;
 }
 
 h2 {
@@ -40,6 +41,7 @@ header {
 
 textarea {
   resize: vertical;
+  white-space: pre-wrap;
 }
 
 select {
@@ -232,9 +234,7 @@ option {
   overflow: hidden;
   white-space: nowrap;
 }
-.comment_preview_p::after {
-  /* content: '...'; */
-}
+
 .comment_count {
   min-width: 75px;
   min-height: 75px;
@@ -249,9 +249,11 @@ option {
   content: "\1F4AC";
 }
 .media__body__bottom {
-  width: 40%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 /* FORMS ***********************************************/

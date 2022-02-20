@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', e => {
       }
 
       if (!res.ok) {
-        console.log('res not ok');
+        // console.log('res not ok');
         throw res;
       }
 
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', e => {
           }
 
           if (!res.ok) {
-            console.log('bruh');
+            // console.log('bruh');
             throw res;
           }
 
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', e => {
       const commentId = e.currentTarget.dataset.comment;
 
       if (window.confirm('Are you sure you want to delete this comment?')) {
-        console.log(commentId);
+        // console.log(commentId);
         try {
           const res = await fetch(`/api/comments/${commentId}`, {
             method: 'delete',
@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', e => {
           if (res.status === 403) {
             return alert('You don\'t have permission to delete this! >:(');
           } else if (!res.ok) {
-            console.log('error from fetch response');
+            // console.log('error from fetch response');
             throw res;
           }
 

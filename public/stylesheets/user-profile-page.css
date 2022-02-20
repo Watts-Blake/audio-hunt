@@ -33,6 +33,11 @@
   flex-direction: column;
   justify-content: space-around;
 }
+
+.user_banner__body>a{
+  align-self: start;
+}
+
 .user_banner__body__name {
   font-size: 22px;
 }
