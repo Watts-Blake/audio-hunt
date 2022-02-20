@@ -1,0 +1,22 @@
+extends layout 
+
+block content 
+  .container 
+    h1= title 
+  .main_body.container.main_body_center
+    .user_posts.container
+      if posts
+        each post in posts
+          a(href=`/posts/${post.id}`).media
+            img.media__img(src=post.Song.albumImgUrl)
+            .media__body
+              h3= post.title
+              span= post.shortDescription
+              .media__body__bottom
+                small= post.Song.artistName
+                small= post.Song.songName
+            //- .comment_count.container
+            //-   span= post.Comments.length
+      else 
+        h2= msg
+

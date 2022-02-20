@@ -143,3 +143,7 @@ textarea.container {
 .delete_icon {
   color: #ca1b1b;
 }
+
+.main_body_center{
+  justify-content: center;
+}
