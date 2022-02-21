@@ -169,8 +169,9 @@ router.delete(
     const id = req.params.id * 1;
 
     const comment = await db.Comment.findByPk(id);
+    const posts = await db.Post.findByPk(comment.postId)
 
-    if (req.session.auth.userId !== comment.userId) {
+    if (req.session.auth.userId !== comment.userId && req.session.auth.userId !== posts.userId ) {
       const err = new Error("You are not authorized to delete this comment.");
       err.status = 403;
       return next(err);
@@ -193,9 +194,9 @@ router.delete(
 router.get('/search/:songName',
   asyncHandler(
  async (req, res) => {
-  const param = req.url;
-  const songName = param.split("=")[1]
-  console.log(songName)
+  const url = req.url;
+  const songName = url.split("=")[1]
+  // console.log(songName)
   const posts = await db.Post.findAll({
     include: {
       model: db.Song,
@@ -208,7 +209,7 @@ router.get('/search/:songName',
     }
   });
 
-  console.log(posts)
+  // console.log(posts)
 
   if (posts.length) {
     

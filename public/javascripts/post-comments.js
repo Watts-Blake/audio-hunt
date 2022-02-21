@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', e => {
 
     const pathArr = window.location.pathname.split("/");
     const postId = pathArr[2];
-    let newNumComments = currentNumComments++
+    let newNumComments = ++currentNumComments
     numComments.innerText = newNumComments
     const formData = new FormData(commentForm);
     const content = formData.get('content');
@@ -56,7 +56,11 @@ document.addEventListener('DOMContentLoaded', e => {
           <p>${content}</p>
           <small>${username}</small>
         </div>
-        <div class="container"
+        <div class="container">
+        <div class="form_group">
+        <a href=${document.location.href} class="btn edit_icon" > \&#8634 <small>Refresh to edit/delete</small> </a>
+        
+        </div>
         <span>${timeElapsed}</span>
         </div>
       `;
@@ -224,7 +228,7 @@ document.addEventListener('DOMContentLoaded', e => {
 
     btn.addEventListener('click', async e => {
       const commentId = e.currentTarget.dataset.comment;
-    let newNumComments = currentNumComments--
+    let newNumComments = --currentNumComments
     numComments.innerText = newNumComments
       if (window.confirm('Are you sure you want to delete this comment?')) {
         // console.log(commentId);
