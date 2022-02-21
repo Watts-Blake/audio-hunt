@@ -23,6 +23,7 @@ header,
 .topCenterNav {
   width: 200px;
   justify-content: space-around;
+  margin-right: 75px;
 }
 
 .searchInputNav {

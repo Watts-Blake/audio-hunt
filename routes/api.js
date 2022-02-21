@@ -169,8 +169,9 @@ router.delete(
     const id = req.params.id * 1;
 
     const comment = await db.Comment.findByPk(id);
+    const posts = await db.Post.findByPk(comment.postId)
 
-    if (req.session.auth.userId !== comment.userId) {
+    if (req.session.auth.userId !== comment.userId && req.session.auth.userId !== posts.userId ) {
       const err = new Error("You are not authorized to delete this comment.");
       err.status = 403;
       return next(err);
@@ -189,11 +190,13 @@ router.delete(
 )
 
 
-// GET api/search/:postTitle  Search Function
+// GET api/search/:songName  Search Function
 router.get('/search/:songName',
   asyncHandler(
  async (req, res) => {
-  const songName = req.params.songName;
+  const url = req.url;
+  const songName = url.split("=")[1]
+  // console.log(songName)
   const posts = await db.Post.findAll({
     include: {
       model: db.Song,
@@ -206,18 +209,24 @@ router.get('/search/:songName',
     }
   });
 
+  // console.log(posts)
 
-  if (posts) {
-    //WIP:  need to display the result...
-    return res.status(200).json(posts)
+  if (posts.length) {
+    
+    res.render('search-results', {
+      title : "Search Results",
+      posts,
+      songName,
+    })
 
   } else {
-    const err = new Error("The posts you are looking for are not found.");
-    error.status = 404;
-    next(err);
+    res.render('search-results', {
+      title : "Search Results",
+      msg:  "Sorry, we could not find the song post..."
+    })
   }
 
-  
+
 
 }))
 

@@ -16,9 +16,9 @@ html(lang="en")
         div.searchBarNav
           div.searchIconNav
             img(src="", alt="")
-          div.searchInputNav
-            label(for="searchBar")
-            input#search_bar(type="text" name="searchBar" placeHolder='Search Audio Hunt')
+          form(action="/api/search/:songName", method="get") 
+            label(for="search")
+            input#search_bar.searchInputNav(type="search" name="search" placeHolder='Search Audio Hunt')
       nav.topCenterNav.container
         a.homeNav(href="/") Home
         if authenticated

@@ -14,7 +14,7 @@ block content
     h2 Most Popular Posts
     h2 Most Recent Comments 
   .main_body.container
-    .user_posts.container
+    .user_posts.container.search_result
       each post in posts
         a(href=`/posts/${post.id}`).media
           img.media__img(src=post.Song.albumImgUrl)
@@ -23,7 +23,7 @@ block content
             span= post.shortDescription
             .media__body__bottom
               small= post.Song.artistName
-              small= post.Song.albumName
+              small= post.Song.songName
           .comment_count.container
             span= post.Comments.length
     .user_comments_preview.container
