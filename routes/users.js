@@ -45,7 +45,7 @@ router.post(
     const { email } = req.body;
 
     const user = await db.User.findOne({ where: { email } });
-    
+
     let errors = [];
     const validatorErrors = validationResult(req);
     if (user !== null && validatorErrors.isEmpty()) {
@@ -69,11 +69,17 @@ router.post(
 );
 
 // POST /users/logout
-router.post("/logout", (req, res) => {
+router.post("/logout", asyncHandler ( async(req, res) => {
+  const userId = req.session.auth.userId
+  if (userId === 1) {
+    const user = await db.User.findByPk(1)
+  await user.update({username: 'Demo User', bio: "This is Demo User's bio", header: "This is Demo User's Bio", email: "test@test.com"})
+  }
+
   logoutUser(req, res);
   req.session.save(()=> res.redirect('/'))
   return
-});
+}));
 // GET /users/signup
 router.get("/signup", csrfProtection, (req, res) => {
   return res.render("signup", {
