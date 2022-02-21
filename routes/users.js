@@ -73,7 +73,7 @@ router.post("/logout", asyncHandler ( async(req, res) => {
   const userId = req.session.auth.userId
   if (userId === 1) {
     const user = await db.User.findByPk(1)
-  await user.update({username: 'Demo User', bio: "This is Demo User's bio", header: "This is Demo User's Bio", email: "test@test.com"})
+  await user.update({username: 'Demo User', bio: "This is Demo User's bio", header: "This is Demo User's header", email: "test@test.com"})
   }
 
   logoutUser(req, res);
